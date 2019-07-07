@@ -1,15 +1,17 @@
 .idea/
 *.iml
-/src
-*/target/
+/target/
+.project
 /*/.project
 .settings/
+/.classpath
 /*/.classpath
 .project
 .build
 /build/
 *.class
 /*/.class
+/build
 /*/build
 /**/README.md
 

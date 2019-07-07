@@ -3,7 +3,7 @@ spring:
     username: root
     password: a
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/novel
+    url: jdbc:mysql://localhost:3306/pengyuan?useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
 
     initialSize: 5
@@ -24,3 +24,5 @@ spring:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
+server:
+  port: 80
