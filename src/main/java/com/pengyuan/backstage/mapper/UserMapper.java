@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Select;
 public interface UserMapper {
 
     /**
+     *
      *  根据用户名和密码
      *
      * @param userName
