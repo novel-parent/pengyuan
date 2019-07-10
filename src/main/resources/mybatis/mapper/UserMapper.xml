@@ -4,4 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pengyuan.backstage.mapper.UserMapper">
 
+<resultMap type="com.pengyuan.backstage.bean.User" id="userListMap">
+	<id column="uid" property="uid"/>
+	<result column="fid"  property="fid"/>
+	<collection property="factory" column="fid"  select="com.pengyuan.backstage.mapper.FactoryMapper.selectFactoryByFid"/>
+	
+</resultMap>
+
+			<select id="getUserList"   resultMap="userListMap">
+					select * from user 
+			</select>
+			
+			<select id="getUserInfo" resultMap="userListMap">
+					select * from user where uid = #{uid} 
+			</select>
+			
+			<insert id="addUser">
+				insert into user(userName,tel,fid,flag) values(#{userName},#{tel},#{fid},#{flag})
+			</insert>
+			
+			<update id="updateUser">
+				update user 
+				<set>
+						<if test="userName != null">
+							userName = #{userName},
+						</if>
+						<if test="tel != null">
+							tel  =  #{tel},
+						</if>
+						<if test="fid != null">
+							fid  =  #{fid},
+						</if>
+						<if test="flag != null">
+							flag = #{flag}
+						</if>
+				</set>
+				where uid= #{uid}
+			</update>
+
 </mapper>

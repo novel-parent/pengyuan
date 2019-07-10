@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+$(function(){
+	
+	
+	//加载工厂列表
+	
+	$.ajax({
+		url:'getFactoryList',
+		type:'post',
+		data:'',
+		success: function(data){
+			
+			for(var i=0;i<data.length;i++){
+				var html='';
+				
+				html+='<option value="'+data[i].fid+'">'+data[i].factoryName+'</option>';
+				
+				$("#fid").append(html);
+				
+				
+				$("#factory").append(html);
+			}
+		}
+	})
+	
+	//加载用户列表
+	$.ajax({
+		url:'getUserList',
+		type:'post',
+		data:'',
+		success:function(data){
+			
+			for(var i=0 ;i<data.length;i++){
+				
+					var flag='在职';
+					if(data[i].flag == 0 ){
+						flag='离职';
+					}
+				
+					var html='';
+					html+='<tr>';
+					html+='<td>'+data[i].userName+'</td>';
+					html+='<td>'+data[i].tel+'</td>';
+					html+='<td>'+data[i].factory.factoryName+'</td>';
+					html+='<td>'+flag+'</td>';
+					html+='<td>';
+					html+='<div class="button-group">';
+					html+='<a class="button border-main" name="edi" onclick="edit('+data[i].uid+')"> <span class="icon-edit"></span> 修改</a>';
+					html+=' <a class="button border-red" href="javascript:void(0)" onclick="return del('+data[i].uid+')">';
+					html+='<span class="icon-trash-o"></span> 删除</a>';
+					html+='</div>';
+					html+='</td>';
+					html+='</tr>';
+					
+					$("#usertable").append(html);
+					
+			}
+		}
+	})
+})
+	
+			//加载编辑用户信息列表
+			function edit(obj){
+				$.ajax({
+					url:'getUserInfo',
+					type:'post',
+					data: 'uid='+obj,
+					success: function(data){
+						
+						$("input[name = 'uid']").val(obj);
+						$("#name").val(data.userName);
+						$("#tel").val(data.tel);
+						$("#fid").val(data.factory.fid);
+						$("#flag").val(data.flag);
+						
+						$("#myModal").modal('show');
+					}
+				})
+			}
+</script>
+
+</head>
+<body>
+	<div id="myAlert" class="alert alert-success">
+			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>admin你好！</strong>欢迎来到员工管理界面。
+		</div>
+		<div class="padding border-bottom">
+				<table class="table" >
+
+							<tr >
+								<td style="width:100px;">
+								<input type="text" class="form-control" style="width:120px;" name="name"
+									placeholder="姓名"  ></td>
+								<td style="width:100px;"><input type="text" class="form-control" style="width:120px;" name="tel"
+									placeholder="电话" ></td>
+								<td style="width:120px;"><select id="factory"
+									class="form-control" >
+										
+								</select></td>
+								<td style="width:120px;"><select
+									class="form-control">
+										<option value="1">在职</option>
+										<option value="0" >离职</option>
+								</select></td>
+								<td>
+								<button type="button" class="btn btn-primary"  >搜索</button>
+								</td>
+								<td>
+								<button type="button" class="btn btn-primary" onclick="addUserBtn()" >添加员工</button>
+								</td>
+							</tr>
+					</table>
+		</div>
+
+
+		
+
+		<table class="table table-hover text-center" id="usertable">
+			<tr>
+				<th width="10%">姓名</th>
+				<th width="20%">电话</th>
+				<th width="15%">所属工厂</th>
+				<th width="20%">在职状态</th>
+				<th width="20%">操作</th>
+			</tr>
+
+			<!-- 员工信息列表 -->
+			
+			
+		</table>
+	</div>
+
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		
+		<input type="hidden" name="uid" value="">
+		
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">员工信息</h4>
+				</div>
+				<div class="modal-body">
+
+					<table class="table">
+
+						<thead>
+							<tr>
+								<th>姓名</th>
+								<th>电话</th>
+								<th>工厂</th>
+								<th>在职状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" id="name"
+									placeholder="请输入姓名"></td>
+								<td><input type="text" class="form-control" id="tel"
+									placeholder="请输入电话"></td>
+								<td style="margin-right: 20px;">
+										<select class="form-control" style="width: 90px;" id="fid" >
+											
+											<!-- 工厂信息 -->
+												
+										</select>
+								</td>
+								<td style="margin-right: 20px;"><select id="flag"
+									class="form-control" style="width: 90px;">
+										<option value="1">在职</option>
+										<option value="0">离职</option>
+								</select></td>
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<div class="modal-footer">
+				
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消 </button>
+					
+					<button type="button" class="btn btn-primary" data-dismiss="modal" id="savebtn">保存</button>
+						
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+
+
+
+
+
+	<script type="text/javascript">
+		function del(uid) {
+			if (confirm("您确定要删除该员工吗?")) {
+				alert();
+			}
+		}
+
+		$("#savebtn").on('click',function(){
+			
+			
+			var data;
+			
+			if($("input[name = 'uid']").val() == 0){
+				data = {
+						userName:$("#name").val(),
+						tel:$("#tel").val(),
+						fid:$("#fid").val(),
+						flag:$("#flag").val()
+					}
+			}else{
+				data = {
+						uid:$("input[name = 'uid']").val(),
+						userName:$("#name").val(),
+						tel:$("#tel").val(),
+						fid:$("#fid").val(),
+						flag:$("#flag").val()
+					}
+			}
+			
+			
+			
+			$.ajax({
+				url:'updateUser',
+				type:'post',
+				data:data,
+				success: function(data){
+					if(data.code == 1){
+						alert(data.msg);
+						window.location.reload();
+					}
+				}
+			})
+		})
+		
+		function addUserBtn(){
+			
+			$("input[name = 'uid']").val("0");
+			$("#name").val('');
+			$("#tel").val('');
+			$("#fid").val('');
+			$("#flag").val('');
+			
+			$("#myModal").modal('show');
+		}
+		
+		
+	
+	</script>
+
+</body>
+</html>

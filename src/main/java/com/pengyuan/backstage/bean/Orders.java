@@ -1,5 +1,7 @@
 package com.pengyuan.backstage.bean;
 
+import java.io.Serializable;
+
 import com.pengyuan.backstage.util.DateUtil;
 import com.pengyuan.backstage.util.MoneyUtil;
 
@@ -8,9 +10,11 @@ import com.pengyuan.backstage.util.MoneyUtil;
  * @author LX
  * @date 2019/7/8 - 13:19
  */
-public class Orders {
+public class Orders implements Serializable{
 
-    private long oid;
+	private static final long serialVersionUID = 1L;
+
+	private long oid;
 
     private String corporateName;
 

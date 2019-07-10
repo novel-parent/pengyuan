@@ -1,5 +1,8 @@
 package com.pengyuan.backstage.service;
 
+import java.util.List;
+
+import com.pengyuan.backstage.bean.Factory;
 import com.pengyuan.backstage.bean.User;
 
 /**
@@ -15,4 +18,14 @@ public interface UserService {
      * @return
      */
     User login(String userName,String password);
+
+	List<User> getUserList();
+
+	User getUserInfo(long uid);
+
+	List<Factory> getFactoryList();
+
+	int addUser(User user);
+
+	int updateUser(User user);
 }
