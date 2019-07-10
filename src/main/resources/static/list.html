@@ -333,7 +333,7 @@ function changesearch(){
                   result+="<div class='button-group'>"
                   result+="<a class='button border-main' href='add.html'>"
                   result+="<span class='icon-edit'></span> 修改</a>"
-                  result+="<a class='button border-red' href='javascript:void(0)' onclick='return del(1,1,1)'>"
+                  result+="<a class='button border-red' href='javascript:void(0)' onclick='return del("+ele.oid+")'>"
                   result+="<span class='icon-trash-o'></span> 删除</a> </div></td>"
                   result+="</tr>"
                    order.append(result)
@@ -354,7 +354,7 @@ function changesearch(){
 }
 
 //单个删除
-function del(id,mid,iscid){
+function del(oid){
 	if(confirm("您确定要删除吗?")){
 		
 	}
