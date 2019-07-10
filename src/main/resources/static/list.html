@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="applicable-device" content="pc,mobile">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+<link rel="stylesheet" href="css/list.css">
+</head>
+<body>
+<form method="post" action="" id="listform">
+  <div class="panel admin-panel">
+    <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+    <div class="padding border-bottom">
+      <ul class="search" style="padding-left:10px;">
+        <li> <a class="button border-main icon-plus-square-o" href="add.html"> 添加内容</a> </li>
+        <li>
+          <select name="s_ishome" class="input" onchange="changesearch()" id="corporateName"  style="width:120px; line-height:17px; display:inline-block">
+            <option value="">公司名称</option>
+
+          </select>
+          &nbsp;&nbsp;
+          
+          <select name="s_isvouch" class="input"  id="year"  style="width:80px; line-height:17px;display:inline-block">
+            <option value="">年</option>
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
+          </select>
+          &nbsp;&nbsp;
+          
+          <select name="s_istop" class="input" onchange="changesearch()" id="month"  style="width:60px; line-height:17px;display:inline-block">
+            <option value="">月份</option>
+            <option value="01">01</option>
+            <option value="02">02</option>
+            <option value="03">03</option>
+            <option value="04">04</option>
+            <option value="05">05</option>
+            <option value="06">06</option>
+            <option value="07">07</option>
+            <option value="08">08</option>
+            <option value="09">09</option>
+            <option value="10">10</option>
+            <option value="11">11</option>
+            <option value="12">12</option>
+          </select>
+          
+          &nbsp;&nbsp;
+          
+          <input type="text" placeholder="日" onchange="changesearch()" id="day"  name="s_istop" class="input"   style="width:60px; line-height:17px;display:inline-block">
+            
+          </input>
+        </li>
+        <if condition="$iscid eq 1">
+          <li>
+            <select name="cid" onchange="changesearch()" onfocus="getGoodsName()" id="goodsName" class="input" style="width:200px; line-height:17px;">
+                <option value="">商品类型</option>
+
+            </select>
+          </li>
+        </if>
+        <li>
+          <input type="text" placeholder="请输入搜索关键字" id="key" onclick="searchOnclick()"  onkeyup="getSearchKey()" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          <div id="historySearch">
+              <ul class="historyLi">
+
+                  <li>6666666</li>
+                   <li>6666666</li>
+                    <li>6666666</li>
+                     <li>6666666</li>
+                      <li>6666666</li>
+                       <li>6666666</li>
+                       <li>6666666</li>
+
+              </ul>
+          </div>
+
+          <a href="javascript:void(0)" onclick="changesearch()" class="button border-main icon-search" > 搜索</a></li>
+      </ul>
+    </div>
+    <table class="table table-hover text-center" id="order">
+
+
+    </table>
+  </div>
+</form>
+<script type="text/javascript">
+
+getCorporateName()
+
+function searchOnclick() {
+    // $('#key').css('display', 'block')
+}
+
+
+
+var length = 0
+
+function getSearchKey() {
+
+    var key = $('#key').val()
+
+    if(key ==null || key == ''){
+         return
+    }
+
+    if(key.length < length){
+
+        return
+    }
+    length =key.length
+
+   $.ajax({
+       url:"orderSearchKeys?key="+key,
+       error:function(){
+           alert("请求出错.")
+       },
+       success:function(data){
+
+           if (data==null || data==''){
+               alert("暂无数据")
+               return
+           }
+           data =eval(data)
+
+           $(data).each(function(index,ele) {
+
+               alert(ele)
+           })
+       },
+       type:'GET'
+   });
+}
+
+
+ function getCorporateName() {
+      var corporateName1 = $('#corporateName')
+
+      $.ajax({
+             url:"corporateName",
+             error:function(){
+                 alert("请求出错.")
+             },
+             success:function(data){
+
+                 if (data==null || data==''){
+                     alert("暂无数据")
+                     return
+                 }
+                 data =eval(data)
+
+                 $(data).each(function(index,ele) {
+                     corporateName1.append("<option value=\""+ele+"\">"+ele+"</option>")
+                 })
+             },
+             type:'GET'
+         });
+   }
+
+
+   function getGoodsName() {
+
+       var goodsName = $('#goodsName')
+
+       goodsName.html(goodsName.val())
+
+       var tUrl = "goodsName"
+       var corporateName = $('#corporateName').val()
+
+       if(corporateName !='' && corporateName !=null ){
+           tUrl +="?corporateName="+corporateName
+       }
+
+       $.ajax({
+              url:tUrl,
+              error:function(){
+                  alert("请求出错.")
+              },
+              success:function(data){
+
+                  if (data==null || data==''){
+                      alert("暂无数据")
+                      return
+                  }
+                  data =eval(data)
+
+                  $(data).each(function(index,ele) {
+                      goodsName.append("<option value=\""+ele+"\">"+ele+"</option>")
+                  })
+              },
+              type:'GET'
+          });
+    }
+
+
+ var order = $('#order')
+//搜索
+function changesearch(){
+
+   order.html('')
+
+    var flag = 0
+	var tUrl = ''
+	var corporateName = $('#corporateName').val()
+
+	if (corporateName !=null && corporateName!=''){
+	    tUrl+="corporateName="+corporateName+"&"
+	    flag++;
+	}
+
+	var goodsName = $('#goodsName').val()
+	if ( goodsName !=null && goodsName!=''){
+	    tUrl+="goodsName="+goodsName+"&"
+	    flag++;
+	}
+
+	var key = $('#key').val()
+    if ( key !=null && key!=''){
+	    tUrl+="key="+key+"&"
+	    flag++;
+    }
+
+	var year = $('#year').val()
+
+	if(year!=null && year!=''){
+        var month = $('#month').val()
+        if(month!=null && month!=''){
+
+            var endTime =''
+
+            //   记录 用户 是否需要按照时间来进行查询
+            var times =year
+            flag++;
+            times+=month
+
+            var day = $('#day').val()
+                if(day!=null && day!=''){
+
+                    if(day.indexOf('0')==0){
+                        //  代表用户输入的  小于 10   输入格式是    05
+                    }else{
+
+                        if(day<10){
+                            //  当用户输入的 格式 是 小于 10    格式为   6
+                            //   给它补全  格式   06
+                            day="0"+day
+                        }
+                    }
+                    times+=day
+                    endTime=times+"2500"
+                    times+="0000"
+                }else{
+
+                    endTime+=times+"320000"
+                    times+="000000"
+                }
+
+            tUrl+="startTime="+times+"&"
+            tUrl+="endTime="+endTime+"&"
+            flag++
+        }
+	}
+
+	if (flag==0){
+	    //  搜索条件为空
+	    alert("搜索条件为空")
+	    return
+	}
+     var index = tUrl.lastIndexOf('&')
+     tUrl ="order?"+tUrl.substring(0,index)
+     var r =''
+      r+="<tr>"
+      r+="<th width='100' style='text-align:left; padding-left:20px;'>ID</th>"
+      r+="<th width='9%'>公司名称</th>"
+      r+="<th width='8%'>商品名称</th>"
+      r+="<th width='7%'>订单编号</th>"
+      r+="<th width='8%'>单价</th>"
+      r+="<th width='6%'>数目</th>"
+      r+="<th width='4%'>单位</th>"
+      r+="<th width='10%'>金额</th>"
+      r+="<th width='14%'>时间</th>"
+      r+="<th width='6%'>签收人</th>"
+      r+="<th width='310'>操作</th>"
+      r+="</tr>"
+      order.append(r)
+
+
+    $.ajax({
+        url:tUrl,
+        error:function(){
+            alert("请求出错.")
+        },
+        success:function(data){
+
+            if (data==null || data==''){
+                alert("暂无数据")
+                return
+            }
+
+            data =eval(data)
+
+            var result =''
+            $(data.list).each(function(index,ele) {
+                 result+="<tr><td style='text-align:left; padding-left:20px;'><input type='checkbox' name='id[]' value='' />"
+                  var number = parseInt(index)+1
+                  result+=""+number+"</td>"
+                  result+="<td>"+ele.corporateName+"</td>"
+                  result+="<td>"+ele.goodsName+"</td>"
+                  result+="<td>"+ele.documents+"</td>"
+                  result+="<td>"+ele.price+"</td>"
+                  result+="<td>"+ele.number+"</td>"
+                  result+="<td>"+ele.company+"</td>"
+                  result+="<td>"+ele.money+"</td>"
+                  result+="<td>"+ele.times+"</td>"
+                   result+="<td>"+ele.signatory+"</td>"
+                  result+="<td>"
+                  result+="<div class='button-group'>"
+                  result+="<a class='button border-main' href='add.html'>"
+                  result+="<span class='icon-edit'></span> 修改</a>"
+                  result+="<a class='button border-red' href='javascript:void(0)' onclick='return del(1,1,1)'>"
+                  result+="<span class='icon-trash-o'></span> 删除</a> </div></td>"
+                  result+="</tr>"
+                   order.append(result)
+                   result=''
+            })
+               var t =''
+               t+="<tr> <td colspan ='8'>共:"+data.size+"条记录 </td  > <td  colspan ='4'>总金额:"+data.sum+"元 </td>   </tr>"
+               t+="<tr>"
+               t+="  <td colspan='12'> <div class='pagelist'> <a href=''>上一页</a> <span class='current'>1</span><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>3</a><a href=''>下一页</a><a href=''>尾页</a> </div></td>"
+               t+="</tr>"
+               order.append(t)
+        },
+        type:'GET'
+    });
+
+
+
+}
+
+//单个删除
+function del(id,mid,iscid){
+	if(confirm("您确定要删除吗?")){
+		
+	}
+}
+
+//全选
+$("#checkall").click(function(){ 
+  $("input[name='id[]']").each(function(){
+	  if (this.checked) {
+		  this.checked = false;
+	  }
+	  else {
+		  this.checked = true;
+	  }
+  });
+})
+
+//批量删除
+function DelSelect(){
+	var Checkbox=false;
+	 $("input[name='id[]']").each(function(){
+	  if (this.checked==true) {		
+		Checkbox=true;	
+	  }
+	});
+	if (Checkbox){
+		var t=confirm("您确认要删除选中的内容吗？");
+		if (t==false) return false;		
+		$("#listform").submit();		
+	}
+	else{
+		alert("请选择您要删除的内容!");
+		return false;
+	}
+}
+</script>
+</body>
+</html>

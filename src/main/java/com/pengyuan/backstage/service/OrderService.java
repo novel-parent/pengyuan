@@ -1,5 +1,6 @@
 package com.pengyuan.backstage.service;
 
+import com.pengyuan.backstage.bean.OrderListDiv;
 import com.pengyuan.backstage.bean.Orders;
 
 import java.util.List;
@@ -13,8 +14,13 @@ import java.util.List;
 public interface OrderService {
 
     /**
-     *        显示 所有的  订单信息
+     *        订单搜索
+     * @param corporateName
+     * @param goodsName
+     * @param startTime
+     * @param endTime
+     * @param key
      * @return
      */
-    List<Orders> showOrder();
+    OrderListDiv searchOrder(String corporateName, String goodsName, Long startTime, Long endTime, String key);
 }
