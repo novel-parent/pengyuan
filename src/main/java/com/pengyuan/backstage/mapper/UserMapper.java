@@ -25,7 +25,6 @@ public interface UserMapper {
     @Select("SELECT * FROM USER WHERE userName=#{userName} AND password=#{password}")
     User selByLogin(@Param("userName") String userName, @Param("password") String password);
 
-<<<<<<< HEAD
 	List<User> getUserList();
 
 	User getUserInfo(long uid);
@@ -33,7 +32,5 @@ public interface UserMapper {
 	int addUser(User user);
 
 	int updateUser(User user);
-=======
 
->>>>>>> a40701fed0ca2d72bf658ef93d0ff1cc8add2684
 }
