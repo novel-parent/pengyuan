@@ -2,105 +2,196 @@
 <html lang="zh-cn">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="renderer" content="webkit">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <meta name="applicable-device" content="pc,mobile">
-    <meta http-equiv="Cache-Control" content="no-transform">
-    <meta http-equiv="Cache-Control" content="no-siteapp">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta name="applicable-device" content="pc,mobile">
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title></title>
 <link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.js"></script>
 <script src="js/pintuer.js"></script>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/list.css">
 </head>
 <body>
-<form method="post" action="" id="listform">
-  <div class="panel admin-panel">
-    <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
-    <div class="padding border-bottom">
-      <ul class="search" style="padding-left:10px;">
-        <li> <a class="button border-main icon-plus-square-o" href="add.html"> 添加内容</a> </li>
-        <li>
-          <select name="s_ishome" class="input" onchange="changesearch()" id="corporateName"  style="width:120px; line-height:17px; display:inline-block">
-            <option value="">公司名称</option>
-
-          </select>
-          &nbsp;&nbsp;
-          
-          <select name="s_isvouch" class="input"  id="year"  style="width:80px; line-height:17px;display:inline-block">
-            <option value="">年</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>
-            <option value="2021">2021</option>
-            <option value="2022">2022</option>
-            <option value="2023">2023</option>
-            <option value="2024">2024</option>
-            <option value="2025">2025</option>
-            <option value="2026">2026</option>
-          </select>
-          &nbsp;&nbsp;
-          
-          <select name="s_istop" class="input" onchange="changesearch()" id="month"  style="width:60px; line-height:17px;display:inline-block">
-            <option value="">月份</option>
-            <option value="01">01</option>
-            <option value="02">02</option>
-            <option value="03">03</option>
-            <option value="04">04</option>
-            <option value="05">05</option>
-            <option value="06">06</option>
-            <option value="07">07</option>
-            <option value="08">08</option>
-            <option value="09">09</option>
-            <option value="10">10</option>
-            <option value="11">11</option>
-            <option value="12">12</option>
-          </select>
-          
-          &nbsp;&nbsp;
-          
-          <input type="text" placeholder="日" onchange="changesearch()" id="day"  name="s_istop" class="input"   style="width:60px; line-height:17px;display:inline-block">
-            
-          </input>
-        </li>
-        <if condition="$iscid eq 1">
-          <li>
-            <select name="cid" onchange="changesearch()" onfocus="getGoodsName()" id="goodsName" class="input" style="width:200px; line-height:17px;">
-                <option value="">商品类型</option>
-
-            </select>
-          </li>
-        </if>
-        <li>
-          <input type="text" placeholder="请输入搜索关键字" id="key" onclick="searchOnclick()"  onkeyup="getSearchKey()" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
-          <div id="historySearch">
-              <ul class="historyLi">
-
-                  <li>6666666</li>
-                   <li>6666666</li>
-                    <li>6666666</li>
-                     <li>6666666</li>
-                      <li>6666666</li>
-                       <li>6666666</li>
-                       <li>6666666</li>
-
-              </ul>
-          </div>
-
-          <a href="javascript:void(0)" onclick="changesearch()" class="button border-main icon-search" > 搜索</a></li>
-      </ul>
-    </div>
-    <table class="table table-hover text-center" id="order">
 
 
-    </table>
-  </div>
-</form>
-<script type="text/javascript">
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="false">
+
+
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">订单信息</h4>
+				</div>
+				<div class="modal-body">
+
+					<table class="table">
+
+						<thead>
+							<tr>
+								<th>订单编号</th>
+								<th>公司名称</th>
+								<th>商品名称</th>
+								<th>单价</th>
+								<th>数目</th>
+								<th>金额</th>
+								<th>签收人</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" class="form-control" id="name"
+									placeholder="请输入订单编号"></td>
+
+								<td><input type="text" class="form-control" id="tel"
+									placeholder="请输入公司名称"></td>
+
+								<td><input type="text" class="form-control" id="tel"
+									placeholder="请输入商品名称"></td>
+
+								<td><input type="text" class="form-control" id="tel"
+									placeholder="请输入单价"></td>
+
+								<td><input type="text" class="form-control" id="tel"
+									placeholder="请输入数目"></td>
+
+								<td><input type="text" class="form-control" id="tel"
+									placeholder="请输入金额"></td>
+
+								<td><input type="text" class="form-control" id="tel"
+									placeholder="请输入签收人"></td>
+
+							</tr>
+						</tbody>
+					</table>
+
+				</div>
+				<div class="modal-footer">
+
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消
+					</button>
+
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						id="savebtn">保存</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+	<form method="post" action="" id="listform">
+		<div class="panel admin-panel">
+			<div class="panel-head">
+				<strong class="icon-reorder"> 内容列表</strong> <a href=""
+					style="float: right; display: none;">添加字段</a>
+			</div>
+			<div class="padding border-bottom">
+				<ul class="search" style="padding-left: 10px;">
+					<li><a class="button border-main icon-plus-square-o"
+						onclick="addOrder()"> 添加内容</a></li>
+					<li><select name="s_ishome" class="input"
+						onchange="changesearch()" id="corporateName"
+						style="width: 120px; line-height: 17px; display: inline-block">
+							<option value="">公司名称</option>
+
+					</select> &nbsp;&nbsp; <select name="s_isvouch" class="input" id="year"
+						style="width: 80px; line-height: 17px; display: inline-block">
+							<option value="">年</option>
+							<option value="2019">2019</option>
+							<option value="2020">2020</option>
+							<option value="2021">2021</option>
+							<option value="2022">2022</option>
+							<option value="2023">2023</option>
+							<option value="2024">2024</option>
+							<option value="2025">2025</option>
+							<option value="2026">2026</option>
+					</select> &nbsp;&nbsp; <select name="s_istop" class="input"
+						onchange="changesearch()" id="month"
+						style="width: 60px; line-height: 17px; display: inline-block">
+							<option value="">月份</option>
+							<option value="01">01</option>
+							<option value="02">02</option>
+							<option value="03">03</option>
+							<option value="04">04</option>
+							<option value="05">05</option>
+							<option value="06">06</option>
+							<option value="07">07</option>
+							<option value="08">08</option>
+							<option value="09">09</option>
+							<option value="10">10</option>
+							<option value="11">11</option>
+							<option value="12">12</option>
+					</select> &nbsp;&nbsp; <input type="text" placeholder="日"
+						onchange="changesearch()" id="day" name="s_istop" class="input"
+						style="width: 60px; line-height: 17px; display: inline-block">
+
+						</input></li>
+					<if condition="$iscid eq 1">
+					<li><select name="cid" onchange="changesearch()"
+						onfocus="getGoodsName()" id="goodsName" class="input"
+						style="width: 200px; line-height: 17px;">
+							<option value="">商品类型</option>
+
+					</select></li>
+					</if>
+					<li><input type="text" placeholder="请输入搜索关键字" id="key"
+						onclick="searchOnclick()" onkeyup="getSearchKey()" name="keywords"
+						class="input"
+						style="width: 250px; line-height: 17px; display: inline-block" />
+						<div id="historySearch">
+							<ul class="historyLi">
+
+								<li>6666666</li>
+								<li>6666666</li>
+								<li>6666666</li>
+								<li>6666666</li>
+								<li>6666666</li>
+								<li>6666666</li>
+								<li>6666666</li>
+
+							</ul>
+						</div> <a href="javascript:void(0)" onclick="changesearch()"
+						class="button border-main icon-search"> 搜索</a></li>
+				</ul>
+			</div>
+			<table class="table table-hover text-center" id="order">
+
+
+			</table>
+		</div>
+	</form>
+
+
+
+
+	<script type="text/javascript">
+
+
+
+
+	function addOrder(){
+		alert();
+		$("#myModal").modal('show');
+	}
+
+
+
 
 getCorporateName()
 
