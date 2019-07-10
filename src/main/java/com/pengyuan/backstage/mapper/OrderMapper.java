@@ -1,7 +1,7 @@
 package com.pengyuan.backstage.mapper;
 
 import com.pengyuan.backstage.bean.Orders;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -12,10 +12,6 @@ import java.util.List;
 public interface OrderMapper {
 
 
-    /**
-     *        查询 所有订单
-     * @return
-     */
-    @Select("SELECT * FROM orders")
-    List<Orders> selAll();
+
+    List<Orders> selForSearch(@Param("corporateName") String corporateName, @Param("startTime") Long startTime,@Param("endTime") Long endTime,@Param("key") String key);
 }

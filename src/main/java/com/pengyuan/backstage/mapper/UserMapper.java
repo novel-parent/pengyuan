@@ -1,5 +1,6 @@
 package com.pengyuan.backstage.mapper;
 
+import com.pengyuan.backstage.bean.Orders;
 import com.pengyuan.backstage.bean.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -20,4 +21,6 @@ public interface UserMapper {
      */
     @Select("SELECT * FROM USER WHERE userName=#{userName} AND password=#{password}")
     User selByLogin(@Param("userName") String userName, @Param("password") String password);
+
+
 }

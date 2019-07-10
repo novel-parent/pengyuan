@@ -13,8 +13,11 @@ import java.util.List;
 public interface OrderService {
 
     /**
-     *        显示 所有的  订单信息
+     *          订单搜索
+     * @param corporateName
+     * @param time
+     * @param key
      * @return
      */
-    List<Orders> showOrder();
+    List<Orders> searchOrder(String corporateName,Long startTime,Long endTime,String key);
 }

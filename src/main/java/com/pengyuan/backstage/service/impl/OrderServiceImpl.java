@@ -19,9 +19,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     @Override
-    public List<Orders> showOrder() {
+    public List<Orders> searchOrder(String corporateName, Long startTime, Long endTime, String key) {
 
+        List<Orders> ordersList = orderMapper.selForSearch(corporateName, startTime, endTime, key);
 
-        return orderMapper.selAll();
+        return ordersList;
     }
 }
