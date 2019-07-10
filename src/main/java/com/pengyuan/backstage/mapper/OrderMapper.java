@@ -13,5 +13,5 @@ public interface OrderMapper {
 
 
 
-    List<Orders> selForSearch(@Param("corporateName") String corporateName, @Param("startTime") Long startTime,@Param("endTime") Long endTime,@Param("key") String key);
+    List<Orders> selForSearch(@Param("corporateName") String corporateName, @Param("goodsName") String goodsName,@Param("startTime") Long startTime,@Param("endTime") Long endTime,@Param("key") String key);
 }

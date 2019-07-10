@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta name="applicable-device" content="pc,mobile">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <title></title>
 <link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
 <script src="js/jquery.js"></script>
 <script src="js/pintuer.js"></script>
+<link rel="stylesheet" href="css/list.css">
 </head>
 <body>
 <form method="post" action="" id="listform">
@@ -21,7 +28,7 @@
         <li>
           <select name="s_ishome" class="input" onchange="changesearch()" id="corporateName"  style="width:120px; line-height:17px; display:inline-block">
             <option value="">公司名称</option>
-            <option value="浩宇扣具">浩宇扣具</option>
+
           </select>
           &nbsp;&nbsp;
           
@@ -62,15 +69,28 @@
         </li>
         <if condition="$iscid eq 1">
           <li>
-            <select name="cid" onchange="changesearch()" id="goodsName" class="input" style="width:200px; line-height:17px;">
-              <option value="">商品类型</option>
-              <option value="1.5肩扣">1.5肩扣</option>
-              <option value="1.5肩扣">1.5肩扣</option>
+            <select name="cid" onchange="changesearch()" onfocus="getGoodsName()" id="goodsName" class="input" style="width:200px; line-height:17px;">
+                <option value="">商品类型</option>
+
             </select>
           </li>
         </if>
         <li>
-          <input type="text" placeholder="请输入搜索关键字" id="key" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          <input type="text" placeholder="请输入搜索关键字" id="key" onclick="searchOnclick()"  onkeyup="getSearchKey()" name="keywords" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          <div id="historySearch">
+              <ul class="historyLi">
+
+                  <li>6666666</li>
+                   <li>6666666</li>
+                    <li>6666666</li>
+                     <li>6666666</li>
+                      <li>6666666</li>
+                       <li>6666666</li>
+                       <li>6666666</li>
+
+              </ul>
+          </div>
+
           <a href="javascript:void(0)" onclick="changesearch()" class="button border-main icon-search" > 搜索</a></li>
       </ul>
     </div>
@@ -81,6 +101,113 @@
   </div>
 </form>
 <script type="text/javascript">
+
+getCorporateName()
+
+function searchOnclick() {
+    // $('#key').css('display', 'block')
+}
+
+
+
+var length = 0
+
+function getSearchKey() {
+
+    var key = $('#key').val()
+
+    if(key ==null || key == ''){
+         return
+    }
+
+    if(key.length < length){
+
+        return
+    }
+    length =key.length
+
+   $.ajax({
+       url:"orderSearchKeys?key="+key,
+       error:function(){
+           alert("请求出错.")
+       },
+       success:function(data){
+
+           if (data==null || data==''){
+               alert("暂无数据")
+               return
+           }
+           data =eval(data)
+
+           $(data).each(function(index,ele) {
+
+               alert(ele)
+           })
+       },
+       type:'GET'
+   });
+}
+
+
+ function getCorporateName() {
+      var corporateName1 = $('#corporateName')
+
+      $.ajax({
+             url:"corporateName",
+             error:function(){
+                 alert("请求出错.")
+             },
+             success:function(data){
+
+                 if (data==null || data==''){
+                     alert("暂无数据")
+                     return
+                 }
+                 data =eval(data)
+
+                 $(data).each(function(index,ele) {
+                     corporateName1.append("<option value=\""+ele+"\">"+ele+"</option>")
+                 })
+             },
+             type:'GET'
+         });
+   }
+
+
+   function getGoodsName() {
+
+       var goodsName = $('#goodsName')
+
+       goodsName.html(goodsName.val())
+
+       var tUrl = "goodsName"
+       var corporateName = $('#corporateName').val()
+
+       if(corporateName !='' && corporateName !=null ){
+           tUrl +="?corporateName="+corporateName
+       }
+
+       $.ajax({
+              url:tUrl,
+              error:function(){
+                  alert("请求出错.")
+              },
+              success:function(data){
+
+                  if (data==null || data==''){
+                      alert("暂无数据")
+                      return
+                  }
+                  data =eval(data)
+
+                  $(data).each(function(index,ele) {
+                      goodsName.append("<option value=\""+ele+"\">"+ele+"</option>")
+                  })
+              },
+              type:'GET'
+          });
+    }
+
 
  var order = $('#order')
 //搜索
@@ -189,7 +316,7 @@ function changesearch(){
             data =eval(data)
 
             var result =''
-            $(data).each(function(index,ele) {
+            $(data.list).each(function(index,ele) {
                  result+="<tr><td style='text-align:left; padding-left:20px;'><input type='checkbox' name='id[]' value='' />"
                   var number = parseInt(index)+1
                   result+=""+number+"</td>"
@@ -212,9 +339,17 @@ function changesearch(){
                    order.append(result)
                    result=''
             })
+               var t =''
+               t+="<tr> <td colspan ='8'>共:"+data.size+"条记录 </td  > <td  colspan ='4'>总金额:"+data.sum+"元 </td>   </tr>"
+               t+="<tr>"
+               t+="  <td colspan='12'> <div class='pagelist'> <a href=''>上一页</a> <span class='current'>1</span><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>2</a><a href=''>3</a><a href=''>下一页</a><a href=''>尾页</a> </div></td>"
+               t+="</tr>"
+               order.append(t)
         },
         type:'GET'
     });
+
+
 
 }
 

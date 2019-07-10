@@ -83,7 +83,7 @@ public class Orders {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(long price) {
         String s = MoneyUtil.formatMoney( price );
         this.price = s;
     }
@@ -109,9 +109,8 @@ public class Orders {
         return money;
     }
 
-    public void setMoney( long money ) {
-        String s = MoneyUtil.formatMoney( money );
-        this.money = s;
+    public void setMoney( String money ) {
+        this.money = money;
     }
 
     @Override

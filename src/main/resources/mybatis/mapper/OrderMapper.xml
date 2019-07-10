@@ -8,9 +8,12 @@
         <if test="corporateName !=null">
             AND corporateName = #{corporateName}
         </if>
+        <if test="goodsName !=null">
+            AND goodsName = #{goodsName}
+        </if>
         <if test="key !=null">
             <bind name="key" value="'%'+key+'%'"></bind>
-            AND (corporateName like #{key} or documents like #{key})
+            AND (corporateName like #{key} or documents like #{key} or goodsName like #{key})
         </if>
         <if test="startTime!=null and endTime !=null">
             AND (times between #{startTime} and #{endTime})

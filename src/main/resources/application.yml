@@ -5,7 +5,6 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/pengyuan?useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
-
     initialSize: 5
     minIdle: 5
     maxActive: 20
@@ -21,6 +20,10 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGloba;DataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  redis:
+    host: 47.106.110.16
+    port: 6379
+    password: li157922018
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
