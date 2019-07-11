@@ -17,8 +17,24 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService {
 
+
+
+
     @Autowired
     private OrderMapper orderMapper;
+
+    @Override
+    public String delOrder(long oid) {
+
+        String msg = "1";
+        int i = orderMapper.updOrderByOid(oid);
+
+        if(i<=0){
+            msg = "-1";
+        }
+
+        return msg;
+    }
 
     @Override
     public OrderListDiv searchOrder(String corporateName, String goodsName, Long startTime, Long endTime, String key) {

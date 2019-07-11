@@ -33,4 +33,11 @@ public class OrderController {
         return service.searchOrder(corporateName,goodsName, startTime, endTime, key);
     }
 
+    @ResponseBody
+    @RequestMapping("/delOrder")
+    public String delOrder( Long oid){
+
+        return service.delOrder(oid);
+    }
+
 }
