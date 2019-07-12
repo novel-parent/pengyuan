@@ -28,7 +28,7 @@ public interface OrderMapper {
      */
     @Insert("INSERT INTO orders (corporateName,goodsName," +
             "documents,number,company,price,money,times,signatory) " +
-            "VALUE(#{corporateName},#{goodsName},#{documents},#{number},#{company},#{price},#{times},#{signatory}) ")
+            "VALUE(#{corporateName},#{goodsName},#{documents},#{number},#{company},#{price},#{money},#{times},#{signatory}) ")
     int insOrder(Order order);
     /**
      *       更新  flag

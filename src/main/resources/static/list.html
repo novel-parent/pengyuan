@@ -46,32 +46,33 @@
 								<th>商品名称</th>
 								<th>单价</th>
 								<th>数目</th>
+								<th>单位</th>
 								<th>金额</th>
 								<th>签收人</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" class="form-control" style="width:120px;"  id="name" placeholder="订单编号"></td>
+								<td><input type="text" class="form-control" style="width:100px;"  id="newDocuments" placeholder="订单编号"></td>
 									
 
-								<td><input type="text" class="form-control" style="width:120px;" id="tel" placeholder="公司名称"></td>
+								<td><input type="text" class="form-control" style="width:120px;" id="newCorporateName" placeholder="公司名称"></td>
 									
 
-								<td><input type="text" class="form-control" style="width:120px;" id="tel" placeholder="商品名称"></td>
+								<td><input type="text" class="form-control" style="width:120px;" id="newGoodsName" placeholder="商品名称"></td>
+
+							    <td><input type="text" class="form-control" style="width:100px;" id="newPrice" placeholder="单价"></td>
+
+								<td><input type="number" class="form-control" style="width:100px;" id="newNumber" placeholder="数目"></td>
+									
+                                <td><input type="text" class="form-control" style="width:80px;" id="newCompany" value="个" placeholder="单位"></td>
+
+
+
+								<td><input type="text" class="form-control" style="width:120px;" id="newMoney" placeholder="金额"></td>
 									
 
-								<td><input type="number" class="form-control" style="width:120px;" id="tel" placeholder="单价"></td>
-									
-
-								<td><input type="number" class="form-control" style="width:120px;" id="tel" placeholder="数目"></td>
-									
-
-								<td><input type="number" class="form-control" style="width:120px;" id="tel" placeholder="金额"></td>
-									
-
-								<td><input type="text" class="form-control" id="tel" style="width:120px;" placeholder="签收人"></td>
-									
+								<td><input type="text" class="form-control" id="newSignatory" style="width:100px;" placeholder="签收人"></td>
 
 							</tr>
 						</tbody>
@@ -80,11 +81,11 @@
 				</div>
 				<div class="modal-footer">
 
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消
+					<button type="button" onclick="cleanOrder()" class="btn btn-default" data-dismiss="modal">退出
 					</button>
 
-					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						id="savebtn">保存</button>
+					<button type="button" class="btn btn-primary"  onclick="saveOrder()"
+						id="savebtn">上传</button>
 
 				</div>
 			</div>
@@ -192,7 +193,109 @@
 
 	<script type="text/javascript">
 
+    function updateOrder() {
+        alert("此功能暂未开发")
+    }
 
+    function cleanOrder() {
+       $('#newDocuments').val('')
+       $('#newGoodsName').val('');
+       $('#newCorporateName').val('');
+       $('#newPrice').val('')
+       $('#newNumber').val('')
+       $('#newMoney').val('')
+       $('#newSignatory').val('')
+       $('#newCompany').val('个')
+    }
+
+    function saveOrder() {
+      //data-dismiss="modal"
+
+      var newDocuments = $('#newDocuments').val()
+        if(newDocuments==null || newDocuments==''){
+            alert("商品序号不能为空")
+            return
+        }
+
+      var newCorporateName = $('#newCorporateName').val();
+      if(newCorporateName ==null || newCorporateName ==''){
+          alert("公司名不能为空")
+          return
+      }
+
+      var newGoodsName = $('#newGoodsName').val();
+      if(newGoodsName==null || newGoodsName ==''){
+          alert("商品名不能为空")
+          return
+      }
+
+      var newPrice = $('#newPrice').val()
+        if(newPrice==null || newPrice==''){
+            alert("商品单价不能为空(内容只能为数字)")
+            return
+        }
+
+      var newNumber =$('#newNumber').val()
+      if(newNumber==null || newNumber==''){
+          alert("商品数目不能为空(内容只能为数字)")
+          return
+      }
+
+      var newCompany = $('#newCompany').val()
+      if(newCompany==null ||newCompany==''){
+          alert("单位不能为空")
+          return
+      }
+
+      var newMoney = $('#newMoney').val()
+      if(newMoney==null ||newMoney==''){
+          alert("金额不能为空(内容只能为数字)")
+          return
+      }
+
+      var newSignatory = $('#newSignatory').val()
+      if(newSignatory==null || newSignatory==''){
+          alert("签收人不能为空")
+          return
+      }
+
+
+
+      var tMoney = newPrice * newNumber
+
+      if(tMoney !=newMoney){
+          alert("总金额异常")
+          return
+      }
+      newPrice = newPrice*1000;
+
+      newMoney = newMoney*1000;
+
+      $.ajax({
+         url:"newOrder",
+         data:{"documents":newDocuments,"corporateName":newCorporateName,
+         "goodsName":newGoodsName,"price":newPrice,"number":newNumber,
+         "company":newCompany,"money":newMoney,"signatory":newSignatory},
+         error:function(){
+             alert("请求出错.")
+         },
+         success:function(data){
+
+             if(data=="-1"){
+                 alert("提交失败")
+                 return
+             }
+             alert("上传成功")
+             $('#newDocuments').val('')
+             $('#newGoodsName').val('');
+             $('#newPrice').val('')
+             $('#newNumber').val('')
+             $('#newMoney').val('')
+         },
+         type:'POST'
+    });
+
+    }
 
 
 	function addOrder(){
@@ -241,7 +344,7 @@ function getSearchKey() {
 
            $(data).each(function(index,ele) {
 
-               alert(ele)
+               // alert(ele)
            })
        },
        type:'GET'
@@ -450,7 +553,7 @@ function changesearch(){
                    result+="<td>"+ele.signatory+"</td>"
                   result+="<td>"
                   result+="<div class='button-group'>"
-                  result+="<a class='button border-main' href='add.html'>"
+                  result+="<a class='button border-main'  href='javascript:void(0)' onclick='updateOrder()'>"
                   result+="<span class='icon-edit'></span> 修改</a>"
                   result+="<a class='button border-red' href='javascript:void(0)' onclick='return del("+ele.oid+")'>"
                   result+="<span class='icon-trash-o'></span> 删除</a> </div></td>"

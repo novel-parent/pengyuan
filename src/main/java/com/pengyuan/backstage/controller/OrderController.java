@@ -33,7 +33,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping("/newOrder")
     public String newOrder(Order order){
-        return null;
+        return service.insOrder(order);
     }
 
     @ResponseBody
