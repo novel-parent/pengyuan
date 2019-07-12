@@ -57,4 +57,32 @@ public class UserServiceImpl implements UserService {
 	public int updateUser(User user) {
 		return userMapper.updateUser(user);
 	}
+
+	@Override
+	public void deleteUser(long uid) {
+		userMapper.deleteUser(uid);
+	}
+
+	@Override
+	public List<User> SerachUserByCondition(User user) {
+		
+		User u=new User();
+		
+		if(user.getUserName()!=null ) {
+			u.setUserName(user.getUserName());
+		}
+		if(user.getFid() != -1 && user.getFid() != 0) {
+			u.setFid(user.getFid());
+		}
+		if(user.getTel() != null) {
+			u.setTel(user.getTel());
+		}
+		if(user.getFlag() == 1) {
+			u.setFlag(1);
+		}else if(user.getFlag() == 0){
+			u.setFlag(0);
+		}
+		System.out.println(u);
+		return userMapper.selectUserByCondition(u);
+	}
 }

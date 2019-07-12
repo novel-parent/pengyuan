@@ -69,7 +69,7 @@ public class UserController {
     	if(user.getUid() <= 0 || "".equals(user.getUid()+"")) {
     		 if(userService.addUser(user)>0) {
     			 jm.setCode(1);
-    			 jm.setMsg("添加成功！");
+    			 jm.setMsg("添加成功！员工初始密码统一为：123456789");
     		 }else {
     			 jm.setCode(-1);
     			 jm.setMsg("系统繁忙！");
@@ -84,6 +84,37 @@ public class UserController {
     		}
     	}
     	return jm;
+    }
+    
+    @ResponseBody
+    @RequestMapping("deleteUser")
+    public Object deleteUser(long uid) {
+    	JsonModel jm=new JsonModel();
+    	userService.deleteUser(uid);
+    	
+    	jm.setCode(1);
+    	jm.setMsg("删除成功！");
+    	
+    	return jm;
+    }
+    
+    @ResponseBody
+    @RequestMapping("serachUser")
+    public Object serachUser(User user) {
+    	JsonModel jm=new JsonModel();
+    	
+    	List<User> userList=userService.SerachUserByCondition(user);
+    	
+    	if(userList.isEmpty()) {
+    		jm.setCode(-1);
+    		jm.setMsg("没有查找到匹配条件的员工信息");
+    	}else {
+    		jm.setCode(1);
+    		jm.setObj(userList);
+    	}
+    	
+		return jm;
+    	
     }
 
 }

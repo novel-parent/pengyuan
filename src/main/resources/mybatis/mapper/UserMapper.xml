@@ -12,7 +12,7 @@
 </resultMap>
 
 			<select id="getUserList"   resultMap="userListMap">
-					select * from user 
+					select * from user where flag = 1
 			</select>
 			
 			<select id="getUserInfo" resultMap="userListMap">
@@ -41,5 +41,26 @@
 				</set>
 				where uid= #{uid}
 			</update>
-
+			
+			<update id="deleteUser">
+				update user set flag = 0  where uid = #{uid}
+			</update>
+			
+			<select id="selectUserByCondition" resultMap="userListMap">
+				select * from user 
+				<where>
+					<if test="userName != null">
+						userName like "%"#{userName}"%"
+					</if>
+					<if test="tel != null">
+						and tel like  "%"#{tel}"%"
+					</if>
+					<if test="flag != null">
+						and flag = #{flag}
+					</if>
+					<if test="fid != 0">
+						and fid = #{fid}
+					</if>
+				</where>
+			</select>
 </mapper>
