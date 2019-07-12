@@ -212,7 +212,7 @@ $(function(){
 				
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消 </button>
 					
-					<button type="button" class="btn btn-primary" data-dismiss="modal" id="savebtn">保存</button>
+					<button type="button" class="btn btn-primary"  id="savebtn">保存</button>
 						
 				</div>
 			</div>
@@ -220,13 +220,7 @@ $(function(){
 		</div>
 		<!-- /.modal -->
 	</div>
-		<ul class="pagination">
-	<li><a href="#">首页</a></li>
-	<li><a href="#">< </a></li>
-	<li><a href="#">> </a></li>
-	<li><a href="#">尾页</a></li>
-</ul><br>
-
+	
 
 
 
@@ -242,10 +236,9 @@ $(function(){
 	function checkTel(obj){
 		var partten = /[0-9]{11}/;
 		
-		if($("#tel").val().length != 11 || $("#tel").val().length != 7){
+		if($("#tel").val().length != 11 ){
 			
-			alert("请输入正确的长度的电话号码");
-			
+			alert("此电话号码的长度不为11位，请检查");
 		}
 	}
 	
@@ -346,11 +339,19 @@ $(function(){
 			
 			var data;
 			
-			var flag = false;
 			
+			if($("#tel").val().length != 11 ){
+				alert("此电话号码的长度不为11位，请检查");
+				return;
+			}
 			
-			if($("#tel").val().length != 11 || $("#tel").val().length != 7){
-				alert("请输入正确长度的电话号码");
+			if($("#name").val() == ''){
+				alert("姓名不能为空");
+				return;
+			}
+			
+			if($("#fid").val() == -1){
+				alert('该员工还没有选择所属工厂！');
 				return;
 			}
 			
@@ -373,21 +374,7 @@ $(function(){
 					}
 			}
 			
-			if(data.userName == ''){
-				alert("用户名不能为空！");
-			}
 			
-			if(data.tel == ''){
-				alert("电话不能为空");
-			}
-			
-			if(data.userName != '' && data.tel.length == 11){
-				flag = true;
-			}
-			
-			
-			
-			if(flag){
 				$.ajax({
 					url:'updateUser',
 					type:'post',
@@ -399,7 +386,6 @@ $(function(){
 						}
 					}
 				})
-			}
 			
 		})
 		
