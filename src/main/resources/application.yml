@@ -3,7 +3,7 @@ spring:
     username: root
     password: a
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/pengyuan?useSSL=true
+    url: jdbc:mysql://127.0.0.1:3306/pengyuan?useUnicode=true&characterEncoding=UTF-8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
     initialSize: 5
     minIdle: 5

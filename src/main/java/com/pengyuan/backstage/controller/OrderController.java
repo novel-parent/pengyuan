@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.net.URLDecoder;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping("/newOrder")
     public String newOrder(Order order){
+        System.out.println(order);
         return service.insOrder(order);
     }
 
@@ -45,7 +47,7 @@ public class OrderController {
                                @RequestParam(required = false)  String key,
                                @RequestParam(required = false) int pageSize,
                                @RequestParam(required = false) int page){
-
+        System.out.println(corporateName+"  "+goodsName);
         return service.searchOrder(corporateName,goodsName, startTime, endTime, key,pageSize,page);
     }
 

@@ -14,12 +14,12 @@ import java.util.List;
  */
 public interface OrderMapper {
 
-    /**
-     *       更新数据库  订单信息
-     * @param order
-     * @return
-     */
-    int updOrder(Order order);
+//    /**
+//     *       更新数据库  订单信息
+//     * @param order
+//     * @return
+//     */
+//    int updOrder(Order order);
 
     /**
      *        插入new 的订单信息

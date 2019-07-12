@@ -1,10 +1,12 @@
 package com.pengyuan.backstage.bean;
 
+import java.io.Serializable;
+
 /**
  * @author LX
  * @date 2019/7/7 - 15:22
  */
-public class director {
+public class director implements Serializable{
 
     private long did;
     private long uid ;
