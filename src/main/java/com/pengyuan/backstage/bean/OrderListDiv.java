@@ -14,6 +14,36 @@ public class OrderListDiv {
 
     private int size;
 
+    private long number;
+
+    private String priceSum;
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
+    private int pageNumber;
+
+    public long getNumber() {
+        return number;
+    }
+
+    public void setNumber(long number) {
+        this.number = number;
+    }
+
+    public String getPriceSum() {
+        return priceSum;
+    }
+
+    public void setPriceSum(String priceSum) {
+        this.priceSum = priceSum;
+    }
+
     public int getSize() {
         return size;
     }

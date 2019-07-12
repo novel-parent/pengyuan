@@ -1,20 +1,16 @@
 package com.pengyuan.backstage.bean;
 
+import com.pengyuan.backstage.util.DateUtil;
+
 import java.io.Serializable;
 
-import com.pengyuan.backstage.util.DateUtil;
-import com.pengyuan.backstage.util.MoneyUtil;
-
 /**
- *
  * @author LX
- * @date 2019/7/8 - 13:19
+ * @date 2019/7/12 - 0:03
  */
-public class Orders implements Serializable{
+public class Order {
 
-	private static final long serialVersionUID = 1L;
-
-	private long oid;
+    private long oid;
 
     private String corporateName;
 
@@ -24,21 +20,53 @@ public class Orders implements Serializable{
 
     private int number;
 
-    private String price;
+    private long price;
 
-    public String getPrice() {
+    @Override
+    public String toString() {
+        return "Order{" +
+                "oid=" + oid +
+                ", corporateName='" + corporateName + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", documents='" + documents + '\'' +
+                ", number=" + number +
+                ", price=" + price +
+                ", signatory='" + signatory + '\'' +
+                ", times=" + times +
+                ", money=" + money +
+                ", company='" + company + '\'' +
+                '}';
+    }
+
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
+    }
+
+    public long getTimes() {
+        return times;
+    }
+
+    public void setTimes(long times) {
+        this.times = times;
+    }
+
+    public long getMoney() {
+        return money;
+    }
+
+    public void setMoney(long money) {
+        this.money = money;
     }
 
     private String signatory;
 
-    private String times;
+    private long times;
 
-    private String money;
+    private long money;
 
     public String getCompany() {
         return company;
@@ -91,8 +119,6 @@ public class Orders implements Serializable{
         this.number = number;
     }
 
-
-
     public String getSignatory() {
         return signatory;
     }
@@ -101,35 +127,4 @@ public class Orders implements Serializable{
         this.signatory = signatory;
     }
 
-    public String getTimes() {
-        return times;
-    }
-
-    public void setTimes(String times ) {
-        times = DateUtil.getMonthAndDayForAdmin( times );
-        this.times = times ;
-    }
-
-    public String getMoney() {
-        return money;
-    }
-
-    public void setMoney( String money ) {
-        this.money = money;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "oid=" + oid +
-                ", corporateName='" + corporateName + '\'' +
-                ", goodsName='" + goodsName + '\'' +
-                ", documents='" + documents + '\'' +
-                ", number=" + number +
-                ", price=" + price +
-                ", signatory='" + signatory + '\'' +
-                ", times=" + times +
-                ", money=" + money +
-                '}';
-    }
 }
