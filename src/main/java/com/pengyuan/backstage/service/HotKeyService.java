@@ -15,7 +15,8 @@ public interface HotKeyService {
     List<String> corporateNameList();
 
     /**
-     *    得到所有的   goodsName
+     *       得到所有的   goodsName
+     * @param corporateName
      * @return
      */
     List<String> goodsNameList(String corporateName);

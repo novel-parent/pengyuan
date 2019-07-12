@@ -4,6 +4,7 @@ import com.pengyuan.backstage.mapper.HotKeyMapper;
 import com.pengyuan.backstage.service.HotKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,13 +29,6 @@ public class HotKeyServiceImpl implements HotKeyService {
 
         List<String> stringList = hotKeyMapper.selAllCorporateName();
 
-        stringList.forEach(ele->{
-
-            if(redisTemplate.opsForValue().get(ele) ==null){
-                redisTemplate.opsForValue().set("corporateName:"+ ele , 1 );
-            }
-        });
-
         return stringList;
     }
 
@@ -43,13 +37,6 @@ public class HotKeyServiceImpl implements HotKeyService {
     public List<String> goodsNameList(String corporateName) {
 
         List<String> stringList = hotKeyMapper.selGoodsName(corporateName);
-
-        stringList.forEach(ele->{
-
-            if(redisTemplate.opsForValue().get(ele) ==null){
-                redisTemplate.opsForValue().set("goodsName:"+ ele , 1 );
-            }
-        });
 
         return stringList;
     }
