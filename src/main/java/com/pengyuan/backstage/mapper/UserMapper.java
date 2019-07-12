@@ -33,4 +33,9 @@ public interface UserMapper {
 
 	int updateUser(User user);
 
+	void deleteUser(long uid);
+
+
+	List<User> selectUserByCondition(User u);
+
 }

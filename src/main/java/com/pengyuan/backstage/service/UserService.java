@@ -28,4 +28,8 @@ public interface UserService {
 	int addUser(User user);
 
 	int updateUser(User user);
+
+	void deleteUser(long uid);
+
+	List<User> SerachUserByCondition(User user);
 }
