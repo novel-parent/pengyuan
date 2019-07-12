@@ -14,6 +14,13 @@ import java.util.List;
 public interface OrderService {
 
     /**
+     *       管理员删除 订单
+     * @param oid
+     * @return
+     */
+    String delOrder(long oid);
+
+    /**
      *        订单搜索
      * @param corporateName
      * @param goodsName

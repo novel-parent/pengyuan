@@ -407,7 +407,7 @@ function changesearch(){
 
             var result =''
             $(data.list).each(function(index,ele) {
-                 result+="<tr><td style='text-align:left; padding-left:20px;'><input type='checkbox' name='id[]' value='' />"
+                 result+="<tr 'orderId:"+ele.oid+"'><td style='text-align:left; padding-left:20px;'><input type='checkbox' name='id[]' value='' />"
                   var number = parseInt(index)+1
                   result+=""+number+"</td>"
                   result+="<td>"+ele.corporateName+"</td>"
@@ -445,41 +445,27 @@ function changesearch(){
 
 //单个删除
 function del(oid){
+
 	if(confirm("您确定要删除吗?")){
-		
+		$.ajax({
+           url:"delOrder?oid="+oid,
+           error:function(){
+               alert("请求出错.")
+           },
+           success:function(data){
+
+               if (data=="-1"){
+                   alert("系统繁忙......")
+                   return
+               }
+
+               changesearch()
+           },
+           type:'GET'
+       });
 	}
 }
 
-//全选
-$("#checkall").click(function(){ 
-  $("input[name='id[]']").each(function(){
-	  if (this.checked) {
-		  this.checked = false;
-	  }
-	  else {
-		  this.checked = true;
-	  }
-  });
-})
-
-//批量删除
-function DelSelect(){
-	var Checkbox=false;
-	 $("input[name='id[]']").each(function(){
-	  if (this.checked==true) {		
-		Checkbox=true;	
-	  }
-	});
-	if (Checkbox){
-		var t=confirm("您确认要删除选中的内容吗？");
-		if (t==false) return false;		
-		$("#listform").submit();		
-	}
-	else{
-		alert("请选择您要删除的内容!");
-		return false;
-	}
-}
 </script>
 </body>
 </html>
