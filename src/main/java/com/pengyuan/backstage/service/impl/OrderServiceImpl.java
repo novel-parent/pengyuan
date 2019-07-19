@@ -65,8 +65,6 @@ public class OrderServiceImpl implements OrderService {
 
         int size = orderMapper.selAllForGetSize(corporateName, goodsName, startTime, endTime, key);
 
-        System.out.println(size);
-
         OrderListDiv orderListDiv = null ;
         if(ordersList !=null && ordersList.size() > 0){
 

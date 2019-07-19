@@ -27,18 +27,9 @@ public class TokenController {
     @RequestMapping("/getToken")
     public String getToken(){
 
-        Jedis jedis = new Jedis();
-        Long del = jedis.del("");
-
         String token = UUID.randomUUID().toString();
 
         stringRedisTemplate.opsForValue().set("token:"+token, "1",time , TimeUnit.SECONDS );
-
-        String s = stringRedisTemplate.opsForValue().get("token:" + token);
-
-        System.out.println(s);
-
-        stringRedisTemplate.delete("");
 
         return token;
     }

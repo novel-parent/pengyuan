@@ -11,7 +11,6 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 public class JedisUtil {
 
-    @Autowired
     private JedisPool jedisPool;
 
     private Jedis getJedis() {
