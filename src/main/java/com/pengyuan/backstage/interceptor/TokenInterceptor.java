@@ -4,6 +4,8 @@ import com.pengyuan.backstage.util.JedisUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,6 +25,22 @@ public class TokenInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         String token = request.getParameter("token");
+        
+        String uid = request.getParameter("uid");
+        //uid为空表示此次操作为更新用户信息，不做处理
+        if(uid==null || "".equals(uid)) {
+        	System.out.println("此次为更新操作");
+        	
+        	Map<String,String[]> map = request.getParameterMap();
+        	
+        	for(String s:map.keySet()) {
+        		System.out.println("Map   Key    :"+map.get(s));
+        	}
+        	
+        	
+        	return true;
+        }
+        
 
         if(jedisUtil.del(token)>0){
             return true;

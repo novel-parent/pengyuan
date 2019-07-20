@@ -99,11 +99,12 @@ $(function(){
 						$("#tel").val(data.tel);
 						$("#fid").val(data.factory.fid);
 						$("#flag").val(data.flag);
-						
 						$("#myModal").modal('show');
 					}
 				})
 			}
+
+
 </script>
 
 </head>
@@ -111,11 +112,12 @@ $(function(){
 	<div id="myAlert" class="alert alert-success">
 			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>admin你好！</strong>欢迎来到员工管理界面。
 		</div>
-		<div class="padding border-bottom">
+		<div class="padding border-bottom ">
 				<table class="table" >
 
 							<tr >
 								<td style="width:100px;">
+								<input type="hidden" name="token" value=""/>
 								<input type="text" class="form-control" data-toggle="tooltip" data-placement="top" title="请输入姓名"  style="width:120px;" name="name"
 									placeholder="姓名"  ></td>
 								<td style="width:100px;"><input type="text"  data-toggle="tooltip" data-placement="top" title="请输入电话" class="form-control" style="width:120px;" name="tel"
@@ -143,6 +145,7 @@ $(function(){
 
 		
 	<!-- 列表主体  -->
+	<div class="table-responsive">
 		<table class="table table-hover text-center myclass" id="usertable" >
 			<tr >
 				<th width="10%" >姓名</th>
@@ -225,6 +228,20 @@ $(function(){
 
 
 	<script type="text/javascript">
+	
+	//token
+	$.ajax({
+		url:'getToken',
+		data:'',
+		type:'post',
+		success: function(data){
+			$("input[name^='token']").val(data);
+		}
+	})
+
+	
+	
+	
 	function checkName(obj){
 		
 		if($("#name").val() ==  ''){
@@ -316,6 +333,9 @@ $(function(){
 	
 	
 	
+	
+	
+	
 		function del(uid) {
 			if (confirm("您确定要删除该员工吗?")) {
 				$.ajax({
@@ -356,13 +376,16 @@ $(function(){
 			}
 			
 			
+			alert($("input[name^='token']").val());
+			
 			
 			if($("input[name = 'uid']").val() == 0){
 				data = {
 						userName:$("#name").val(),
 						tel:$("#tel").val(),
 						fid:$("#fid").val(),
-						flag:$("#flag").val()
+						flag:$("#flag").val(),
+						token:$("input[name^='token']").val()
 					}
 			}else{
 				data = {
@@ -370,7 +393,7 @@ $(function(){
 						userName:$("#name").val(),
 						tel:$("#tel").val(),
 						fid:$("#fid").val(),
-						flag:$("#flag").val()
+						flag:$("#flag").val(),
 					}
 			}
 			
@@ -383,6 +406,8 @@ $(function(){
 						if(data.code == 1){
 							alert(data.msg);
 							window.location.reload();
+						}else if(data == -1){
+							alert('请求失败');
 						}
 					}
 				})

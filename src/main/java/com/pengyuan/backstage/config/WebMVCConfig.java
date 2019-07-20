@@ -19,6 +19,6 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter{
 
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(new TokenInterceptor());
 
-        interceptorRegistration.addPathPatterns("/newOrder");
+        interceptorRegistration.addPathPatterns("/newOrder").addPathPatterns("/updateUser");
     }
 }
