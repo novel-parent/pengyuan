@@ -63,7 +63,6 @@ public class HotKeyServiceImpl implements HotKeyService {
                 keysList.add(ele.toString().replace("corporateName:", ""));
             });
         }
-        System.out.println(keysList);
         return keysList;
     }
 

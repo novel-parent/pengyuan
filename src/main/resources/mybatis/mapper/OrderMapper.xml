@@ -20,7 +20,7 @@
         <if test="startTime!=null and endTime !=null">
             AND (times between #{startTime} and #{endTime})
         </if>
-        LIMIT #{index},#{pageSize}
+        ORDER BY times DESC LIMIT #{index},#{pageSize}
 
     </select>
     <select id="selAllForGetSize" resultType="java.lang.Integer">

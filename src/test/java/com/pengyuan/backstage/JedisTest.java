@@ -14,11 +14,9 @@ public class JedisTest {
 
         JedisUtil jedisUtil = new JedisUtil();
 
-        String s = jedisUtil.get("vip:8");
+        jedisUtil.set("user:48", "7");
 
-        System.out.println(s);
-
-        Long del = jedisUtil.del("vip:5");
+        Long del = jedisUtil.del("user:48");
 
         System.out.println(del);
     }

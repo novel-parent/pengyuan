@@ -24,6 +24,7 @@
 <body>
 
      <input type='hidden' id='pageNumber' value=''>
+     <input type='hidden' id='token' value=''>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
 		aria-labelledby="myModalLabel" aria-hidden="false" style="margin-left:-400px;" >
 
@@ -61,16 +62,13 @@
 
 								<td><input type="text" class="form-control" style="width:120px;" id="newGoodsName" placeholder="商品名称"></td>
 
-							    <td><input type="text" class="form-control" style="width:100px;" id="newPrice" placeholder="单价"></td>
+							    <td><input type="text" onkeyup="getMoney()" class="form-control" style="width:100px;" id="newPrice" placeholder="单价"></td>
 
-								<td><input type="number" class="form-control" style="width:100px;" id="newNumber" placeholder="数目"></td>
+								<td><input type="number" onkeyup="getMoney()" class="form-control" style="width:100px;" id="newNumber" placeholder="数目"></td>
 									
                                 <td><input type="text" class="form-control" style="width:80px;" id="newCompany" value="个" placeholder="单位"></td>
 
-
-
 								<td><input type="text" class="form-control" style="width:120px;" id="newMoney" placeholder="金额"></td>
-									
 
 								<td><input type="text" class="form-control" id="newSignatory" style="width:100px;" placeholder="签收人"></td>
 
@@ -96,7 +94,6 @@
 
 
 
-	<form method="post" action="" id="listform">
 		<div class="panel admin-panel">
 			<div class="panel-head">
 				<strong class="icon-reorder"> 内容列表</strong> <a href=""
@@ -186,12 +183,38 @@
 
 			</table>
 		</div>
-	</form>
 
 
 
 
 	<script type="text/javascript">
+
+    function getMoney() {
+
+        var newPrice = $('#newPrice').val();
+
+        var newNumber = $('#newNumber').val();
+
+        if(newPrice!='' && newNumber!=''){
+            $('#newMoney').val(newPrice*newNumber)
+        }
+    }
+
+    getToken()
+    function getToken() {
+
+      $.ajax({
+               url:"getToken",
+               error:function(){
+                   alert("请求出错.")
+               },
+               success:function(data){
+
+                   $('#token').val(data)
+               },
+               type:'POST'
+          });
+    }
 
     function updateOrder() {
         alert("此功能暂未开发")
@@ -260,8 +283,6 @@
           return
       }
 
-
-
       var tMoney = newPrice * newNumber
 
       if(tMoney !=newMoney){
@@ -272,20 +293,24 @@
 
       newMoney = newMoney*1000;
 
+      var token = $('#token').val();
       $.ajax({
          url:"newOrder",
-         data:{"documents":newDocuments,"corporateName":newCorporateName,
+         data:{"token":token,"documents":newDocuments,"corporateName":newCorporateName,
          "goodsName":newGoodsName,"price":newPrice,"number":newNumber,
          "company":newCompany,"money":newMoney,"signatory":newSignatory},
          error:function(){
+             getToken()
              alert("请求出错.")
          },
          success:function(data){
 
              if(data=="-1"){
-                 alert("提交失败")
+                 alert("提交失败,请重试.....")
                  return
              }
+
+             getToken()
              alert("上传成功")
              $('#newDocuments').val('')
              $('#newGoodsName').val('');
@@ -314,7 +339,7 @@ function searchOnclick() {
 
 
 
-var length = 0
+var value = 0
 
 function getSearchKey() {
 
@@ -324,11 +349,11 @@ function getSearchKey() {
          return
     }
 
-    if(key.length < length){
+    if(key == value){
 
         return
     }
-    length =key.length
+    value = key
 
    $.ajax({
        url:"orderSearchKeys?key="+key,
