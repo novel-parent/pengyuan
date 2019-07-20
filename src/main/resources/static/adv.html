@@ -392,11 +392,21 @@ $(function(){
 			var partten11 = /^\d{11}$/;
 			var partten7 = /^\d{7}$/;
 			
+			var len = $("#tel").val().length;
 			
-			if( !partten7.test($("#tel").val())   ||  !partten11.test($("#tel").val()) ){
+			if(len <=  7){
 				
-				if(!confirm('此电话号码格式不正确，确定提交吗？')){
-					return;
+				if(!partten7.test($("#tel").val())){
+					if(!confirm("此电话号码格式不正确！确认提交吗？")){
+						return;
+					}
+				}
+				
+			}else if(len <= 11){
+				if(!partten11.test($("#tel").val())){
+					if(!confirm("此电话号码格式不正确！确认提交吗？")){
+						return;
+					}
 				}
 			}
 			
