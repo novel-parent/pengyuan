@@ -63,18 +63,18 @@ public interface UserService {
 	//List<User> SerachUserByCondition(User user);
 
 	/**
-	 *     搜素分页
+	 *         搜素分页
 	 * @param user
 	 * @param pageNum
 	 * @return
 	 */
-	List<PageBean> SerachPageBean(User user, int pageNum);
+	List<PageBean> searchPageBean(User user, int pageNum);
 
 	/**
 	 *     搜索查询
 	 * @param user
 	 * @return
 	 */
-	List<User> SerachUserByCondition(User user);
+	List<User> searchUserByCondition(User user);
 
 }

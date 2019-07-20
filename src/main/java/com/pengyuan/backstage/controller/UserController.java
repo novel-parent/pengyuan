@@ -104,7 +104,7 @@ public class UserController {
     public Object serachUser(User user,int pageNum) {
     	JsonModel jm=new JsonModel();
 
-    	List<User> userList=userService.SerachUserByCondition(user);
+    	List<User> userList=userService.searchUserByCondition(user);
     	
     	//List<PageBean> pageList= userService.SerachPageBean(user,pageNum);
     	
