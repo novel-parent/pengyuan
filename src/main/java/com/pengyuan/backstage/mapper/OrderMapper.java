@@ -1,9 +1,11 @@
 package com.pengyuan.backstage.mapper;
 
+import com.pengyuan.backstage.bean.HotKey;
 import com.pengyuan.backstage.bean.Order;
 import com.pengyuan.backstage.bean.Orders;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -20,6 +22,14 @@ public interface OrderMapper {
 //     * @return
 //     */
 //    int updOrder(Order order);
+
+    /**
+     *      根据oid  查询 订单的     公司名称 和  商品名称
+     * @param oid
+     * @return
+     */
+    @Select("SELECT corporateName , goodsName FROM orders WHERE oid = #{oid}")
+    HotKey selOrdersByOid(@Param("oid") long oid);
 
     /**
      *        插入new 的订单信息

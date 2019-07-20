@@ -104,7 +104,7 @@
 					<li><a class="button border-main icon-plus-square-o"
 						onclick="addOrder()"> 添加内容</a></li>
 					<li>
-					<select name='s_ishome' onchange="changesearch()" id='pageSize' class='input' style='width: 60px; line-height: 17px; display: inline-block'>
+					<select name='s_ishome' onchange="changeSearch()" id='pageSize' class='input' style='width: 60px; line-height: 17px; display: inline-block'>
                       <option value=''>页数</option>
                       <option value='7'>7</option>
                       <option value='8'>8</option>
@@ -113,7 +113,7 @@
                       <option value='1000'>所有</option>
                       </select> &nbsp;&nbsp;
 					<select name="s_ishome" class="input"
-						onchange="changesearch()" id="corporateName"
+						onchange="changeSearch()" id="corporateName"
 						style="width: 120px; line-height: 17px; display: inline-block">
 							<option value="">公司名称</option>
 
@@ -130,7 +130,7 @@
 							<option value="2025">2025</option>
 							<option value="2026">2026</option>
 					</select> &nbsp;&nbsp; <select name="s_istop" class="input"
-						onchange="changesearch()" id="month"
+						onchange="changeSearch()" id="month"
 						style="width: 60px; line-height: 17px; display: inline-block">
 							<option value="">月份</option>
 							<option value="01">01</option>
@@ -146,12 +146,12 @@
 							<option value="11">11</option>
 							<option value="12">12</option>
 					</select> &nbsp;&nbsp; <input type="text" placeholder="日"
-						onchange="changesearch()" id="day" name="s_istop" class="input"
+						onchange="changeSearch()" id="day" name="s_istop" class="input"
 						style="width: 60px; line-height: 17px; display: inline-block">
 
 						</li>
 					<if condition="$iscid eq 1">
-					<li><select name="cid" onchange="changesearch()"
+					<li><select name="cid" onchange="changeSearch()"
 						onfocus="getGoodsName()" id="goodsName" class="input"
 						style="width: 160px; line-height: 17px;">
 							<option value="">商品类型</option>
@@ -163,18 +163,10 @@
 						class="input"
 						style="width: 200px; line-height: 17px; display: inline-block" />
 						<div id="historySearch">
-							<ul class="historyLi">
-
-								<li>6666666</li>
-								<li>6666666</li>
-								<li>6666666</li>
-								<li>6666666</li>
-								<li>6666666</li>
-								<li>6666666</li>
-								<li>6666666</li>
+							<ul class="historyLi" id="historyLi">
 
 							</ul>
-						</div> <a href="javascript:void(0)" onclick="changesearch()"
+						</div> <a href="javascript:void(0)" onclick="changeSearch()"
 						class="button border-main icon-search"> 搜索</a></li>
 				</ul>
 			</div>
@@ -229,7 +221,7 @@
        $('#newMoney').val('')
        $('#newSignatory').val('')
        $('#newCompany').val('个')
-       changesearch()
+       changeSearch()
     }
 
     function saveOrder() {
@@ -328,15 +320,16 @@
 		$("#myModal").modal('show');
 	}
 
-
-
-
 getCorporateName()
 
 function searchOnclick() {
-    // $('#key').css('display', 'block')
+    $('#historySearch').show()
 }
 
+function setSearchKey( data) {
+        $('#historySearch').css('display','none')
+        $('#key').val(data.innerText)
+}
 
 
 var value = 0
@@ -363,19 +356,20 @@ function getSearchKey() {
        success:function(data){
 
            if (data==null || data==''){
-               alert("暂无数据")
                return
            }
            data =eval(data)
 
+           $('#historyLi').html('')
            $(data).each(function(index,ele) {
 
-               // alert(ele)
+               $('#historyLi').append("<li onclick=setSearchKey(this) >"+ele+"</li>")
            })
        },
        type:'GET'
    });
 }
+
 
 
  function getCorporateName() {
@@ -445,8 +439,8 @@ function getSearchKey() {
 //搜索
 var changUrl = ''
 var page = 1;
-function changesearch(){
-
+function changeSearch(){
+ $('#historySearch').css('display','none')
    order.html('')
 
     var flag = 0
@@ -619,7 +613,7 @@ function changesearch(){
 function toPage(data) {
 
      page = data
-     changesearch()
+     changeSearch()
 }
 
 function theLastPage() {
@@ -630,7 +624,7 @@ function theLastPage() {
       return
   }
   page = pageNumber
-  changesearch()
+  changeSearch()
 }
 
 function lastPage() {
@@ -639,7 +633,7 @@ function lastPage() {
       return
   }
   page--;
-  changesearch()
+  changeSearch()
 }
 
 function nextPage() {
@@ -648,7 +642,7 @@ function nextPage() {
      return
  }
  page++
- changesearch()
+ changeSearch()
 }
 
 //单个删除
@@ -667,7 +661,7 @@ function del(oid){
                    return
                }
 
-               changesearch()
+               changeSearch()
            },
            type:'GET'
        });

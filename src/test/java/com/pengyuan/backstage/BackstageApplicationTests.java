@@ -1,5 +1,6 @@
 package com.pengyuan.backstage;
 
+import com.pengyuan.backstage.mapper.OrderMapper;
 import com.pengyuan.backstage.service.HotKeyService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,18 +20,14 @@ public class BackstageApplicationTests {
 	RedisTemplate redisTemplate;
 
 	@Autowired
+	OrderMapper orderMapper;
+
+	@Autowired
 	private HotKeyService hotKeyService;
 	@Test
 	public void contextLoads() {
 
-		Set keys = redisTemplate.keys("goodsName:" + "*" + "拉" + "*");
-
-		if(keys != null){
-			keys.forEach(ele->{
-
-				System.out.println(ele.toString().replaceAll("goodsName:", ""));
-			});
-		}
+		System.out.println(orderMapper.selOrdersByOid(1));
 
 	}
 
