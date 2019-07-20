@@ -18,13 +18,13 @@
 <body>
 
 	<div class="panel admin-panel">
-		<div class="panel-head">
-			<strong class="icon-reorder"> 留言管理</strong>
-		</div>
+		
 		<div class="padding border-bottom">
 			<ul class="search">
 				<li>商品名称</li>
-				<li><input type="text" name=""></li>
+				<li><input type="text" name="" class="form-control"></li>
+				<li>商品备注</li>
+				<li><input type="text" name="" class="form-control"></li>
 			</ul>
 		</div>
 		<table class="table table-hover text-center">
@@ -71,9 +71,9 @@
 				<td>
 					<div class='button-group'>
 						<a class='button border-main' href='javascript:void(0)'
-							onclick='updateOrder()'> <span class='icon-edit'></span> 修改
+							onclick='save()'> <span class='icon-edit'></span> 修改
 						</a> <a class='button border-red' href='javascript:void(0)'
-							onclick='updateOrder()'> <span class='icon-trash-o'></span>
+							onclick='cancel()'> <span class='icon-trash-o'></span>
 							删除
 						</a>
 					</div>
@@ -81,10 +81,20 @@
 			</tr>
 
 			<tr>
-				<td colspan="15"><div class="pagelist">
-						<a href="">上一页</a> <span class="current">1</span><a href="">2</a><a
-							href="">3</a><a href="">下一页</a><a href="">尾页</a>
-					</div></td>
+				<td colspan="15">
+					<div class="pagelist">
+						
+						<img src="images/timg.jfif" style="width:240px;height:240px;" class="img-responsive" onclick="file.click()" alt="Cinque Terre" width="304" height="236">
+						<input type="file" style="display:none" id="file">
+						
+						
+						<div class='button-group'>
+						<a class='button border-main' href='javascript:void(0)'
+							onclick='updateOrder()' style="background-color:blue;color:white;width:120px;text-decoration:none;" > 保存
+						</a> 
+					</div>
+					</div>
+				</td>
 			</tr>
 		</table>
 	</div>
@@ -104,7 +114,7 @@
 					<span >单价</span><input style="width:320px; type="text" name="price" class="form-control">
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					<button type="button"  class="btn btn-default" data-dismiss="modal">关闭
 					</button>
 					<button type="button" class="btn btn-primary">保存</button>
 				</div>
@@ -118,6 +128,14 @@
 	<script type="text/javascript">
 		function updateOrder() {
 			$("#myModal").modal('show');
+		}
+		
+		function save(){
+			$("#myModal").modal('hide');
+		}
+		
+		function cancel(){
+			$("#myModal").modal('hide');
 		}
 	</script>
 </body>

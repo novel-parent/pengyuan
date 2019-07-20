@@ -264,19 +264,26 @@ $(function(){
 	}
 	
 	function checkTel(obj){
+		
 		var partten11 = /^\d{11}$/;
 		var partten7 = /^\d{7}$/;
 		
+		var len = obj.length;
 		
-		if(!partten7.test(obj)){
-			alert("此电话号码不为7位数字，请检查");
-			return;
+		if(len <=  7){
+			
+			if(!partten7.test(obj)){
+				alert("此电话号码不为7位数字，请检查");
+				return;
+			}
+			
+		}else if(len <= 11){
+			if(!partten11.test(obj)){
+				alert("此电话号码不为11位数字，请检查");
+				return;
+			}
 		}
 		
-		if(!partten11.test(obj) ){
-			alert("此电话号码不为11位数字，请检查");
-			return;
-		}
 	}
 	
 	//定义当前页数
@@ -289,15 +296,6 @@ $(function(){
 		var factory = $('#factory').val();
 		var flag = $('#userStatus').val();
 		
-		
-		
-		
-		
-		
-		
-		
-		
-			
 			var data = {};
 			
 			if(name != null && name != ''){
