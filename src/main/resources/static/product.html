@@ -7,43 +7,89 @@
 	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <meta name="renderer" content="webkit">
 <title></title>
+<link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
 <script src="js/jquery.js"></script>
 <script src="js/pintuer.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-
 </head>
 <body>
+
 	<div class="panel admin-panel">
-
-		<input type="hidden" name="id" value="">
-
+		<div class="panel-head">
+			<strong class="icon-reorder"> 留言管理</strong>
+		</div>
+		<div class="padding border-bottom">
+			<ul class="search">
+				<li>商品名称</li>
+				<li><input type="text" name=""></li>
+			</ul>
+		</div>
 		<table class="table table-hover text-center">
 			<tr>
-				<th width="10%">工序</th>
-				<th width="20%">单价</th>
+				<th width="120">工序</th>
+				<th width="120">单价</th>
+				<th width="120">数量</th>
+				<th width="120">姓名</th>
+				<th width="120">合计</th>
+				<th width="120">数量</th>
+				<th width="120">姓名</th>
+				<th width="120">合计</th>
+				<th>操作</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>神夜</td>
+				<td>13420925611</td>
+				<td>564379992@qq.com</td>
+				<td>深圳市民治街道</td>
+				<td>这是一套后台UI</td>
+				<td>2016-07-01</td>
+				<td>2016-07-01</td>
+				<td>
+					<div class='button-group'>
+						<a class='button border-main' href='javascript:void(0)'
+							onclick='updateOrder()'> <span class='icon-edit'></span> 修改
+						</a> <a class='button border-red' href='javascript:void(0)'
+							onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>
+							删除
+						</a>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>神夜</td>
+				<td>13420925611</td>
+				<td>564379992@qq.com</td>
+				<td>深圳市民治街道</td>
+				<td>这是一套后台UI</td>
+				<td>2016-07-01</td>
+				<td>2016-07-01</td>
+				<td>
+					<div class='button-group'>
+						<a class='button border-main' href='javascript:void(0)'
+							onclick='updateOrder()'> <span class='icon-edit'></span> 修改
+						</a> <a class='button border-red' href='javascript:void(0)'
+							onclick='updateOrder()'> <span class='icon-trash-o'></span>
+							删除
+						</a>
+					</div>
+				</td>
 			</tr>
 
 			<tr>
-
-				<td>张三</td>
-				<td>1386548865</td>
-				<td>
-					<div class="btn-group">
-						<button type="button" class="btn btn-default"
-							onclick="addProduct(this)">添加</button>
-						<button type="button" class="btn btn-default"
-							onclick="editProduct(this)">修改</button>
-						<button type="button" class="btn btn-default" onclick="">刪除</button>
-					</div>
-				</td>
+				<td colspan="15"><div class="pagelist">
+						<a href="">上一页</a> <span class="current">1</span><a href="">2</a><a
+							href="">3</a><a href="">下一页</a><a href="">尾页</a>
+					</div></td>
 			</tr>
 		</table>
 	</div>
 
-
+	<!-- 模态框 -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -51,36 +97,16 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					<h4 class="modal-title" id="myModalLabel">员工信息</h4>
+						工序信息
 				</div>
 				<div class="modal-body">
-
-					<table class="table">
-
-						<thead>
-							<tr>
-								<th>工序</th>
-								<th>单价</th>
-							</tr>
-						</thead>
-						<tbody>
-
-							<tr>
-								<td><input type="text" class="form-control" id="name" placeholder="请输入工序名"></td>
-									
-								<td><input type="number" class="form-control" id="price" placeholder="请输入单价"></td>
-							</tr>
-
-						</tbody>
-					</table>
-
-
+					<span >工序名</span><input  type="text" style="width:320px; name="name"  class="form-control">
+					<span >单价</span><input style="width:320px; type="text" name="price" class="form-control">
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 					</button>
-					<button type="button" class="btn btn-primary" data-dismiss="modal"
-						id="savebtn">保存</button>
+					<button type="button" class="btn btn-primary">保存</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -89,23 +115,10 @@
 	</div>
 
 
-
-
-
 	<script type="text/javascript">
-		$("a[name='edit']").on('click', function() {
-			$('#myModal').modal('show');
-		})
-
-		function addProduct(obj) {
-			$("#myModal").modal('show');
-
-		}
-
-		function editProduct(obj) {
+		function updateOrder() {
 			$("#myModal").modal('show');
 		}
 	</script>
-
 </body>
 </html>

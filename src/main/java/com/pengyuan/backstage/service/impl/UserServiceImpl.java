@@ -1,6 +1,7 @@
 package com.pengyuan.backstage.service.impl;
 
 import com.pengyuan.backstage.bean.Factory;
+import com.pengyuan.backstage.bean.PageBean;
 import com.pengyuan.backstage.bean.User;
 import com.pengyuan.backstage.mapper.FactoryMapper;
 import com.pengyuan.backstage.mapper.UserMapper;
@@ -82,7 +83,34 @@ public class UserServiceImpl implements UserService {
 		}else if(user.getFlag() == 0){
 			u.setFlag(0);
 		}
-		System.out.println(u);
+		
 		return userMapper.selectUserByCondition(u);
+	}
+
+	
+
+	@Override
+	public List<PageBean> SerachPageBean(User user, int pageNum) {
+		
+		User u=new User();
+		
+		if(user.getUserName()!=null ) {
+			u.setUserName(user.getUserName());
+		}
+		if(user.getFid() != -1 && user.getFid() != 0) {
+			u.setFid(user.getFid());
+		}
+		if(user.getTel() != null) {
+			u.setTel(user.getTel());
+		}
+		if(user.getFlag() == 1) {
+			u.setFlag(1);
+		}else if(user.getFlag() == 0){
+			u.setFlag(0);
+		}
+		
+		
+		//List<User> pageBean=userMapper.serachPage(u,pageNum);
+		return null;
 	}
 }

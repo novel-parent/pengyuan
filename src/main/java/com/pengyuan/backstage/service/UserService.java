@@ -3,6 +3,7 @@ package com.pengyuan.backstage.service;
 import java.util.List;
 
 import com.pengyuan.backstage.bean.Factory;
+import com.pengyuan.backstage.bean.PageBean;
 import com.pengyuan.backstage.bean.User;
 
 /**
@@ -31,5 +32,10 @@ public interface UserService {
 
 	void deleteUser(long uid);
 
+	//List<User> SerachUserByCondition(User user);
+
+	List<PageBean> SerachPageBean(User user, int pageNum);
+
 	List<User> SerachUserByCondition(User user);
+
 }

@@ -49,7 +49,7 @@ $(function(){
 	})
 	
 	//加载用户列表
-/* 	$.ajax({
+ 	$.ajax({
 		url:'getUserList',
 		type:'post',
 		data:'',
@@ -83,7 +83,7 @@ $(function(){
 			
 			
 		}
-	}) */
+	}) 
 })
 	
 			//加载编辑用户信息列表
@@ -279,6 +279,8 @@ $(function(){
 		}
 	}
 	
+	//定义当前页数
+	var pagenum = 0;
 	
 	//查询员工
 	function serachUser(){
@@ -288,8 +290,7 @@ $(function(){
 		var flag = $('#userStatus').val();
 		
 		
-		var pagesize= 8;
-		var pagenum = 0;
+		
 		
 		
 		
@@ -314,6 +315,9 @@ $(function(){
 			if(flag != null && flag != ''){
 				data.flag = flag;
 			}
+			
+			//当前页数
+			data.pageNum=pagenum;
 			
 			$.ajax({
 				url:'serachUser',

@@ -2,6 +2,7 @@ package com.pengyuan.backstage.controller;
 
 import com.pengyuan.backstage.bean.Factory;
 import com.pengyuan.backstage.bean.JsonModel;
+import com.pengyuan.backstage.bean.PageBean;
 import com.pengyuan.backstage.bean.User;
 import com.pengyuan.backstage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,10 +101,12 @@ public class UserController {
     
     @ResponseBody
     @RequestMapping("serachUser")
-    public Object serachUser(User user) {
+    public Object serachUser(User user,int pageNum) {
     	JsonModel jm=new JsonModel();
-    	
+
     	List<User> userList=userService.SerachUserByCondition(user);
+    	
+    	//List<PageBean> pageList= userService.SerachPageBean(user,pageNum);
     	
     	if(userList.isEmpty()) {
     		jm.setCode(-1);
