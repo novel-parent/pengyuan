@@ -49,7 +49,7 @@ $(function(){
 	})
 	
 	//加载用户列表
-	$.ajax({
+/* 	$.ajax({
 		url:'getUserList',
 		type:'post',
 		data:'',
@@ -83,7 +83,7 @@ $(function(){
 			
 			
 		}
-	})
+	}) */
 })
 	
 			//加载编辑用户信息列表
@@ -140,6 +140,7 @@ $(function(){
 								</td>
 							</tr>
 					</table>
+					
 		</div>
 
 
@@ -224,6 +225,18 @@ $(function(){
 		<!-- /.modal -->
 	</div>
 	
+	<div id="pageTool" align="center">
+		<ul class="pagination pagination-lg"  style="">
+			<li><a href="#">&laquo;</a></li>
+		    <li><a href="#">1</a></li>
+		    <li><a href="#">2</a></li>
+		    <li><a href="#">3</a></li>
+		    <li><a href="#">4</a></li>
+		    <li><a href="#">5</a></li>
+		    <li><a href="#">&raquo;</a></li>
+		</ul>
+	</div>
+	
 
 
 
@@ -251,11 +264,18 @@ $(function(){
 	}
 	
 	function checkTel(obj){
-		var partten = /[0-9]{11}/;
+		var partten11 = /^\d{11}$/;
+		var partten7 = /^\d{7}$/;
 		
-		if($("#tel").val().length != 11 ){
-			
-			alert("此电话号码的长度不为11位，请检查");
+		
+		if(!partten7.test(obj)){
+			alert("此电话号码不为7位数字，请检查");
+			return;
+		}
+		
+		if(!partten11.test(obj) ){
+			alert("此电话号码不为11位数字，请检查");
+			return;
 		}
 	}
 	
@@ -266,6 +286,15 @@ $(function(){
 		var tel = $('input[name="tel"]').val();
 		var factory = $('#factory').val();
 		var flag = $('#userStatus').val();
+		
+		
+		var pagesize= 8;
+		var pagenum = 0;
+		
+		
+		
+		
+		
 		
 			
 			var data = {};
@@ -358,11 +387,15 @@ $(function(){
 		$("#savebtn").on('click',function(){
 			
 			var data;
+			var partten11 = /^\d{11}$/;
+			var partten7 = /^\d{7}$/;
 			
 			
-			if($("#tel").val().length != 11 ){
-				alert("此电话号码的长度不为11位，请检查");
-				return;
+			if( !partten7.test($("#tel").val())   ||  !partten11.test($("#tel").val()) ){
+				
+				if(!confirm('此电话号码格式不正确，确定提交吗？')){
+					return;
+				}
 			}
 			
 			if($("#name").val() == ''){
@@ -376,7 +409,6 @@ $(function(){
 			}
 			
 			
-			alert($("input[name^='token']").val());
 			
 			
 			if($("input[name = 'uid']").val() == 0){

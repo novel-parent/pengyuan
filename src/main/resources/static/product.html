@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+</head>
+<body>
+	<div class="panel admin-panel">
+
+		<input type="hidden" name="id" value="">
+
+		<table class="table table-hover text-center">
+			<tr>
+				<th width="10%">工序</th>
+				<th width="20%">单价</th>
+			</tr>
+
+			<tr>
+
+				<td>张三</td>
+				<td>1386548865</td>
+				<td>
+					<div class="btn-group">
+						<button type="button" class="btn btn-default"
+							onclick="addProduct(this)">添加</button>
+						<button type="button" class="btn btn-default"
+							onclick="editProduct(this)">修改</button>
+						<button type="button" class="btn btn-default" onclick="">刪除</button>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">员工信息</h4>
+				</div>
+				<div class="modal-body">
+
+					<table class="table">
+
+						<thead>
+							<tr>
+								<th>工序</th>
+								<th>单价</th>
+							</tr>
+						</thead>
+						<tbody>
+
+							<tr>
+								<td><input type="text" class="form-control" id="name" placeholder="请输入工序名"></td>
+									
+								<td><input type="number" class="form-control" id="price" placeholder="请输入单价"></td>
+							</tr>
+
+						</tbody>
+					</table>
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消
+					</button>
+					<button type="button" class="btn btn-primary" data-dismiss="modal"
+						id="savebtn">保存</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+
+
+
+
+
+	<script type="text/javascript">
+		$("a[name='edit']").on('click', function() {
+			$('#myModal').modal('show');
+		})
+
+		function addProduct(obj) {
+			$("#myModal").modal('show');
+
+		}
+
+		function editProduct(obj) {
+			$("#myModal").modal('show');
+		}
+	</script>
+
+</body>
+</html>

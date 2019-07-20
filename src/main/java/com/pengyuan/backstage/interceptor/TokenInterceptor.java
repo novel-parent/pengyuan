@@ -28,21 +28,13 @@ public class TokenInterceptor implements HandlerInterceptor {
         String token = request.getParameter("token");
         
         String uid = request.getParameter("uid");
-        //uid为空表示此次操作为更新用户信息，不做处理
-        if(uid==null || "".equals(uid)) {
-        	System.out.println("此次为更新操作");
-        	
-        	Map<String,String[]> map = request.getParameterMap();
-        	
-        	for(String s:map.keySet()) {
-        		System.out.println("Map   Key    :"+map.get(s));
-        	}
-        	
-        	
+        
+        
+        //uid为空表示此次操作为更新用户信息，不做处理 
+        if( uid != null) {
         	return true;
         }
         
-
         if(jedisUtil.del(prefix+token)>0){
             return true;
         }
