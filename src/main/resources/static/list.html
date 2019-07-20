@@ -274,15 +274,17 @@
           return
       }
 
+      newPrice = newPrice*1000;
+
       var tMoney = newPrice * newNumber
+
+      newMoney = newMoney * 1000
 
       if(tMoney !=newMoney){
           alert("总金额异常")
           return
       }
-      newPrice = newPrice*1000;
 
-      newMoney = newMoney*1000;
 
       var token = $('#token').val();
       $.ajax({
