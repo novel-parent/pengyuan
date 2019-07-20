@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class TokenInterceptor implements HandlerInterceptor {
 
+    private final String prefix = "token:";
     private JedisUtil jedisUtil;
 
     public TokenInterceptor() {
@@ -24,7 +25,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         String token = request.getParameter("token");
 
-        if(jedisUtil.del(token)>0){
+        if(jedisUtil.del(prefix+token)>0){
             return true;
         }
         response.getWriter().write("-1");
