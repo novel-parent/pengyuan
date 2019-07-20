@@ -1,5 +1,6 @@
 package com.pengyuan.backstage.service.impl;
 
+import com.pengyuan.backstage.bean.HotKey;
 import com.pengyuan.backstage.bean.Order;
 import com.pengyuan.backstage.bean.OrderListDiv;
 import com.pengyuan.backstage.bean.Orders;
@@ -8,6 +9,7 @@ import com.pengyuan.backstage.service.OrderService;
 import com.pengyuan.backstage.util.DateUtil;
 import com.pengyuan.backstage.util.MoneyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,39 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderMapper orderMapper;
 
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    public void updHotKey(String corporateName ,String goodsName ){
+
+        if (corporateName!=null){
+            stringRedisTemplate.opsForValue().set("goodsName:"+goodsName,"1" );
+        }
+
+        if (goodsName!=null){
+            stringRedisTemplate.opsForValue().set("corporateName:"+corporateName,"1" );
+        }
+    }
+
+    public void delHotKey(String corporateName ,String goodsName ){
+
+        if (corporateName!=null){
+            stringRedisTemplate.delete("goodsName:"+goodsName);
+        }
+
+        if (goodsName!=null){
+            stringRedisTemplate.delete("corporateName:"+corporateName);
+        }
+    }
+
     @Override
     public String updOrder(Order order) {
+
+        HotKey hotKey = orderMapper.selOrdersByOid(order.getOid());
+        delHotKey(hotKey.getCorporateName(), hotKey.getGoodsName());
+
+
+        updHotKey(order.getCorporateName(), order.getGoodsName());
 
         return null;
     }
@@ -39,7 +72,11 @@ public class OrderServiceImpl implements OrderService {
 
         if(insOrder <= 0){
             msg="-1";
+            return msg;
         }
+
+        updHotKey(order.getCorporateName(), order.getGoodsName());
+
         return msg;
     }
 
