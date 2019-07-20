@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService {
 
 		int i = userMapper.addUser(user);
 
+		System.out.println(888);
 		if( i > 0 ){
 			setRedisUserKey(user.getUserName());
 		}

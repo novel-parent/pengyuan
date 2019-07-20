@@ -31,7 +31,7 @@ public class BackstageApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		Set<String> keys = stringRedisTemplate.keys("user:");
+		Set<String> keys = stringRedisTemplate.keys("user:*");
 
 		System.out.println(keys);
 
