@@ -91,9 +91,9 @@ public class UserController {
     @RequestMapping("deleteUser")
     public Object deleteUser(long uid) {
     	JsonModel jm=new JsonModel();
-    	userService.deleteUser(uid);
-    	
-    	jm.setCode(1);
+		int i = userService.deleteUser(uid);
+
+		jm.setCode(i);
     	jm.setMsg("删除成功！");
     	
     	return jm;

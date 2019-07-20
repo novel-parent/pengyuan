@@ -30,7 +30,7 @@ public interface UserService {
 
 	int updateUser(User user);
 
-	void deleteUser(long uid);
+	int deleteUser(long uid);
 
 	//List<User> SerachUserByCondition(User user);
 

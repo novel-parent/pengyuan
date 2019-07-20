@@ -10,6 +10,7 @@ import com.pengyuan.backstage.service.UserService;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 /**
@@ -18,6 +19,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+	private final String prefix = "user:";
+
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     private UserMapper userMapper;
@@ -50,18 +56,40 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int addUser(User user) {
-		
-		return userMapper.addUser(user);
+
+		int i = userMapper.addUser(user);
+
+		if( i > 0 ){
+			setRedisUserKey(user.getUserName());
+		}
+
+		return i;
 	}
 
 	@Override
 	public int updateUser(User user) {
-		return userMapper.updateUser(user);
+
+		User userInfo = getUserInfo(user.getUid());
+
+		int i = userMapper.updateUser(user);
+
+		if(i>0){
+			updRedisUserKey(userInfo.getUserName(),user.getUserName() );
+		}
+
+		return i;
 	}
 
 	@Override
-	public void deleteUser(long uid) {
-		userMapper.deleteUser(uid);
+	public int deleteUser(long uid) {
+
+		User userInfo = userMapper.getUserInfo(uid);
+		int i = userMapper.deleteUser(uid);
+
+		if( i > 0 ){
+			updRedisUserKey(userInfo.getUserName(), null);
+		}
+		return i;
 	}
 
 	@Override
@@ -109,8 +137,23 @@ public class UserServiceImpl implements UserService {
 			u.setFlag(0);
 		}
 		
-		
 		//List<User> pageBean=userMapper.serachPage(u,pageNum);
 		return null;
+	}
+
+	public void updRedisUserKey(String oldUsername , String newUsername){
+
+    	if( oldUsername != null ){
+    		stringRedisTemplate.delete(prefix+oldUsername);
+		}
+    	setRedisUserKey(newUsername);
+	}
+
+	public void setRedisUserKey(String username){
+
+    	if(username != null){
+			stringRedisTemplate.opsForValue().set(prefix + username, "1");
+		}
+
 	}
 }

@@ -96,8 +96,7 @@
 
 		<div class="panel admin-panel">
 			<div class="panel-head">
-				<strong class="icon-reorder"> 内容列表</strong> <a href=""
-					style="float: right; display: none;">添加字段</a>
+				<strong class="icon-reorder"> 订单列表</strong>
 			</div>
 			<div class="padding border-bottom">
 				<ul class="search" style="padding-left: 10px;">
@@ -360,6 +359,11 @@ function getSearchKey() {
            }
            data =eval(data)
 
+           if(data.length ==1){
+                $('#historySearch').css('display','none')
+                $('#key').val(data[0])
+                return
+           }
            $('#historyLi').html('')
            $(data).each(function(index,ele) {
 
