@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> SerachUserByCondition(User user) {
+	public List<User> searchUserByCondition(User user) {
 		
 		User u=new User();
 		
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public List<PageBean> SerachPageBean(User user, int pageNum) {
+	public List<PageBean> searchPageBean(User user, int pageNum) {
 		
 		User u=new User();
 		
