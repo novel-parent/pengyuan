@@ -1,5 +1,6 @@
 package com.pengyuan.backstage.config;
 
+import com.pengyuan.backstage.interceptor.CheckMoneyInterceptor;
 import com.pengyuan.backstage.interceptor.TokenInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -11,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * @date 2019/7/19 - 19:36
  */
 @Configuration
-public class WebMVCConfig extends WebMvcConfigurerAdapter{
+public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
 
     @Override
@@ -20,5 +21,10 @@ public class WebMVCConfig extends WebMvcConfigurerAdapter{
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(new TokenInterceptor());
 
         interceptorRegistration.addPathPatterns("/newOrder").addPathPatterns("/updateUser");
+
+        InterceptorRegistration interceptorRegistration1 = registry.addInterceptor(new CheckMoneyInterceptor());
+
+        interceptorRegistration1.addPathPatterns("/newOrder").addPathPatterns("/updOrder");
+
     }
 }
