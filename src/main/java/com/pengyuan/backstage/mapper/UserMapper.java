@@ -66,4 +66,8 @@ public interface UserMapper {
 	 */
 	List<User> selectUserByCondition(User u);
 
+	List<User> serachUserPage(@Param("user")User user,@Param("pageNum") int pageNum);
+
+	int getTotalPage(@Param("user")User user);
+
 }

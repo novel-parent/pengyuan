@@ -68,7 +68,7 @@ public interface UserService {
 	 * @param pageNum
 	 * @return
 	 */
-	List<PageBean> searchPageBean(User user, int pageNum);
+	//List<PageBean> searchPageBean(User user, int pageNum);
 
 	/**
 	 *     搜索查询
@@ -76,5 +76,13 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> searchUserByCondition(User user);
+	/**
+	  *  用户的分页查询
+	 * @param user
+	 * @param pageNum
+	 * @return
+	 */
+
+	PageBean SerachPageBean(User user, int pageNum);
 
 }

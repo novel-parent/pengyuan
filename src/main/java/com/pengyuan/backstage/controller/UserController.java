@@ -102,21 +102,21 @@ public class UserController {
     @ResponseBody
     @RequestMapping("serachUser")
     public Object serachUser(User user,int pageNum) {
-    	JsonModel jm=new JsonModel();
-
-    	List<User> userList=userService.searchUserByCondition(user);
     	
-    	//List<PageBean> pageList= userService.SerachPageBean(user,pageNum);
     	
-    	if(userList.isEmpty()) {
-    		jm.setCode(-1);
-    		jm.setMsg("没有查找到匹配条件的员工信息");
+    	PageBean userList= userService.SerachPageBean(user,pageNum);
+    	
+    	
+    	if(userList.getObj().isEmpty()) {
+    		userList.setCode(-1);
+    		userList.setMsg("没有查找到匹配条件的员工信息");
     	}else {
-    		jm.setCode(1);
-    		jm.setObj(userList);
+    		userList.setCode(1);
+    		userList.setObj(userList.getObj());
     	}
     	
-		return jm;
+    	
+		return userList;
     	
     }
 

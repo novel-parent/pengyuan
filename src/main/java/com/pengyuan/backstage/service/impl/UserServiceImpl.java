@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
 
 	
 
-	@Override
+	/*@Override
 	public List<PageBean> searchPageBean(User user, int pageNum) {
 		
 		User u=new User();
@@ -140,7 +140,7 @@ public class UserServiceImpl implements UserService {
 		
 		//List<User> pageBean=userMapper.serachPage(u,pageNum);
 		return null;
-	}
+	}*/
 
 	public void updRedisUserKey(String oldUsername , String newUsername){
 
@@ -157,4 +157,61 @@ public class UserServiceImpl implements UserService {
 		}
 
 	}
+
+	@Override
+	public PageBean SerachPageBean(User user, int pageNum) {
+		
+		
+		PageBean pb=new PageBean();
+		
+		User u=new User();
+		
+		if(user.getUserName()!=null ) {
+			u.setUserName(user.getUserName());
+		}
+		if(user.getFid() == -1 && user.getFid() == 0 || user.getFid()<=0) {
+			
+		}else {
+			u.setFid(user.getFid());
+		}
+		
+		if(user.getTel() != null) {
+			u.setTel(user.getTel());
+		}
+		if(user.getFlag() == 1) {
+			u.setFlag(1);
+		}else if(user.getFlag() == 0){
+			u.setFlag(0);
+		}
+		
+		pb.setCurrentPage(pageNum);
+		
+		System.out.println(user);
+		System.out.println(u+"=============================");
+		
+		pageNum=(pageNum-1)*8;
+		
+		List<User> userList = userMapper.serachUserPage(user,pageNum);
+		
+		
+		pb.setPageSize(8);
+		
+		int totalPage=userMapper.getTotalPage(user);
+		
+		if(totalPage%8==0) {
+			totalPage=totalPage/8;
+		}else {
+			totalPage=(totalPage/8)+1;
+		}
+		
+		pb.setTotalPage(totalPage);
+		
+		pb.setObj(userList);
+		
+		System.out.println(pb);
+		
+		return pb;
+	}
+
+	
 }

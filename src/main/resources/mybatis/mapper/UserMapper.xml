@@ -3,8 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pengyuan.backstage.mapper.UserMapper">
-
-<resultMap type="com.pengyuan.backstage.bean.User" id="userListMap">
+	<resultMap type="com.pengyuan.backstage.bean.User" id="userListMap">
 	<id column="uid" property="uid"/>
 	<result column="fid"  property="fid"/>
 	<collection property="factory" column="fid"  select="com.pengyuan.backstage.mapper.FactoryMapper.selectFactoryByFid"/>
@@ -60,6 +59,44 @@
 					</if>
 					<if test="fid != 0">
 						and fid = #{fid}
+					</if>
+				</where>
+			</select>
+			
+			
+			<select id="serachUserPage" resultMap="userListMap">
+				select * from user 
+				<where>
+					<if test="user.userName != null">
+						userName like "%"#{user.userName}"%"
+					</if>
+					<if test="user.tel != null">
+						and tel like  "%"#{user.tel}"%"
+					</if>
+					<if test="user.flag != null">
+						and flag = #{user.flag}
+					</if>
+					<if test="user.fid != 0">
+						and fid = #{user.fid}
+					</if>
+				</where>
+				   	limit #{pageNum},8				
+			</select>
+			
+			<select id="getTotalPage" resultType="Integer">
+				select count(*) from user 
+				<where>
+					<if test="user.userName != null">
+						userName like "%"#{user.userName}"%"
+					</if>
+					<if test="user.tel != null">
+						and tel like  "%"#{user.tel}"%"
+					</if>
+					<if test="user.flag != null">
+						and flag = #{user.flag}
+					</if>
+					<if test="user.fid != 0">
+						and fid = #{user.fid}
 					</if>
 				</where>
 			</select>

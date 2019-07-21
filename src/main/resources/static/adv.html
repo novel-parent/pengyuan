@@ -48,42 +48,6 @@ $(function(){
 		}
 	})
 	
-	//加载用户列表
- 	$.ajax({
-		url:'getUserList',
-		type:'post',
-		data:'',
-		success:function(data){
-			
-			for(var i=0 ;i<data.length;i++){
-				
-					var flag='在职';
-					if(data[i].flag == 0 ){
-						flag='离职';
-					}
-				
-					var html='';
-					html+='<tr>';
-					html+='<td>'+data[i].userName+'</td>';
-					html+='<td>'+data[i].tel+'</td>';
-					html+='<td >'+data[i].factory.factoryName+'</td>';
-					html+='<td >'+flag+'</td>';
-					html+='<td >';
-					html+='<div class="button-group">';
-					html+='<a class="button border-main" name="edi" onclick="edit('+data[i].uid+')"> <span class="icon-edit"></span> 修改</a>';
-					html+=' <a class="button border-red" href="javascript:void(0)" onclick="return del('+data[i].uid+')">';
-					html+='<span class="icon-trash-o"></span> 删除</a>';
-					html+='</div>';
-					html+='</td>';
-					html+='</tr>';
-					
-					$("#usertable").append(html);
-					
-			}
-			
-			
-		}
-	}) 
 })
 	
 			//加载编辑用户信息列表
@@ -225,15 +189,9 @@ $(function(){
 		<!-- /.modal -->
 	</div>
 	
-	<div id="pageTool" align="center">
-		<ul class="pagination pagination-lg"  style="">
-			<li><a href="#">&laquo;</a></li>
-		    <li><a href="#">1</a></li>
-		    <li><a href="#">2</a></li>
-		    <li><a href="#">3</a></li>
-		    <li><a href="#">4</a></li>
-		    <li><a href="#">5</a></li>
-		    <li><a href="#">&raquo;</a></li>
+	<div  align="center">
+		<ul class="pagination pagination-lg"  id="pageLine">
+			<!-- 分页信息 -->
 		</ul>
 	</div>
 	
@@ -251,9 +209,6 @@ $(function(){
 			$("input[name^='token']").val(data);
 		}
 	})
-
-	
-	
 	
 	function checkName(obj){
 		
@@ -286,8 +241,10 @@ $(function(){
 		
 	}
 	
-	//定义当前页数
-	var pagenum = 0;
+	//当前页
+	var currentPage = 1;
+	//总页数·
+	var totalPage = 0;
 	
 	//查询员工
 	function serachUser(){
@@ -314,8 +271,12 @@ $(function(){
 				data.flag = flag;
 			}
 			
+			
+			
 			//当前页数
-			data.pageNum=pagenum;
+			data.pageNum=currentPage;
+			
+			
 			
 			$.ajax({
 				url:'serachUser',
@@ -326,7 +287,25 @@ $(function(){
 						alert(data.msg);
 					}else if(data.code == 1){
 						
+						//清空之前的元素
 						$("#usertable").empty();
+						$("#pageLine").empty();
+						
+						//获取当前页
+						currentPage=data.currentPage;
+						//获取总页数
+						totalPage=data.totalPage;
+						
+						var head='';
+						head+='<tr>';
+						head+='<th width="10%" >姓名</th>';
+						head+='<th width="20%" >电话</th>';
+						head+='<th width="15%" >所属工厂</th>';
+						head+='<th width="20%" >在职状态</th>';
+						head+='<th width="20%" >操作</th>';
+						head+='</tr>';
+						
+						$("#usertable").append(head);
 						
 						$.each(data.obj,function(i,obj){
 							
@@ -353,7 +332,20 @@ $(function(){
 							
 							$("#usertable").append(html);
 							
+							
 						})
+						
+						
+						
+						var tool='';
+						tool+='<li><a onclick="firstPage()">首页</a></li>';
+						tool+='<li><a onclick="prePage()">上一页</a></li>';
+						tool+='<li><a>'+data.currentPage+'</a></li>'
+						tool+='<li><a onclick="nextPage()">下一页</a></li>';
+						tool+='<li><a onclick="lastPage()">尾页</a></li>';
+						tool+='<li><a >共'+data.totalPage+'页</a></li>'
+						
+						$("#pageLine").append(tool);
 						
 					}
 				}
@@ -361,12 +353,50 @@ $(function(){
 			
 		
 	}
+		//上一页
+		function prePage(){
+			if((currentPage-1)<=0){
+				alert('当前已经是第一页');
+				return;
+			}else{
+				currentPage--;
+				serachUser();
+			}
+		}
+		
+		//下一页
+		function nextPage(){
+			if((currentPage+1)>totalPage){
+				alert('当前已经是最后一页');
+				return;
+			}else{
+				currentPage++;
+				serachUser();
+			}
+		}
 	
+		//	首页
+		function firstPage(){
+			if((currentPage-1)<=0){
+				alert("当前已是第一页");
+				return;
+			}else{
+				currentPage=1;
+				serachUser();
+			}
+		}
+		//	尾页
+		function lastPage(){
+			if((currentPage+1)>totalPage){
+				alert("当前已经是最后一页");
+				return;
+			}else{
+				currentPage=totalPage;
+				serachUser();
+			}
+		}
 	
-	
-	
-	
-	
+	//删除用户
 		function del(uid) {
 			if (confirm("您确定要删除该员工吗?")) {
 				$.ajax({
@@ -385,11 +415,13 @@ $(function(){
 		
 		
 		
-
+		//更新或新增用户信息
 		$("#savebtn").on('click',function(){
 			
 			var data;
+			//判断电话是否为11位数字
 			var partten11 = /^\d{11}$/;
+			//判断电话是否为7位数字
 			var partten7 = /^\d{7}$/;
 			
 			var len = $("#tel").val().length;

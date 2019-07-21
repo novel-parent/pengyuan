@@ -14,6 +14,20 @@
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$.ajax({
+			url:'getProductList',
+			type:'post',
+			data:'',
+			success: function(data){
+				
+			}
+		})
+	})
+</script>
+
+
 </head>
 <body>
 
@@ -31,66 +45,61 @@
 			<tr>
 				<th width="120">工序</th>
 				<th width="120">单价</th>
-				<th width="120">数量</th>
+				<th width="180">数量</th>
 				<th width="120">姓名</th>
-				<th width="120">合计</th>
-				<th width="120">数量</th>
+				<th width="180">合计</th>
+				<th width="180">数量</th>
 				<th width="120">姓名</th>
-				<th width="120">合计</th>
+				<th width="180">合计</th>
 				<th>操作</th>
 			</tr>
 			<tr>
-				<td>1</td>
-				<td>神夜</td>
-				<td>13420925611</td>
-				<td>564379992@qq.com</td>
-				<td>深圳市民治街道</td>
-				<td>这是一套后台UI</td>
-				<td>2016-07-01</td>
-				<td>2016-07-01</td>
+				<td>车提手</td>
+				<td>0.15</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 				<td>
-					<div class='button-group'>
-						<a class='button border-main' href='javascript:void(0)'
-							onclick='updateOrder()'> <span class='icon-edit'></span> 修改
-						</a> <a class='button border-red' href='javascript:void(0)'
-							onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>
-							删除
-						</a>
-					</div>
+				 <div class='button-group'>
+					<a class='button border-main' href='javascript:void(0)' onclick='updateOrder()'> <span class='icon-edit'></span>添加 </a>
+					<a class='button border-main' href='javascript:void(0)' onclick='save()'> <span class='icon-edit'></span> 修改	</a>
+					<a class='button border-red' href='javascript:void(0)' onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除</a>
+				 </div>
 				</td>
 			</tr>
 			<tr>
-				<td>1</td>
-				<td>神夜</td>
-				<td>13420925611</td>
-				<td>564379992@qq.com</td>
-				<td>深圳市民治街道</td>
-				<td>这是一套后台UI</td>
-				<td>2016-07-01</td>
-				<td>2016-07-01</td>
+				<td>翻提手</td>
+				<td>0.06</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 				<td>
-					<div class='button-group'>
-						<a class='button border-main' href='javascript:void(0)'
-							onclick='save()'> <span class='icon-edit'></span> 修改
-						</a> <a class='button border-red' href='javascript:void(0)'
-							onclick='cancel()'> <span class='icon-trash-o'></span>
-							删除
-						</a>
-					</div>
+				 <div class='button-group'>
+					<a class='button border-main' href='javascript:void(0)' onclick='updateOrder()'> <span class='icon-edit'></span>添加 </a>
+					<a class='button border-main' href='javascript:void(0)' onclick='save()'> <span class='icon-edit'></span> 修改	</a>
+					<a class='button border-red' href='javascript:void(0)' onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除</a>
+				 </div>
 				</td>
 			</tr>
 
 			<tr>
 				<td colspan="15">
 					<div class="pagelist">
-						
-						<img src="images/timg.jfif" style="width:240px;height:240px;" class="img-responsive" onclick="file.click()" alt="Cinque Terre" width="304" height="236">
-						<input type="file" style="display:none" id="file">
-						
+						<div  onclick="file.click()"">
+							<img src="images/timg.jfif" style="width:120px;height:120px;left:60px;" class="img-responsive"" alt="Cinque Terre" width="304" height="236">
+							<div style="float:left;"><span>上传图片</span></div>
+							<input type="file"  style="display:none" id="file">
+						</div>
 						
 						<div class='button-group'>
 						<a class='button border-main' href='javascript:void(0)'
-							onclick='updateOrder()' style="background-color:blue;color:white;width:120px;text-decoration:none;" > 保存
+							onclick='' style="background-color:blue;color:white;width:120px;text-decoration:none;" > 保存
 						</a> 
 					</div>
 					</div>
