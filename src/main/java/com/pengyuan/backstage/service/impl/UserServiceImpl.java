@@ -169,11 +169,11 @@ public class UserServiceImpl implements UserService {
 		if(user.getUserName()!=null ) {
 			u.setUserName(user.getUserName());
 		}
-		if(user.getFid() == -1 && user.getFid() == 0 || user.getFid()<=0) {
-			
-		}else {
+		if(user.getFid() != -1 && user.getFid() != 0 ) {
 			u.setFid(user.getFid());
 		}
+			
+		
 		
 		if(user.getTel() != null) {
 			u.setTel(user.getTel());
