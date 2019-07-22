@@ -34,8 +34,16 @@ public class OrderController {
     @ResponseBody
     @RequestMapping("/newOrder")
     public String newOrder(Order order){
-        System.out.println(order);
-        return service.insOrder(order);
+
+        String msg = "-1";
+
+        try {
+            msg = service.insOrder(order);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return msg;
     }
 
     @ResponseBody
