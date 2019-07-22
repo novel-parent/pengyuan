@@ -82,9 +82,9 @@ $(function(){
 							<tr >
 								<td style="width:100px;">
 								<input type="hidden" name="token" value=""/>
-								<input type="text" class="form-control" data-toggle="tooltip" data-placement="top" title="请输入姓名"  style="width:120px;" name="name"
+								<input type="text" class="form-control" onblur="serachUser()" data-toggle="tooltip" data-placement="top" title="请输入姓名"  style="width:120px;" name="name"
 									placeholder="姓名"  ></td>
-								<td style="width:100px;"><input type="text"  data-toggle="tooltip" data-placement="top" title="请输入电话" class="form-control" style="width:120px;" name="tel"
+								<td style="width:100px;"><input type="text" onblur="serachUser()" data-toggle="tooltip" data-placement="top" title="请输入电话" class="form-control" style="width:120px;" name="tel"
 									placeholder="电话" ></td>
 								<td style="width:140px;"><select id="factory"
 									class="form-control" onchange="serachUser()">

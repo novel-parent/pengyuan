@@ -76,7 +76,7 @@
 					<if test="user.flag != null">
 						and flag = #{user.flag}
 					</if>
-					<if test="user.fid != 0">
+					<if test="user.fid != null">
 						and fid = #{user.fid}
 					</if>
 				</where>
@@ -95,7 +95,7 @@
 					<if test="user.flag != null">
 						and flag = #{user.flag}
 					</if>
-					<if test="user.fid != 0">
+					<if test="user.fid != null">
 						and fid = #{user.fid}
 					</if>
 				</where>

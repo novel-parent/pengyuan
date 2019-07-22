@@ -161,9 +161,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public PageBean SerachPageBean(User user, int pageNum) {
 		
-		
-		System.out.println(user);
-		
 		PageBean pb=new PageBean();
 		
 		User u=new User();
@@ -171,11 +168,11 @@ public class UserServiceImpl implements UserService {
 		if(user.getUserName()!=null ) {
 			u.setUserName(user.getUserName());
 		}
-		if(user.getFid() != -1 && user.getFid() != 0 ) {
+		if(user.getFid() == -1 && user.getFid() == 0 ) {
 			u.setFid(user.getFid());
+		}else {
+			u.setFid(null);
 		}
-			
-		
 		
 		if(user.getTel() != null) {
 			u.setTel(user.getTel());
@@ -186,16 +183,17 @@ public class UserServiceImpl implements UserService {
 			u.setFlag(0);
 		}
 		
+		
 		pb.setCurrentPage(pageNum);
 		
 		pageNum=(pageNum-1)*8;
 		
-		List<User> userList = userMapper.serachUserPage(user,pageNum);
+		List<User> userList = userMapper.serachUserPage(u,pageNum);
 		
 		
 		pb.setPageSize(8);
 		
-		int totalPage=userMapper.getTotalPage(user);
+		int totalPage=userMapper.getTotalPage(u);
 		
 		if(totalPage%8==0) {
 			totalPage=totalPage/8;
