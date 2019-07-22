@@ -1,4 +1,8 @@
 spring:
+  http: 
+    multipart: 
+      maxFileSize: 10Mb
+      maxRequestSize: 100Mb
   datasource:
     username: root
     password: a
@@ -27,7 +31,13 @@ spring:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
+  
+lximage:
+  endpoint:  oss-cn-beijing.aliyuncs.com
+  keyid:  LTAIITWT4M4azCLU
+  keysecret:  9d7R60FOUvIuKAOKZDMS7nAwA7777X
+  bucketname1:  doki-l
+  filehost:  UploadFile
+
 server:
   port: 80
-logging:
-  level: debug

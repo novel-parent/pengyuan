@@ -5,7 +5,8 @@ public class Procedures {
 	private long pid;
 	private String name;
 	private String main;
-	private String remark;
+	private String remarks;
+	private String path;
 	public long getPid() {
 		return pid;
 	}
@@ -24,11 +25,22 @@ public class Procedures {
 	public void setMain(String main) {
 		this.main = main;
 	}
-	public String getRemark() {
-		return remark;
+	public String getRemarks() {
+		return remarks;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setRemarks(String remarks) {
+		this.remarks = remarks;
+	}
+	public String getPath() {
+		return path;
+	}
+	public void setPath(String path) {
+		this.path = path;
+	}
+	@Override
+	public String toString() {
+		return "Procedures [pid=" + pid + ", name=" + name + ", main=" + main + ", remarks=" + remarks + ", path="
+				+ path + "]";
 	}
 	
 	

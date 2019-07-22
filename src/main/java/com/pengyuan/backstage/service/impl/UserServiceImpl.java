@@ -162,6 +162,8 @@ public class UserServiceImpl implements UserService {
 	public PageBean SerachPageBean(User user, int pageNum) {
 		
 		
+		System.out.println(user);
+		
 		PageBean pb=new PageBean();
 		
 		User u=new User();
@@ -185,9 +187,6 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		pb.setCurrentPage(pageNum);
-		
-		System.out.println(user);
-		System.out.println(u+"=============================");
 		
 		pageNum=(pageNum-1)*8;
 		

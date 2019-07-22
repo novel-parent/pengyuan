@@ -78,7 +78,7 @@ public interface UserService {
 	List<User> searchUserByCondition(User user);
 	/**
 	  *  用户的分页查询
-	 * @param user
+	 * @param user  ：查询的用户信息
 	 * @param pageNum
 	 * @return
 	 */

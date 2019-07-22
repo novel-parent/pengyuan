@@ -9,22 +9,40 @@
 <title></title>
 <link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
-<script src="js/jquery.js"></script>
+<script src="js/jquery-3.1.1.js"></script>
 <script src="js/pintuer.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
-	$(function(){
-		$.ajax({
-			url:'getProductList',
-			type:'post',
-			data:'',
-			success: function(data){
+
+	//获取模板信息
+	$.ajax({
+		url:'getProcedureInfo',
+		type:'post',
+		data:'baseModel=base',
+		success: function(data){
+			if(data.code == -1){
+				alert(data.msg);
+			}else if(data.code == 1){
 				
+				let m = indexOf('[');
+				let n = indexOf(']');
+				
+				alert(n +"-"+m);
+				
+				var dataString = data.obj.main;
+				
+				var dataArr=new Array();
+				 dataString = dataString.substring(0,1);
+				 dataString = dataString.substring(dataString.length-1,dataString.length);
+				 
+				 alert(dataString);
 			}
-		})
+			
+		}
 	})
+	
 </script>
 
 
@@ -32,17 +50,17 @@
 <body>
 
 	<div class="panel admin-panel">
-		
+
 		<div class="padding border-bottom">
 			<ul class="search">
 				<li>商品名称</li>
-				<li><input type="text" name="" class="form-control"></li>
+				<li><input type="text" name="name" class="form-control"></li>
 				<li>商品备注</li>
-				<li><input type="text" name="" class="form-control"></li>
+				<li><input type="text" name="remark" class="form-control"></li>
 			</ul>
 		</div>
-		<table class="table table-hover text-center">
-			<tr>
+		<table class="table table-hover text-center" name="procedureTable">
+			<tr name="title">
 				<th width="120">工序</th>
 				<th width="120">单价</th>
 				<th width="180">数量</th>
@@ -53,7 +71,7 @@
 				<th width="180">合计</th>
 				<th>操作</th>
 			</tr>
-			<tr>
+			<tr name="title">
 				<td>车提手</td>
 				<td>0.15</td>
 				<td></td>
@@ -63,14 +81,18 @@
 				<td></td>
 				<td></td>
 				<td>
-				 <div class='button-group'>
-					<a class='button border-main' href='javascript:void(0)' onclick='updateOrder()'> <span class='icon-edit'></span>添加 </a>
-					<a class='button border-main' href='javascript:void(0)' onclick='save()'> <span class='icon-edit'></span> 修改	</a>
-					<a class='button border-red' href='javascript:void(0)' onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除</a>
-				 </div>
+					<div class='button-group'>
+						<a class='button border-main' href='javascript:void(0)'
+							onclick='updateOrder()'> <span class='icon-edit'></span>添加
+						</a> <a class='button border-main' href='javascript:void(0)'
+							onclick='save()'> <span class='icon-edit'></span> 修改
+						</a> <a class='button border-red' href='javascript:void(0)'
+							onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除
+						</a>
+					</div>
 				</td>
 			</tr>
-			<tr>
+			<tr name="title">
 				<td>翻提手</td>
 				<td>0.06</td>
 				<td></td>
@@ -80,28 +102,40 @@
 				<td></td>
 				<td></td>
 				<td>
-				 <div class='button-group'>
-					<a class='button border-main' href='javascript:void(0)' onclick='updateOrder()'> <span class='icon-edit'></span>添加 </a>
-					<a class='button border-main' href='javascript:void(0)' onclick='save()'> <span class='icon-edit'></span> 修改	</a>
-					<a class='button border-red' href='javascript:void(0)' onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除</a>
-				 </div>
+					<div class='button-group'>
+						<a class='button border-main' href='javascript:void(0)'
+							onclick='updateOrder()'> <span class='icon-edit'></span>添加
+						</a> <a class='button border-main' href='javascript:void(0)'
+							onclick='save()'> <span class='icon-edit'></span> 修改
+						</a> <a class='button border-red' href='javascript:void(0)'
+							onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除
+						</a>
+					</div>
 				</td>
 			</tr>
 
-			<tr>
+			<tr name="title">
 				<td colspan="15">
+				<form action="" id="formdatafrom"></form>
 					<div class="pagelist">
-						<div  onclick="file.click()"">
-							<img src="images/timg.jfif" style="width:120px;height:120px;left:60px;" class="img-responsive"" alt="Cinque Terre" width="304" height="236">
-							<div style="float:left;"><span>上传图片</span></div>
-							<input type="file"  style="display:none" id="file">
+						<div onclick="file.click()">
+							<img src="images/timg.jfif" name="fileimg"
+								style="width: 120px; height: 120px; left: 60px;"
+								class="img-responsive" " alt="Cinque Terre" width="304"
+								height="236">
+							<div style="float: left;">
+								<span>上传图片</span>
+							</div>
+							<input type="file" onchange="changeImg(this)"
+								style="display: none" id="file">
 						</div>
-						
+
 						<div class='button-group'>
-						<a class='button border-main' href='javascript:void(0)'
-							onclick='' style="background-color:blue;color:white;width:120px;text-decoration:none;" > 保存
-						</a> 
-					</div>
+							<a class='button border-main' href='javascript:void(0)'
+								onclick='saveProcedureInfo()'
+								style="background-color: blue; color: white; width: 120px; text-decoration: none;">
+								保存 </a>
+						</div>
 					</div>
 				</td>
 			</tr>
@@ -116,16 +150,17 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-						工序信息
+					工序信息
 				</div>
 				<div class="modal-body">
-					<span >工序名</span><input  type="text" style="width:320px; name="name"  class="form-control">
-					<span >单价</span><input style="width:320px; type="text" name="price" class="form-control">
+					<span>工序名</span><input type="text" style="width: 320px;"
+						name"  class="form-control"> <span>单价</span><input
+						style="width: 320px;" text" name="price" class="form-control">
 				</div>
 				<div class="modal-footer">
-					<button type="button"  class="btn btn-default" data-dismiss="modal">关闭
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 					</button>
-					<button type="button" class="btn btn-primary">保存</button>
+					<button type="button" class="btn btn-primary" >保存</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -135,16 +170,106 @@
 
 
 	<script type="text/javascript">
+		
+
+		//保存模板信息
+		function saveProcedureInfo() {
+			
+			var name=$("input[name='name']").val();
+			var remark=$("input[name='remark']").val();
+			var fd=new FormData();
+			
+		
+			
+			if(name == ''){
+				alert('请输入模板名称');
+				return;
+			}
+			
+			if(remark == ''){
+				alert('请输入备注');
+				return;
+			}
+			
+			
+			var trList = $("tr[name='title']");
+
+			var arr = "[{name:工序名,price:单价}";
+
+			for (var i = 1; i < trList.size() - 1; i++) {
+
+				var tdList = trList.eq(i).children();
+
+				arr += ",{name:" + tdList.eq(0).html() + ",price:"
+						+ tdList.eq(1).html() + "}"
+
+			}
+
+			arr += "]";
+
+		
+			
+			
+			
+			fd.append('name',name);
+			fd.append('remarks',remark);
+			fd.append('main',arr);
+			fd.append('file',$("#file")[0].files[0]);
+			
+			console.log(fd.get('procedures'));
+			
+			console.log(fd.get('file'));
+			
+			$.ajax({
+				url : 'SaveProcedureString',
+				type : 'post',
+				data : fd,
+				processData: false,
+				contentType: false,
+				success : function(data) {
+					if(data.code == 1){
+						alert(data.msg);
+					}
+				}
+			})
+			
+			
+			
+			
+			
+		}
+
 		function updateOrder() {
 			$("#myModal").modal('show');
 		}
-		
-		function save(){
+
+		function save() {
 			$("#myModal").modal('hide');
 		}
-		
-		function cancel(){
+
+		function cancel() {
 			$("#myModal").modal('hide');
+		}
+
+		function changeImg(obj) {
+
+			var url = getObjectURL(obj);
+
+			$("img[name='fileimg']").attr('src', url);
+		}
+
+		//获取文件真实路径
+		function getObjectURL(file) {
+			var url = null;
+			var fileObj = file.files[0];
+			if (window.createObjcectURL != undefined) {
+				url = window.createOjcectURL(fileObj);
+			} else if (window.URL != undefined) {
+				url = window.URL.createObjectURL(fileObj);
+			} else if (window.webkitURL != undefined) {
+				url = window.webkitURL.createObjectURL(fileObj);
+			}
+			return url;
 		}
 	</script>
 </body>
