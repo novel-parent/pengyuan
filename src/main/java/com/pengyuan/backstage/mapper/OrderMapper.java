@@ -16,12 +16,12 @@ import java.util.List;
  */
 public interface OrderMapper {
 
-//    /**
-//     *       更新数据库  订单信息
-//     * @param order
-//     * @return
-//     */
-//    int updOrder(Order order);
+    /**
+     *       更新数据库  订单信息
+     * @param order
+     * @return
+     */
+    int updOrder(Order order);
 
     /**
      *      根据oid  查询 订单的     公司名称 和  商品名称

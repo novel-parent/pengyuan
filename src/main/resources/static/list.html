@@ -299,6 +299,7 @@
          success:function(data){
 
              if(data=="-1"){
+                 getToken()
                  alert("提交失败,请重试.....")
                  return
              }
@@ -333,9 +334,10 @@ function setSearchKey( data) {
 }
 
 
-var value = 0
+var value = ''
 
 function getSearchKey() {
+
 
     var key = $('#key').val()
 
@@ -371,6 +373,7 @@ function getSearchKey() {
 
                $('#historyLi').append("<li onclick=setSearchKey(this) >"+ele+"</li>")
            })
+            $('#historySearch').show()
        },
        type:'GET'
    });

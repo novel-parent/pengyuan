@@ -27,7 +27,7 @@ $(function(){
 		data:'',
 		success: function(data){
 			var html='';
-			html+='<option value="-1">请选择</option>';
+			html+='<option value="-1">请选择楼层</option>';
 			
 			$("#fid").append(html);
 			
@@ -86,8 +86,8 @@ $(function(){
 									placeholder="姓名"  ></td>
 								<td style="width:100px;"><input type="text"  data-toggle="tooltip" data-placement="top" title="请输入电话" class="form-control" style="width:120px;" name="tel"
 									placeholder="电话" ></td>
-								<td style="width:120px;"><select id="factory"
-									class="form-control" >
+								<td style="width:140px;"><select id="factory"
+									class="form-control" onchange="serachUser()">
 										
 								</select></td>
 								<td style="width:120px;">

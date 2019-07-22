@@ -2,9 +2,6 @@ package com.pengyuan.backstage.bean;
 
 import java.io.Serializable;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize.Inclusion;
-
 /**
  * @author LX
  * @date 2019/7/7 - 14:42
@@ -15,35 +12,36 @@ public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	
-	private long uid ;
+	private Long uid ;
     private String userName;
     private String password;
-    private long fid;
+    private Long fid;
     private Factory factory;
     private String tel;
-    private int flag;
+    private Integer flag;
     
     public User() {
     	
     }
 
-    public User(long uid, String userName, String password, long fid, Factory factory, String tel, int flag) {
-		super();
-		this.uid = uid;
-		this.userName = userName;
-		this.password = password;
-		this.fid = fid;
-		this.factory = factory;
-		this.tel = tel;
-		this.flag = flag;
-	}
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid=" + uid +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", fid=" + fid +
+                ", factory=" + factory +
+                ", tel='" + tel + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
 
-
-	public long getUid() {
+    public Long getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
@@ -63,11 +61,11 @@ public class User implements Serializable{
         this.password = password;
     }
 
-    public long getFid() {
+    public Long getFid() {
         return fid;
     }
 
-    public void setFid(long fid) {
+    public void setFid(Long fid) {
         this.fid = fid;
     }
 
@@ -87,24 +85,21 @@ public class User implements Serializable{
         this.tel = tel;
     }
 
-    public int getFlag() {
+    public Integer getFlag() {
         return flag;
     }
 
-    public void setFlag(int flag) {
+    public void setFlag(Integer flag) {
         this.flag = flag;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "uid=" + uid +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", fid=" + fid +
-                ", factory=" + factory +
-                ", tel='" + tel + '\'' +
-                ", flag=" + flag +
-                '}';
+    public User(Long uid, String userName, String password, Long fid, Factory factory, String tel, Integer flag) {
+        this.uid = uid;
+        this.userName = userName;
+        this.password = password;
+        this.fid = fid;
+        this.factory = factory;
+        this.tel = tel;
+        this.flag = flag;
     }
 }

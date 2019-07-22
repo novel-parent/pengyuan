@@ -57,7 +57,7 @@
 					<if test="flag != null">
 						and flag = #{flag}
 					</if>
-					<if test="fid != 0">
+					<if test="fid != null">
 						and fid = #{fid}
 					</if>
 				</where>
