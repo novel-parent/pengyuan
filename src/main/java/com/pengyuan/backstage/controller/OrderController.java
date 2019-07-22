@@ -55,15 +55,31 @@ public class OrderController {
                                @RequestParam(required = false)  String key,
                                @RequestParam(required = false) int pageSize,
                                @RequestParam(required = false) int page){
-        System.out.println(corporateName+"  "+goodsName);
-        return service.searchOrder(corporateName,goodsName, startTime, endTime, key,pageSize,page);
+
+        OrderListDiv orderListDiv = null ;
+
+        try {
+
+            orderListDiv = service.searchOrder(corporateName, goodsName, startTime, endTime, key, pageSize, page);
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+        return orderListDiv;
     }
 
     @ResponseBody
     @RequestMapping("/delOrder")
     public String delOrder( Long oid){
 
-        return service.delOrder(oid);
+        String msg = "-1";
+
+        try {
+            msg = service.delOrder(oid);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msg;
     }
 
 }

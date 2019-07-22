@@ -3,9 +3,43 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pengyuan.backstage.mapper.OrderMapper">
-    <update id="updOrder">
+    <update id="updOrder" parameterType="com.pengyuan.backstage.bean.Order">
 
-        UPDATE orders SET
+        UPDATE orders
+                     <set>
+                         <if test="corporateName!=null">
+                             corporateName = #{corporateName}
+                         </if>
+
+                         <if test="goodsName !=null">
+                             goodsName = #{goodsName}
+                         </if>
+
+                         <if test="documents!=null">
+                             documents = #{documents}
+                         </if>
+
+                         <if test="number!=null">
+                             number = #{number}
+                         </if>
+
+                         <if test="price!=null">
+                             price = #{price}
+                         </if>
+
+                         <if test="signatory!=null">
+                             signatory = #{signatory}
+                         </if>
+
+                         <if test="money!=null">
+                             money = #{money}
+                         </if>
+
+                         <if test="company!=null">
+                             company = #{company}
+                         </if>
+                     </set>
+        WHERE oid = #{oid}
 
     </update>
 
