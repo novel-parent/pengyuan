@@ -8,10 +8,10 @@
 			select * from procedures
 			<where>
 				<if test="procedures.name != null">
-					name like "%"#{procedures.name}"%"
+					and name like "%"#{procedures.name}"%"
 				</if>
 				<if test="procedures.remarks != null">
-					remarks like "%"#{procedures.remarks}"%"
+					and remarks like "%"#{procedures.remarks}"%"
 				</if>
 			</where>
 			
@@ -22,10 +22,10 @@
 		select count(*) from procedures
 			<where>
 				<if test="procedures.name != null">
-					name = #{procedures.name}
+					and name = #{procedures.name}
 				</if>
 				<if test="procedures.remarks != null">
-					remarks = #{procedures.remarks}
+					and remarks = #{procedures.remarks}
 				</if>
 			</where>
 	</select>
