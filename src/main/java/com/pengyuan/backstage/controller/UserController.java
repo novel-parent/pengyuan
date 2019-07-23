@@ -2,7 +2,7 @@ package com.pengyuan.backstage.controller;
 
 import com.pengyuan.backstage.bean.Factory;
 import com.pengyuan.backstage.bean.JsonModel;
-import com.pengyuan.backstage.bean.PageBean;
+import com.pengyuan.backstage.bean.UserModel;
 import com.pengyuan.backstage.bean.User;
 import com.pengyuan.backstage.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,39 +36,43 @@ public class UserController {
         return user;
     }
     
+   /**
+    * 	修改用户信息时给模态框赋值
+    * @param uid ：员工id
+    * @return
+    */
     @ResponseBody
-    @RequestMapping("/getUserList")
-    public List<User> getUserList(){
-    	
-    	List<User> userList=userService.getUserList();
-    	
-    	
-    	return userList;
-    }
-    
-    @ResponseBody
-    @RequestMapping("/getUserInfo")
+    @RequestMapping("/getUserInfo.b")
     public User getUserInfo(long uid) {
     	
      return userService.getUserInfo(uid);
     }
     
+    /**
+         *   获取所有工厂列表，用于给下拉框加载工厂列表
+     * @return
+     */
     @ResponseBody
-    @RequestMapping("/getFactoryList")
+    @RequestMapping("/getFactoryList.b")
     public List<Factory> getFactoryList(){
     	
     	return userService.getFactoryList();
     }
     
+    /**
+         *  更新或者添加用户。如果uid不为空则为修改员工信息，否则为新增员工
+     * @param user ：前台传入的员工信息
+     * @return
+     */
     @ResponseBody
-    @RequestMapping("updateUser")
+    @RequestMapping("updateUser.b")
     public JsonModel updateUser(User user) {
     	
     	
     	JsonModel jm = new JsonModel();
-    	//判断用户是的uid是否为空，如果为空则说明该用户在数据库里没有记录
+    	//判断用户是的uid是否为空，为空为新增员工，不为空为更新员工信息
     	try {
-    	
+    		
 	    	if(user.getUid() == null) {
 	    		 if(userService.addUser(user)>0) {
 	    			 jm.setCode(1);
@@ -97,8 +101,14 @@ public class UserController {
     	return jm;
     }
     
+    /**
+         *  删除员工
+     * @param uid
+     * @param currentPage ：在做删除员工操作时，用户浏览的时第几页
+     * @return
+     */
     @ResponseBody
-    @RequestMapping("deleteUser/{currentPage}")
+    @RequestMapping("deleteUser.b/{currentPage}")
     public Object deleteUser(long uid,@PathVariable("currentPage") int currentPage ) {
 				    	
     	JsonModel jm=new JsonModel();
@@ -128,12 +138,18 @@ public class UserController {
     	return jm;
     }
     
+    /**
+         *  用户信息的查询
+     * @param user ：前台输入的用户信息
+     * @param pageNum ：当前查询第几页
+     * @return
+     */
     @ResponseBody
-    @RequestMapping("/searchUser")
+    @RequestMapping("/searchUser.b")
     public Object searchUser(User user,int pageNum) {
     	
     	
-    	PageBean userList= userService.SerachPageBean(user,pageNum);
+    	UserModel userList= userService.SerachPageBean(user,pageNum);
     	
     	
     	if(userList.getObj().isEmpty()) {

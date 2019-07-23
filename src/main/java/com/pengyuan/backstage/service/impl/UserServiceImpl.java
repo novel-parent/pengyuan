@@ -1,7 +1,7 @@
 package com.pengyuan.backstage.service.impl;
 
 import com.pengyuan.backstage.bean.Factory;
-import com.pengyuan.backstage.bean.PageBean;
+import com.pengyuan.backstage.bean.UserModel;
 import com.pengyuan.backstage.bean.User;
 import com.pengyuan.backstage.mapper.FactoryMapper;
 import com.pengyuan.backstage.mapper.UserMapper;
@@ -159,11 +159,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PageBean SerachPageBean(User user, int pageNum) {
+	public UserModel SerachPageBean(User user, int pageNum) {
 		
 		System.out.println(user+"=======================");
 		
-		PageBean pb=new PageBean();
+		UserModel pb=new UserModel();
 		
 		User u=new User();
 		

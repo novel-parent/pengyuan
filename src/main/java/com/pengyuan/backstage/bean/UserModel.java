@@ -3,7 +3,7 @@ package com.pengyuan.backstage.bean;
 import java.io.Serializable;
 import java.util.List;
 
-public class PageBean implements Serializable{
+public class UserModel implements Serializable{
 	//所有页数
 	private int totalPage;
 	//每页数据条数
@@ -16,6 +16,7 @@ public class PageBean implements Serializable{
 	private String msg;
 	//对象列表
 	private List<User> obj;
+	
 	public int getTotalPage() {
 		return totalPage;
 	}

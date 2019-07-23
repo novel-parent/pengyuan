@@ -3,7 +3,7 @@ package com.pengyuan.backstage.service;
 import java.util.List;
 
 import com.pengyuan.backstage.bean.Factory;
-import com.pengyuan.backstage.bean.PageBean;
+import com.pengyuan.backstage.bean.UserModel;
 import com.pengyuan.backstage.bean.User;
 
 /**
@@ -60,15 +60,6 @@ public interface UserService {
 	 */
 	int deleteUser(long uid);
 
-	//List<User> SerachUserByCondition(User user);
-
-	/**
-	 *         搜素分页
-	 * @param user
-	 * @param pageNum
-	 * @return
-	 */
-	//List<PageBean> searchPageBean(User user, int pageNum);
 
 	/**
 	 *     搜索查询
@@ -83,6 +74,6 @@ public interface UserService {
 	 * @return
 	 */
 
-	PageBean SerachPageBean(User user, int pageNum);
+	UserModel SerachPageBean(User user, int pageNum);
 
 }

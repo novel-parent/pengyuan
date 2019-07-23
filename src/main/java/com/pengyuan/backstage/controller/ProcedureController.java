@@ -22,9 +22,15 @@ public class ProcedureController {
 	@Autowired
 	private ProcedureService ps;
 	
+	/**
+	  * 将模板信息保存至数据库
+	 * @param procedure 模板信息
+	 * @param file 文件
+	 * @return
+	 */
 	@ResponseBody
-	@RequestMapping("SaveProcedureString")
-	public Object SaveProcedure(Procedures procedure,@RequestParam("file")MultipartFile file) {
+	@RequestMapping("SaveProcedureString.b")
+	public Object SaveProcedure(Procedures procedure,MultipartFile file) {
 		JsonModel jm=new JsonModel();
 		
 		
@@ -35,14 +41,19 @@ public class ProcedureController {
 			jm.setMsg("模板保存成功");
 		}else {
 			jm.setCode(-1);
-			jm.setMsg("系统繁忙！");
+			jm.setMsg("请求失败");
 		}
 		
 		
 		return jm;
 	}
 	
-	@RequestMapping("getProcedureInfo")
+	/**
+	  * 从数据库中读取名称为baseModel的基础模板信息
+	 * @param baseModel ：前台ajax传入的模板名
+	 * @return
+	 */
+	@RequestMapping("getProcedureInfo.b")
 	@ResponseBody
 	public Object getProcedureInfo(String baseModel) {
 		JsonModel jm=new JsonModel();
@@ -57,6 +68,25 @@ public class ProcedureController {
 			jm.setMsg("没有查询到相应模板信息");
 		}
 		return jm;
+	}
+	/**
+	  * 获取模板信息列表
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("getProcedureList.b")
+	public Object getProcedureList(Procedures pd,int currentPage) {
+		
+		ProcedureModel pp = ps.searchProcedureByPage(pd,currentPage);
+		
+		if(pp.getObj().isEmpty()) {
+			pp.setCode(-1);
+			pp.setMsg("查无此数据");
+		}else {
+			pp.setCode(1);
+		}
+		
+		return pp;
 	}
 	
 }

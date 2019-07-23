@@ -1,5 +1,7 @@
 package com.pengyuan.backstage.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,5 +15,9 @@ public interface ProcedureMapper {
 	
 	@Select("select * from procedures where name = #{name}")
 	Procedures getProcedureModel(String baseModel);
+
+	List<Procedures> searchProcedureByPage(@Param("procedures")Procedures procedures,@Param("pageBeginIndex") int pageBeginIndex);
+
+	int searchAllColumn(@Param("procedures")Procedures p);
 
 }

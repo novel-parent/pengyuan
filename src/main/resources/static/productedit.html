@@ -19,7 +19,7 @@
 	$(function(){
 		//获取模板信息
 		$.ajax({
-			url:'getProcedureInfo',
+			url:'getProcedureInfo.b',
 			type:'post',
 			data:'baseModel=base',
 			success: function(data){
@@ -37,7 +37,7 @@
 						
 						var html = '';
 						let name=dataArr[i].split(",")[0].split(":")[1];
-						let price=dataArr[i].split(",")[0].split(":")[1];
+						let price=dataArr[i].split(",")[1].split(":")[1];
 						
 						var trName=new Date().getTime();
 						
@@ -177,7 +177,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					工序信息
+					添加工序
 				</div>
 				<div class="modal-body">
 					<input type="hidden" name="trid" value="">
@@ -197,12 +197,50 @@
 		</div>
 		<!-- /.modal -->
 	</div>
+	
+	<!-- 模态框 -->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					修改工序
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="edittrid" value="">
+				
+					<span>工序名</span><input type="text" style="width: 320px;" name="afterEditProcedureName"  class="form-control">
+						
+					<span>单价</span><input style="width: 320px;"  name="afterEditProcedurePrice" class="form-control">
+						
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary" onclick="saveEdit()" >保存</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
 
 
 	<script type="text/javascript">
 		
+		//删除工序信息
+		function del(obj){
+			
+			if(confirm('确定删除该工序吗？')){
+				$('#title_'+obj).remove();
+			}
+			
+		}
+		
 
-		//保存模板信息
+		//保存模板信息，上传到数据库
 		function saveProcedureInfo() {
 			
 			var name=$("input[name='name']").val();
@@ -237,6 +275,12 @@
 
 			arr += "]";
 			
+			if($("#file")[0].files[0] == null){
+				if(!confirm('你还没有选择图片确认要保存该模板吗？')){
+					return ;
+				}
+			}
+			
 			
 			fd.append('name',name);
 			fd.append('remarks',remark);
@@ -248,7 +292,7 @@
 			console.log(fd.get('file'));
 			
 			$.ajax({
-				url : 'SaveProcedureString',
+				url : 'SaveProcedureString.b',
 				type : 'post',
 				data : fd,
 				processData: false,
@@ -256,6 +300,7 @@
 				success : function(data) {
 					if(data.code == 1){
 						alert(data.msg);
+						window.location.reload();
 					}
 				}
 			})
@@ -263,16 +308,15 @@
 		}
 		
 		
-
+		//新增工序之前的相关操作
 		function addProcedure(obj) {
 			
 			$("#myModal").modal('show');
 			$("input[name = 'trid']").val('title_'+obj);
 			
-			console.log("3:"+$("input[name = 'trid']").val());
-			
 		}
-
+	
+		//新增工序的保存方法
 		function save() {
 			
 			let trName = new Date().getTime();
@@ -310,24 +354,53 @@
 			
 			alert('添加成功');
 			
-			
-			
+			$("input[name = 'trid']").val('');
 			
 		}
 		
+		//编辑工序信息之前的相关操作
 		function edit(obj){
 			
-			var objId = '#title_'+trName;
+			var objId = '#title_'+obj;
+			
+			var trList = $(objId).children();
+			
+			$("input[name = 'edittrid']").val(objId);
+			
+			$("input[name = 'afterEditProcedureName']").val(trList.eq(0).html());
+			
+			$("input[name = 'afterEditProcedurePrice']").val(trList.eq(1).html());
+			
+			$("#editModal").modal('show');
+		}
+		
+		//保存工序信息
+		function saveEdit(){
+			
+			var objId = $("input[name = 'edittrid']").val();
+			
+			var name = $("input[name = 'afterEditProcedureName']").val();
+			var price = $("input[name = 'afterEditProcedurePrice']").val();
 			
 			
+			var trList = $(objId).children();
 			
+			trList.eq(0).html(name);
+			trList.eq(1).html(price);
+			
+			alert('修改成功');
+			
+			$("#editModal").modal('hide');
 			
 		}
-
+		
+		
+		//隐藏模态框
 		function cancel() {
 			$("#myModal").modal('hide');
 		}
-
+		
+		//	将用户上传的图片显示在页面上
 		function changeImg(obj) {
 
 			var url = getObjectURL(obj);

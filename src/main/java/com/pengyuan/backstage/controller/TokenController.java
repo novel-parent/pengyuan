@@ -24,7 +24,7 @@ public class TokenController {
     private final int time = 180;
 
     @ResponseBody
-    @RequestMapping("/getToken")
+    @RequestMapping("/getToken.b")
     public String getToken(){
 
         String token = UUID.randomUUID().toString();

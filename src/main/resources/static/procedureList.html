@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+</head>
+<body>
+<form method="post" action="" id="listform">
+  <div class="panel admin-panel">
+    <div class="padding border-bottom">
+      <ul class="search" style="padding-left:10px;">
+        <li>
+        
+        名称：  <input type="text" placeholder="请输入搜索关键字" name="name" onblur="ProcedureListsearch()" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          	
+        备注：  <input type="text" placeholder="请输入搜索关键字" name="remarks" onblur="ProcedureListsearch()" class="input" style="width:250px; line-height:17px;display:inline-block" />
+          
+          <a href="javascript:void(0)" class="button border-main icon-search" onclick="ProcedureListsearch()" > 搜索</a></li>
+    
+      </ul>
+    </div>
+    
+    
+    <table class="table table-hover text-center" id="proceduresTable">
+      <tr>
+        <th width="10%" style="text-align:left; padding-left:40px;">模板名称</th>
+        <th width="20%">备注</th>
+        <th width="20%">图片</th>
+        
+        <th width="10%">操作</th>
+      </tr>
+      
+      
+   		
+      
+    </table>
+  </div>
+</form>
+<script type="text/javascript">
+
+	var totalPage;
+	var currentPage = 1;
+	
+	function ProcedureListsearch(){
+		
+		var name  = $("input[name = 'name']").val();
+		var remarks = $("input[name = 'remarks']").val();
+		
+		let data = {};
+		
+		if(name != ''){
+			data.name = name;
+		}
+		
+		if(remarks != ''){
+			data.remarks = remarks;
+		}
+		
+		data.currentPage = currentPage;
+		
+		
+		$.ajax({
+			url: 'getProcedureList',
+			type: 'post',
+			data: data,
+			success : function (data){
+				
+				$("#proceduresTable").empty();
+				
+				var html = '';
+				html+='<tr>';
+				html+='<th width="10%" style="text-align:left; padding-left:40px;">模板名称</th>';
+				html+='<th width="20%">备注</th>';
+				html+='<th width="20%">图片</th>';
+				html+='<th width="10%">操作</th>';
+				html+=' </tr>';
+				
+				$("#proceduresTable").append(html);
+				
+				if(data.code == 1){
+					
+					
+					
+					totalPage = data.totalPage;
+					currentPage = data.currentPage;
+					
+					
+					for(var i=0;i<data.obj.length;i++){
+						
+						var obj = data.obj[i];
+						
+						var html = '';
+						
+						html+='<tr>';
+						html+='<td style="text-align:left; padding-left:40px;"> '+obj.name+'</td>';
+						html+='<td>'+obj.remarks+'</td>';
+						html+='<td width="10%"><img src="'+obj.path+'" alt="" width="70" height="50" /></td>';
+						html+='<td>';
+						html+='<div class="button-group">';
+						html+=' <a class="button border-main" href="add.html"><span class="icon-edit"></span> 查看详情</a>';
+						html+=' <a class="button border-red" href="javascript:void(0)" onclick="return del(1,1,1)"><span class="icon-trash-o"></span> 删除</a>';
+						html+='</div>';
+						html+='</td>';
+						html+='</tr>';
+					
+						$("#proceduresTable").append(html);
+						
+					}
+					
+						var html='';
+						
+						html+='<tr>';
+						html+='<td colspan="8">';
+						html+='<div class="pagelist">';
+						html+=' <a onclick="firstPage()">首页</a>';
+						html+=' <a onclick="prePage()">上一页</a>';
+						html+='<span class="current">'+data.currentPage+'</span>';
+						html+='<a onclick="nextPage()">下一页</a>';
+						html+='<a onclick="lastPage()">尾页</a>';
+						html+='<a >共'+data.totalPage+'页</a>';
+						html+='</div>';
+						html+='</td>';
+						html+='</tr>';
+						
+						$("#proceduresTable").append(html);
+					
+				}else if(data.code == -1){
+					alert(data.msg);
+				}
+			}
+		})
+		
+}
+	
+	function firstPage(){
+		currentPage = 1;
+		ProcedureListsearch();
+	}
+	
+	function prePage(){
+		if((currentPage-1) <= 0){
+			alert('当前已经是第一页');
+			return;
+		}
+		currentPage --;
+		ProcedureListsearch();
+	}
+	
+	function nextPage(){
+		if((currentPage+1) > totalPage ){
+			alert('当前已经是最后一页');
+			return;
+		}
+		currentPage ++;
+		ProcedureListsearch();
+	}
+	
+	function lastPage(){
+		currentPage = totalPage;
+		ProcedureListsearch();
+	}
+	
+
+</script>
+</body>
+</html>

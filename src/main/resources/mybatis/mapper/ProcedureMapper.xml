@@ -3,6 +3,31 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pengyuan.backstage.mapper.ProcedureMapper">
-
+	
+	<select id="searchProcedureByPage" resultType="com.pengyuan.backstage.bean.Procedures">
+			select * from procedures
+			<where>
+				<if test="procedures.name != null">
+					name like "%"#{procedures.name}"%"
+				</if>
+				<if test="procedures.remarks != null">
+					remarks like "%"#{procedures.remarks}"%"
+				</if>
+			</where>
+			
+			limit #{pageBeginIndex},8
+	</select>
+	
+	<select id="searchAllColumn" resultType="Integer">
+		select count(*) from procedures
+			<where>
+				<if test="procedures.name != null">
+					name = #{procedures.name}
+				</if>
+				<if test="procedures.remarks != null">
+					remarks = #{procedures.remarks}
+				</if>
+			</where>
+	</select>
 	
 </mapper>
