@@ -23,7 +23,13 @@ public class HotKeyController {
     @RequestMapping("/corporateName")
     public List<String> corporateNameKey(){
 
-        List<String> list = hotKeyService.corporateNameList();
+        List<String> list = null ;
+
+        try {
+            list = hotKeyService.corporateNameList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return list;
     }
@@ -32,14 +38,28 @@ public class HotKeyController {
     @RequestMapping("/goodsName")
     public List<String> goodsName(@RequestParam(required = false) String corporateName){
 
-        return hotKeyService.goodsNameList(corporateName);
+        List<String> list = null ;
+
+        try {
+            list = hotKeyService.goodsNameList(corporateName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return list ;
     }
 
     @ResponseBody
     @RequestMapping("/orderSearchKeys")
     public List<String> getOrderSearchKeys(@RequestParam(required = false) String key){
 
-        List<String> searchKeys = hotKeyService.getOrderSearchKeys(key);
+        List<String> searchKeys = null ;
+
+        try {
+            searchKeys = hotKeyService.getOrderSearchKeys(key);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return searchKeys;
     }

@@ -11,7 +11,7 @@ public class Order implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-    private long oid;
+    private Long oid;
 
     private String corporateName;
 
@@ -19,71 +19,27 @@ public class Order implements Serializable{
 
     private String documents;
 
-    private int number;
+    private Integer number;
 
-    private long price;
-
-    @Override
-    public String toString() {
-        return "Order{" +
-                "oid=" + oid +
-                ", corporateName='" + corporateName + '\'' +
-                ", goodsName='" + goodsName + '\'' +
-                ", documents='" + documents + '\'' +
-                ", number=" + number +
-                ", price=" + price +
-                ", signatory='" + signatory + '\'' +
-                ", times=" + times +
-                ", money=" + money +
-                ", company='" + company + '\'' +
-                '}';
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
-    }
-
-    public long getTimes() {
-        return times;
-    }
-
-    public void setTimes(long times) {
-        this.times = times;
-    }
-
-    public long getMoney() {
-        return money;
-    }
-
-    public void setMoney(long money) {
-        this.money = money;
-    }
+    private Long price;
 
     private String signatory;
 
-    private long times;
+    private Long times;
 
-    private long money;
-
-    public String getCompany() {
-        return company;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
+    private Long money;
 
     private String company;
 
-    public long getOid() {
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getOid() {
         return oid;
     }
 
-    public void setOid(long oid) {
+    public void setOid(Long oid) {
         this.oid = oid;
     }
 
@@ -111,13 +67,20 @@ public class Order implements Serializable{
         this.documents = documents;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
-
+    public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    public Long getPrice() {
+        return price;
+    }
+
+    public void setPrice(Long price) {
+        this.price = price;
     }
 
     public String getSignatory() {
@@ -128,4 +91,43 @@ public class Order implements Serializable{
         this.signatory = signatory;
     }
 
+    public Long getTimes() {
+        return times;
+    }
+
+    public void setTimes(Long times) {
+        this.times = times;
+    }
+
+    public Long getMoney() {
+        return money;
+    }
+
+    public void setMoney(Long money) {
+        this.money = money;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "oid=" + oid +
+                ", corporateName='" + corporateName + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", documents='" + documents + '\'' +
+                ", number=" + number +
+                ", price=" + price +
+                ", signatory='" + signatory + '\'' +
+                ", times=" + times +
+                ", money=" + money +
+                ", company='" + company + '\'' +
+                '}';
+    }
 }

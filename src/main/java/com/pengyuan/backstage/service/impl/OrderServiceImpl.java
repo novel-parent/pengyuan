@@ -52,13 +52,21 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String updOrder(Order order) {
 
+        String msg = "-1";
+
         HotKey hotKey = orderMapper.selOrdersByOid(order.getOid());
-        delHotKey(hotKey.getCorporateName(), hotKey.getGoodsName());
 
+        int i = orderMapper.updOrder(order);
 
-        updHotKey(order.getCorporateName(), order.getGoodsName());
+        if( i > 0 ){
 
-        return null;
+            msg = "1";
+
+            delHotKey(hotKey.getCorporateName(), hotKey.getGoodsName());
+
+            updHotKey(order.getCorporateName(), order.getGoodsName());
+        }
+        return msg;
     }
 
     @Override
