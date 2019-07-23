@@ -9,6 +9,7 @@ public class JsonModel implements Serializable{
 	private int code;
 	private String msg;
 	private Object obj;
+	private Object other;
 	
 	public int getCode() {
 		return code;
@@ -28,4 +29,11 @@ public class JsonModel implements Serializable{
 	public void setObj(Object obj) {
 		this.obj = obj;
 	}
+	public Object getOther() {
+		return other;
+	}
+	public void setOther(Object other) {
+		this.other = other;
+	}
+	
 }

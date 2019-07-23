@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -97,14 +98,27 @@ public class UserController {
     }
     
     @ResponseBody
-    @RequestMapping("deleteUser")
-    public Object deleteUser(long uid) {
+    @RequestMapping("deleteUser/{currentPage}")
+    public Object deleteUser(long uid,@PathVariable("currentPage") int currentPage ) {
+				    	
     	JsonModel jm=new JsonModel();
+    	
+    	//将页码回传
+		jm.setCode(currentPage);
+    	
     	try {
-		int i = userService.deleteUser(uid);
-
-		jm.setCode(i);
-    	jm.setMsg("删除成功！");
+			int i = userService.deleteUser(uid);
+	
+			if(i>0) {
+				
+				//设置回传数据
+				jm.setCode(currentPage);
+				
+		    	jm.setMsg("删除成功！");
+			}else {
+				jm.setCode(-1);
+				jm.setMsg("请求失败");
+			}
     	}catch (Exception e) {
     		e.printStackTrace();
     		jm.setCode(-1);

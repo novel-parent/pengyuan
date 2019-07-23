@@ -265,7 +265,7 @@ $(function(){
 	function searchUser(){
 		var name = $('input[name="name"]').val();
 		var tel = $('input[name="tel"]').val();
-		var factory = $('#factory').val();
+		var fid = $('#factory').val();
 		var flag = $('#userStatus').val();
 		
 			var data = {};
@@ -278,8 +278,8 @@ $(function(){
 				data.tel=tel;
 			}
 			
-			if(factory != '' && factory != null){
-				data.fid=factory;
+			if(fid != '' && fid != null){
+				data.fid=fid;
 			}
 			
 			if(flag != null && flag != ''){
@@ -321,24 +321,30 @@ $(function(){
 						
 						$("#usertable").append(head);
 						
-						$.each(data.obj,function(i,obj){
+						
+							
+						for(var i=0;i<data.obj.length;i++){
+							
+							var listId = new Date().getTime();
+							
+							var user = data.obj[i];
 							
 							var flag='在职';
 							
-							if(obj.flag == 0 ){
+							if(user.flag == 0 ){
 								flag='离职';
 							}
 
 							var html='';
-							html+='<tr>';
-							html+='<td>'+obj.userName+'</td>';
-							html+='<td>'+obj.tel+'</td>';
-							html+='<td >'+obj.factory.factoryName+'</td>';
+							html+='<tr id=user_'+listId+'>';
+							html+='<td>'+user.userName+'</td>';
+							html+='<td>'+user.tel+'</td>';
+							html+='<td >'+user.factory.factoryName+'</td>';
 							html+='<td >'+flag+'</td>';
 							html+='<td >';
 							html+='<div class="button-group">';
-							html+='<a class="button border-main" name="edi" onclick="edit('+obj.uid+')"> <span class="icon-edit"></span> 修改</a>';
-							html+=' <a class="button border-red" href="javascript:void(0)" onclick="return del('+obj.uid+')">';
+							html+='<a class="button border-main" name="edi" onclick="edit('+user.uid+')"> <span class="icon-edit"></span> 修改</a>';
+							html+=' <a class="button border-red" href="javascript:void(0)" onclick="del('+user.uid+','+listId+')">';
 							html+='<span class="icon-trash-o"></span> 删除</a>';
 							html+='</div>';
 							html+='</td>';
@@ -346,8 +352,8 @@ $(function(){
 							
 							$("#usertable").append(html);
 							
-							
-						})
+						}	
+						
 						
 						
 						var tool='';
@@ -410,19 +416,31 @@ $(function(){
 		}
 	
 	//删除用户
-		function del(uid) {
+		function del(uid,trId) {
+			
 			if (confirm("您确定要删除该员工吗?")) {
+				
+				var name = $('input[name="name"]').val();
+				var tel = $('input[name="tel"]').val();
+				var fid = $('#factory').val();
+				var flag = $('#userStatus').val();
+				
 				$.ajax({
-					url:'deleteUser',
+					url:'deleteUser/'+currentPage,
 					type:'post',
 					data:'uid='+uid,
 					success: function(data){
-						if(data.code == 1){
+						//code返回的是删除前的页码
+						if(data.code > 0){
+							
+							currentPage = data.code;
+							
+							//使用删除前的页码再进行搜索
+							searchUser();
+							
 							alert(data.msg);
-							window.location.reload();
 						}else if(data.code == -1){
 							alert(data.msg);
-							window.location.reload();
 						}
 					}
 				})

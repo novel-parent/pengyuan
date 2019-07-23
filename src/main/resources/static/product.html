@@ -39,8 +39,11 @@
 						let name=dataArr[i].split(",")[0].split(":")[1];
 						let price=dataArr[i].split(",")[0].split(":")[1];
 						
+						var trName=new Date().getTime();
 						
-						html+="<tr name='title_'"+new Date()+">";
+						console.log('Ending_'+i+"  :  "+trName);
+						
+						html+="<tr id='title_"+trName+"'>";
 						html+="<td>"+name+"</td>";
 						html+="<td>"+price+"</td>";
 						html+="<td></td>";
@@ -51,19 +54,20 @@
 						html+="<td></td>";
 						html+="<td>";
 						html+="<div class='button-group'>";
-						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+new Date()+")'><span class='icon-edit'></span>添加</a>";
-						html+="<a class='button border-main' href='javascript:void(0)' onclick='edit(this)'> <span class='icon-edit'></span> 修改</a>";
-						html+="<a class='button border-red' href='javascript:void(0)' onclick='return del(this)'> <span class='icon-trash-o'></span>删除</a>";
+						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+trName+")'><span class='icon-edit'></span>添加</a>";
+						html+="<a class='button border-main' href='javascript:void(0)' onclick='edit("+trName+")'> <span class='icon-edit'></span> 修改</a>";
+						html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+")'> <span class='icon-trash-o'></span>删除</a>";
 						html+="</div>";
 						html+="</td>";
 						html+="</tr>";
 						
+						console.log('Ending_'+i+"  :  "+trName);
 						
 						$("#procedureInfo").append(html);
 					}
 					
 					var html = '';
-					html+='<tr name="title">';
+					html+='<tr id="titleSave">';
 					html+='<td colspan="15">';
 					html+='<div class="pagelist">';
 					html+='<div onclick="file.click()">';
@@ -146,7 +150,7 @@
 			</ul>
 		</div>
 		<table class="table table-hover text-center" name="procedureTable" id="procedureInfo">
-			<tr name="title">
+			<tr id="titleBegin">
 				<th width="120">工序</th>
 				<th width="120">单价</th>
 				<th width="180">数量</th>
@@ -176,6 +180,7 @@
 					工序信息
 				</div>
 				<div class="modal-body">
+					<input type="hidden" name="trid" value="">
 				
 					<span>工序名</span><input type="text" style="width: 320px;" name="procedureName"  class="form-control">
 						
@@ -217,7 +222,7 @@
 			}
 			
 			
-			var trList = $("tr[name='title']");
+			var trList = $("tr[id ^= 'title']");
 
 			var arr = "[{name:工序名,price:单价}";
 
@@ -255,21 +260,66 @@
 				}
 			})
 			
-			
-			
-			
-			
 		}
+		
+		
 
 		function addProcedure(obj) {
+			
 			$("#myModal").modal('show');
+			$("input[name = 'trid']").val('title_'+obj);
+			
+			console.log("3:"+$("input[name = 'trid']").val());
+			
 		}
 
 		function save() {
 			
-			let html='';
-			let procedureName = $("input[name = 'procedureName']").val();
-			let procedurePrice = $("input[name = 'procedurePrice']").val();
+			let trName = new Date().getTime();
+			
+			let name = $("input[name = 'procedureName']").val();
+			
+			let price = $("input[name = 'procedurePrice']").val();
+			
+			let objName = $("input[name = 'trid']").val();
+			
+			
+			let trObj = $("#"+objName);
+			
+			let html = '';
+			
+			html+="<tr id='title_"+trName+"'>";
+			html+="<td>"+name+"</td>";
+			html+="<td>"+price+"</td>";
+			html+="<td></td>";
+			html+="<td></td>";
+			html+="<td></td>";
+			html+="<td></td>";
+			html+="<td></td>";
+			html+="<td></td>";
+			html+="<td>";
+			html+="<div class='button-group'>";
+			html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+trName+")'><span class='icon-edit'></span>添加</a>";
+			html+="<a class='button border-main' href='javascript:void(0)' onclick='edit("+trName+")'> <span class='icon-edit'></span> 修改</a>";
+			html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+")'> <span class='icon-trash-o'></span>删除</a>";
+			html+="</div>";
+			html+="</td>";
+			html+="</tr>";
+			
+			trObj.after(html);
+			
+			alert('添加成功');
+			
+			
+			
+			
+		}
+		
+		function edit(obj){
+			
+			var objId = '#title_'+trName;
+			
+			
 			
 			
 		}
