@@ -67,7 +67,7 @@ public class UserController {
     	
     	JsonModel jm = new JsonModel();
     	//判断用户是的uid是否为空，如果为空则说明该用户在数据库里没有记录
-    	if(user.getUid() <= 0 || "".equals(user.getUid()+"")) {
+    	if(user.getUid() == null) {
     		 if(userService.addUser(user)>0) {
     			 jm.setCode(1);
     			 jm.setMsg("添加成功！员工初始密码统一为：123456789");

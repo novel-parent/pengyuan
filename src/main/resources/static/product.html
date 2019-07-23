@@ -16,32 +16,118 @@
 <script src="js/bootstrap.min.js"></script>
 <script type="text/javascript">
 
-	//获取模板信息
-	$.ajax({
-		url:'getProcedureInfo',
-		type:'post',
-		data:'baseModel=base',
-		success: function(data){
-			if(data.code == -1){
-				alert(data.msg);
-			}else if(data.code == 1){
+	$(function(){
+		//获取模板信息
+		$.ajax({
+			url:'getProcedureInfo',
+			type:'post',
+			data:'baseModel=base',
+			success: function(data){
+				if(data.code == -1){
+					alert(data.msg);
+				}else if(data.code == 1){
+					
+					
+					var dataString = data.obj.main;
+					
+					var dataArr = parseJsonString(dataString);
+					
+					//遍历工序模板信息
+					for(let i=0;i<dataArr.length;i++){
+						
+						var html = '';
+						let name=dataArr[i].split(",")[0].split(":")[1];
+						let price=dataArr[i].split(",")[0].split(":")[1];
+						
+						
+						html+="<tr name='title_'"+new Date()+">";
+						html+="<td>"+name+"</td>";
+						html+="<td>"+price+"</td>";
+						html+="<td></td>";
+						html+="<td></td>";
+						html+="<td></td>";
+						html+="<td></td>";
+						html+="<td></td>";
+						html+="<td></td>";
+						html+="<td>";
+						html+="<div class='button-group'>";
+						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+new Date()+")'><span class='icon-edit'></span>添加</a>";
+						html+="<a class='button border-main' href='javascript:void(0)' onclick='edit(this)'> <span class='icon-edit'></span> 修改</a>";
+						html+="<a class='button border-red' href='javascript:void(0)' onclick='return del(this)'> <span class='icon-trash-o'></span>删除</a>";
+						html+="</div>";
+						html+="</td>";
+						html+="</tr>";
+						
+						
+						$("#procedureInfo").append(html);
+					}
+					
+					var html = '';
+					html+='<tr name="title">';
+					html+='<td colspan="15">';
+					html+='<div class="pagelist">';
+					html+='<div onclick="file.click()">';
+					html+='<img src="images/timg.jfif" name="fileimg" style="width: 120px; height: 120px; left: 60px;" class="img-responsive" " alt="Cinque Terre" width="304" height="236">';
+					html+='<div style="float: left;">';
+					html+='<span>上传图片</span>';
+					html+='</div>';
+					html+='<input type="file" onchange="changeImg(this)" style="display: none" id="file">';
+					html+='</div>';
+					html+='<div class="button-group">';
+					html+='<a class="button border-main" href="javascript:void(0)" onclick="saveProcedureInfo()" style="background-color: blue; color: white; width: 120px; text-decoration: none;"> 保存 </a>';
+					html+='</div>';
+					html+='</div>';
+					html+='</td>';
+					html+='</tr>';
+					
+					$("#procedureInfo").append(html);
+					 
+				}
 				
-				let m = indexOf('[');
-				let n = indexOf(']');
-				
-				alert(n +"-"+m);
-				
-				var dataString = data.obj.main;
-				
-				var dataArr=new Array();
-				 dataString = dataString.substring(0,1);
-				 dataString = dataString.substring(dataString.length-1,dataString.length);
-				 
-				 alert(dataString);
 			}
+		})
+		
+	})
+
+	
+	
+	
+	
+	
+	
+	
+	//解析Json数组
+	function parseJsonString(dataString){
+		
+		let m = indexOf(dataString,'[');
+		let n = indexOf(dataString,']');
+		
+		var dataStr=dataString.substring(m+1,n);
+		
+		var tmpArr=dataStr.split('}');
+		
+		var dataArr = new Array();
+		
+		for(let j=0;j<tmpArr.length-1;j++){
+			
+			let tmpStr = tmpArr[j].split('{');
+			
+			dataArr[j-1] = tmpStr[1];
 			
 		}
-	})
+		
+		return dataArr;
+	}
+	
+	//获取某一字符在字符串里面的位置
+	function indexOf(str,value){
+		var tmp = str.split('');
+		for(var i=0;i<tmp.length;i++){
+			if(tmp[i] == value){
+				return i;
+			}
+		}
+	}
 	
 </script>
 
@@ -59,7 +145,7 @@
 				<li><input type="text" name="remark" class="form-control"></li>
 			</ul>
 		</div>
-		<table class="table table-hover text-center" name="procedureTable">
+		<table class="table table-hover text-center" name="procedureTable" id="procedureInfo">
 			<tr name="title">
 				<th width="120">工序</th>
 				<th width="120">单价</th>
@@ -71,74 +157,11 @@
 				<th width="180">合计</th>
 				<th>操作</th>
 			</tr>
-			<tr name="title">
-				<td>车提手</td>
-				<td>0.15</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>
-					<div class='button-group'>
-						<a class='button border-main' href='javascript:void(0)'
-							onclick='updateOrder()'> <span class='icon-edit'></span>添加
-						</a> <a class='button border-main' href='javascript:void(0)'
-							onclick='save()'> <span class='icon-edit'></span> 修改
-						</a> <a class='button border-red' href='javascript:void(0)'
-							onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除
-						</a>
-					</div>
-				</td>
-			</tr>
-			<tr name="title">
-				<td>翻提手</td>
-				<td>0.06</td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td>
-					<div class='button-group'>
-						<a class='button border-main' href='javascript:void(0)'
-							onclick='updateOrder()'> <span class='icon-edit'></span>添加
-						</a> <a class='button border-main' href='javascript:void(0)'
-							onclick='save()'> <span class='icon-edit'></span> 修改
-						</a> <a class='button border-red' href='javascript:void(0)'
-							onclick='return del("+ele.oid+")'> <span class='icon-trash-o'></span>删除
-						</a>
-					</div>
-				</td>
-			</tr>
-
-			<tr name="title">
-				<td colspan="15">
-				<form action="" id="formdatafrom"></form>
-					<div class="pagelist">
-						<div onclick="file.click()">
-							<img src="images/timg.jfif" name="fileimg"
-								style="width: 120px; height: 120px; left: 60px;"
-								class="img-responsive" " alt="Cinque Terre" width="304"
-								height="236">
-							<div style="float: left;">
-								<span>上传图片</span>
-							</div>
-							<input type="file" onchange="changeImg(this)"
-								style="display: none" id="file">
-						</div>
-
-						<div class='button-group'>
-							<a class='button border-main' href='javascript:void(0)'
-								onclick='saveProcedureInfo()'
-								style="background-color: blue; color: white; width: 120px; text-decoration: none;">
-								保存 </a>
-						</div>
-					</div>
-				</td>
-			</tr>
+			
+			
+			<!-- 工序列表内容 -->
+			
+			
 		</table>
 	</div>
 
@@ -153,14 +176,16 @@
 					工序信息
 				</div>
 				<div class="modal-body">
-					<span>工序名</span><input type="text" style="width: 320px;"
-						name"  class="form-control"> <span>单价</span><input
-						style="width: 320px;" text" name="price" class="form-control">
+				
+					<span>工序名</span><input type="text" style="width: 320px;" name="procedureName"  class="form-control">
+						
+					<span>单价</span><input style="width: 320px;"  name="procedurePrice" class="form-control">
+						
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
 					</button>
-					<button type="button" class="btn btn-primary" >保存</button>
+					<button type="button" class="btn btn-primary" onclick="save()" >保存</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -206,9 +231,6 @@
 			}
 
 			arr += "]";
-
-		
-			
 			
 			
 			fd.append('name',name);
@@ -239,12 +261,17 @@
 			
 		}
 
-		function updateOrder() {
+		function addProcedure(obj) {
 			$("#myModal").modal('show');
 		}
 
 		function save() {
-			$("#myModal").modal('hide');
+			
+			let html='';
+			let procedureName = $("input[name = 'procedureName']").val();
+			let procedurePrice = $("input[name = 'procedurePrice']").val();
+			
+			
 		}
 
 		function cancel() {
