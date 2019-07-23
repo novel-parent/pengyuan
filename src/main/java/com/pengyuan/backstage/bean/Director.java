@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author LX
  * @date 2019/7/7 - 15:22
  */
-public class director implements Serializable{
+public class Director implements Serializable{
 
     private long did;
     private long uid ;
