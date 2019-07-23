@@ -161,6 +161,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public PageBean SerachPageBean(User user, int pageNum) {
 		
+		System.out.println(user+"=======================");
+		
 		PageBean pb=new PageBean();
 		
 		User u=new User();
@@ -168,7 +170,7 @@ public class UserServiceImpl implements UserService {
 		if(user.getUserName()!=null ) {
 			u.setUserName(user.getUserName());
 		}
-		if(user.getFid() == -1 && user.getFid() == 0 ) {
+		if(user.getFid() == -1 || user.getFid() == 0 ) {
 			u.setFid(null);
 		}else {
 			u.setFid(user.getFid());

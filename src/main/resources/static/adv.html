@@ -163,7 +163,7 @@ $(function(){
 								<td><input type="text" class="form-control" id="tel"
 									placeholder="请输入电话" onblur="checkTel(this.value)"></td>
 								<td style="margin-right: 20px;">
-										<select class="form-control" style="width: 90px;" id="fid" >
+										<select class="form-control" style="width: 120px;" id="fid" >
 											
 											<!-- 工厂信息 -->
 												
@@ -297,7 +297,7 @@ $(function(){
 				data:data,
 				success: function(data){
 					if(data.code == -1){
-						getToken();
+						
 						alert(data.msg);
 					}else if(data.code == 1){
 						
@@ -440,6 +440,13 @@ $(function(){
 			
 			var len = $("#tel").val().length;
 			
+			//判断姓名是否为空
+			if($("#name").val() == ''){
+				alert("姓名不能为空");
+				return;
+			}
+			
+			//判断电话号码格式是否正确
 			if(len <=  7){
 				
 				if(!partten7.test($("#tel").val())){
@@ -456,11 +463,8 @@ $(function(){
 				}
 			}
 			
-			if($("#name").val() == ''){
-				alert("姓名不能为空");
-				return;
-			}
 			
+			//判断是否选择了工厂
 			if($("#fid").val() == -1){
 				alert('该员工还没有选择所属工厂！');
 				return;
@@ -498,12 +502,18 @@ $(function(){
 							window.location.reload();
 						}else if(data == -1){
 							alert('请求失败');
+							getToken();
 						}
+					}
+					error: function(){
+						alert('系统繁忙');
+						getToken();
 					}
 				})
 			
 		})
 		
+		//点击新增用户按钮加载模态框的数据
 		function addUserBtn(){
 			
 			$("input[name = 'uid']").val("0");

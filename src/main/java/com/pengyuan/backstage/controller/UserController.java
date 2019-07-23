@@ -105,6 +105,7 @@ public class UserController {
     	
     	PageBean userList= userService.SerachPageBean(user,pageNum);
     	
+    	
     	if(userList.getObj().isEmpty()) {
     		userList.setCode(-1);
     		userList.setMsg("没有查找到匹配条件的员工信息");
