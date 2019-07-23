@@ -48,6 +48,9 @@ $(function(){
 		}
 	})
 	
+	
+	
+	
 })
 	
 			//加载编辑用户信息列表
@@ -210,6 +213,18 @@ $(function(){
 		}
 	})
 	
+	//获取token信息
+	function getToken(){
+		$.ajax({
+			url:'getToken',
+			data:'',
+			type:'post',
+			success: function(data){
+				$("input[name^='token']").val(data);
+			}
+		})
+	}
+	
 	function checkName(obj){
 		
 		if($("#name").val() ==  ''){
@@ -272,10 +287,8 @@ $(function(){
 			}
 			
 			
-			
 			//当前页数
 			data.pageNum=currentPage;
-			
 			
 			
 			$.ajax({
@@ -284,6 +297,7 @@ $(function(){
 				data:data,
 				success: function(data){
 					if(data.code == -1){
+						getToken();
 						alert(data.msg);
 					}else if(data.code == 1){
 						

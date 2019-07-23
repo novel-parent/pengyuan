@@ -63,7 +63,6 @@ public class UserController {
     @RequestMapping("updateUser")
     public JsonModel updateUser(User user) {
     	
-    	System.out.println(user);
     	
     	JsonModel jm = new JsonModel();
     	//判断用户是的uid是否为空，如果为空则说明该用户在数据库里没有记录
@@ -105,7 +104,6 @@ public class UserController {
     	
     	
     	PageBean userList= userService.SerachPageBean(user,pageNum);
-    	
     	
     	if(userList.getObj().isEmpty()) {
     		userList.setCode(-1);
