@@ -1,6 +1,5 @@
 package com.pengyuan.backstage.mapper;
 
-import com.pengyuan.backstage.bean.Orders;
 import com.pengyuan.backstage.bean.User;
 
 import java.util.List;

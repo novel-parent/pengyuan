@@ -19,6 +19,8 @@ public class User implements Serializable{
     private Factory factory;
     private String tel;
     private Integer flag;
+
+    private Director director;
     
     public User() {
     	
@@ -35,6 +37,14 @@ public class User implements Serializable{
                 ", tel='" + tel + '\'' +
                 ", flag=" + flag +
                 '}';
+    }
+
+    public Director getDirector() {
+        return director;
+    }
+
+    public void setDirector(Director director) {
+        this.director = director;
     }
 
     public Long getUid() {
