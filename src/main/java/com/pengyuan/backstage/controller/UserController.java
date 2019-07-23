@@ -66,22 +66,32 @@ public class UserController {
     	
     	JsonModel jm = new JsonModel();
     	//判断用户是的uid是否为空，如果为空则说明该用户在数据库里没有记录
-    	if(user.getUid() == null) {
-    		 if(userService.addUser(user)>0) {
-    			 jm.setCode(1);
-    			 jm.setMsg("添加成功！员工初始密码统一为：123456789");
-    		 }else {
-    			 jm.setCode(-1);
-    			 jm.setMsg("系统繁忙！");
-    		 }
-    	}else {
-    		if(userService.updateUser(user)>0){
-    			jm.setCode(1);
-   			 	jm.setMsg("修改成功！");
-    		}else {
-    			 jm.setCode(-1);
-    			 jm.setMsg("系统繁忙！");
-    		}
+    	try {
+    	
+	    	if(user.getUid() == null) {
+	    		 if(userService.addUser(user)>0) {
+	    			 jm.setCode(1);
+	    			 jm.setMsg("添加成功！员工初始密码统一为：123456789");
+	    		 }else {
+	    			 jm.setCode(-1);
+	    			 jm.setMsg("系统繁忙！");
+	    		 }
+	    	}else {
+	    		if(userService.updateUser(user)>0){
+	    			jm.setCode(1);
+	   			 	jm.setMsg("修改成功！");
+	    		}else {
+	    			 jm.setCode(-1);
+	    			 jm.setMsg("系统繁忙！");
+	    		}
+	    	}	
+	    	
+    	}catch(Exception e) {
+    		
+    		e.printStackTrace();
+    		jm.setCode(-1);
+			jm.setMsg("系统繁忙！");
+			
     	}
     	return jm;
     }
@@ -90,10 +100,16 @@ public class UserController {
     @RequestMapping("deleteUser")
     public Object deleteUser(long uid) {
     	JsonModel jm=new JsonModel();
+    	try {
 		int i = userService.deleteUser(uid);
 
 		jm.setCode(i);
     	jm.setMsg("删除成功！");
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		jm.setCode(-1);
+        	jm.setMsg("请求失败");
+    	}
     	
     	return jm;
     }

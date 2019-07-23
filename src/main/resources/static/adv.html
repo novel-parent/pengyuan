@@ -350,7 +350,6 @@ $(function(){
 						})
 						
 						
-						
 						var tool='';
 						tool+='<li><a onclick="firstPage()">首页</a></li>';
 						tool+='<li><a onclick="prePage()">上一页</a></li>';
@@ -419,6 +418,9 @@ $(function(){
 					data:'uid='+uid,
 					success: function(data){
 						if(data.code == 1){
+							alert(data.msg);
+							window.location.reload();
+						}else if(data.code == -1){
 							alert(data.msg);
 							window.location.reload();
 						}
@@ -505,12 +507,7 @@ $(function(){
 							getToken();
 						}
 					}
-					error: function(){
-						alert('系统繁忙');
-						getToken();
-					}
 				})
-			
 		})
 		
 		//点击新增用户按钮加载模态框的数据
