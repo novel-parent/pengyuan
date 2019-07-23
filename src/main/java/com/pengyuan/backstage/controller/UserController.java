@@ -100,8 +100,8 @@ public class UserController {
     }
     
     @ResponseBody
-    @RequestMapping("serachUser")
-    public Object serachUser(User user,int pageNum) {
+    @RequestMapping("/searchUser")
+    public Object searchUser(User user,int pageNum) {
     	
     	
     	PageBean userList= userService.SerachPageBean(user,pageNum);
