@@ -24,7 +24,20 @@ public interface ProcedureService {
 	 */
 
 	Procedures getProcedureModel(String baseModel);
+	
+	/**
+	  * 分页查询数据
+	 * @param pd	前台传过来的要查询的工序信息
+	 * @param currentPage :当前页
+	 * @return
+	 */
 
 	ProcedureModel searchProcedureByPage(Procedures pd, int currentPage);
+	
+	/**
+	  * 获取所有的日期信息
+	 * @return
+	 */
+	List<Procedures> searchAllDate();
 
 }
