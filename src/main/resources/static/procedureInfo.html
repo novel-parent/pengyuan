@@ -17,11 +17,20 @@
 <script type="text/javascript">
 
 	$(function(){
+		
+		var searchString = window.location.search;
+		
+		var rowData = searchString.split('?')[1];
+		
+		var fid = rowData.split('&')[0].split('=')[1];
+		
+				
+		
 		//获取模板信息
 		$.ajax({
-			url:'getProcedureInfo.b',
+			url:'addDataForProcedure.b',
 			type:'post',
-			data:'baseModel=base',
+			data:'fid='+fid,
 			success: function(data){
 				if(data.code == -1){
 					alert(data.msg);
