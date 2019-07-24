@@ -39,5 +39,11 @@ public interface ProcedureService {
 	 * @return
 	 */
 	List<Procedures> searchAllDate();
+	/**
+	  * 通过fid查找模板信息   
+	 * @param fid
+	 * @return
+	 */
+	Procedures searchProcedureById(Long fid);
 
 }
