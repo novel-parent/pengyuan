@@ -9,6 +9,13 @@ import java.util.List;
 public interface HotKeyService {
 
     /**
+     *        得到key   用户 有关的  查询
+     * @param key
+     * @return
+     */
+    List<String> userNameList(String key);
+
+    /**
      *       得到所有的  corporateName  的名字
      * @return
      */

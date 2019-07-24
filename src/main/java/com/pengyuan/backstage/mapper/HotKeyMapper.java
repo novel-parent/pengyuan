@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface HotKeyMapper {
 
+
     /**
      *         搜索 所有的 corporateName 的名字 作为关键词  提示
      * @return
