@@ -152,14 +152,14 @@
 		<table class="table table-hover text-center" name="procedureTable" id="procedureInfo">
 			<tr id="titleBegin">
 				<th width="120">工序</th>
-				<th width="120">单价</th>
-				<th width="180">数量</th>
-				<th width="120">姓名</th>
-				<th width="180">合计</th>
-				<th width="180">数量</th>
-				<th width="120">姓名</th>
-				<th width="180">合计</th>
-				<th>操作</th>
+				<th width="80">单价</th>
+				<th width="100">数量</th>
+				<th width="80">姓名</th>
+				<th width="120">合计</th>
+				<th width="100">数量</th>
+				<th width="80">姓名</th>
+				<th width="120">合计</th>
+				<th width="220">操作</th>
 			</tr>
 			
 			
@@ -239,7 +239,9 @@
 				type:'post',
 				success: function(data){
 					if(data.code > 0){
-						alert('与先前的模板名称有冲突，建议换一个名字');
+						if(confirm('与先前的商品名称重名,确认使用此名字吗？')){
+							
+						}
 					}
 				}
 			})

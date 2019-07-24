@@ -76,9 +76,7 @@ $(function(){
 
 </head>
 <body>
-	<div id="myAlert" class="alert alert-success">
-			<a href="#" class="close" data-dismiss="alert">&times;</a> <strong>admin你好！</strong>欢迎来到员工管理界面。
-		</div>
+	
 		<div class="padding border-bottom ">
 				<table class="table" >
 
@@ -269,6 +267,10 @@ $(function(){
 		var fid = $('#factory').val();
 		var flag = $('#userStatus').val();
 		
+		
+		
+			
+		
 			var data = {};
 			
 			if(name != null && name != ''){
@@ -329,6 +331,8 @@ $(function(){
 							var listId = new Date().getTime();
 							
 							var user = data.obj[i];
+							
+							console.log(user);
 							
 							var flag='在职';
 							

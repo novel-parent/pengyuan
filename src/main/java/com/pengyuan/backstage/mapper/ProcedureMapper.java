@@ -23,4 +23,7 @@ public interface ProcedureMapper {
 	@Select("select distinct times from procedures")
 	List<Procedures> serachAllDate();
 
+	@Select("select * from procedures where pid = #{pid}")
+	Procedures searchProcedureById(Long fid);
+
 }

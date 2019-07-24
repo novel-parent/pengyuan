@@ -37,6 +37,7 @@
 				}else if(data.code == 1){
 					
 					
+					
 					var dataString = data.obj.main;
 					
 					var dataArr = parseJsonString(dataString);
@@ -94,6 +95,11 @@
 					html+='</tr>';
 					
 					$("#procedureInfo").append(html);
+					
+					
+					
+					$("input[name = 'name']").val(data.obj.name);
+					$("input[name = 'remark']").val(data.obj.remarks);
 					 
 				}
 				

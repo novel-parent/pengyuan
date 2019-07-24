@@ -111,4 +111,36 @@ public class ProcedureController {
 		return jm;
 	}
 	
+	@ResponseBody
+	@RequestMapping("checkProcedureName.b")
+	public Object checkProcedureName(String name) {
+		JsonModel jm=new JsonModel();
+		
+		Procedures pro = ps.getProcedureModel(name);
+		
+		if(pro == null) {
+			jm.setCode(1);
+		}else {
+			jm.setCode(-1);
+		}
+		return jm;
+	}
+	
+	@ResponseBody
+	@RequestMapping("addDataForProcedure.b")
+	public Object addDataForProcedure(Long fid) {
+		JsonModel jm = new JsonModel();
+		
+		try {
+			Procedures procedure = ps.searchProcedureById(fid);
+			jm.setObj(procedure);
+			jm.setCode(1);
+		}catch(Exception e) {
+			jm.setCode(-1);
+			jm.setMsg("请求失败");
+			e.printStackTrace();
+		}
+		return jm;
+	}
+	
 }

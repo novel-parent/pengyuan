@@ -125,6 +125,12 @@ public class ProcedureImpl implements ProcedureService {
 	}
 
 
+	@Override
+	public Procedures searchProcedureById(Long pid) {
+		return pm.searchProcedureById(pid);
+	}
+
+
 
 	
 }
