@@ -63,4 +63,14 @@ public class HotKeyController {
 
         return searchKeys;
     }
+
+    @ResponseBody
+    @RequestMapping("/userKey.b")
+    public List<String> getUserNameKeys(@RequestParam(required = false) String key){
+
+        List<String> list = hotKeyService.userNameList(key);
+
+        return list;
+
+    }
 }

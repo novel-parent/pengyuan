@@ -25,6 +25,27 @@ public class HotKeyServiceImpl implements HotKeyService {
     private HotKeyMapper hotKeyMapper;
 
     @Override
+    public List<String> userNameList(String key) {
+
+        List<String> list = new ArrayList<>();
+
+        Set keys = redisTemplate.keys("user:*" + key + "*");
+
+        if( keys != null && keys.size() > 0 ){
+
+            keys.forEach(ele->
+                list.add(ele.toString().replace("user:","" ))
+            );
+        }
+
+        if( list.size() > 0 ){
+            return list;
+        }
+
+        return null;
+    }
+
+    @Override
     public List<String> corporateNameList() {
 
         List<String> stringList = hotKeyMapper.selAllCorporateName();
@@ -49,21 +70,25 @@ public class HotKeyServiceImpl implements HotKeyService {
 
         if(keys != null && keys.size() > 0){
 
-            keys.forEach( ele->{
+            keys.forEach( ele->
 
-                keysList.add(ele.toString().replace("goodsName:", ""));
-            });
+                keysList.add(ele.toString().replace("goodsName:", ""))
+            );
         }
 
         Set keys1 = redisTemplate.keys("corporateName:" + "*" + key + "*");
 
         if( keys1 !=null && keys1.size() > 0){
 
-            keys1.forEach( ele->{
-                keysList.add(ele.toString().replace("corporateName:", ""));
-            });
+            keys1.forEach( ele->
+                keysList.add(ele.toString().replace("corporateName:", ""))
+            );
         }
-        return keysList;
+
+        if(keysList.size()>0){
+            return keysList;
+        }
+        return null;
     }
 
 }
