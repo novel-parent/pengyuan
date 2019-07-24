@@ -24,7 +24,6 @@ public class UserFilter implements Filter {
 
         Object pengyuan = servletRequest.getSession().getAttribute("pengyuan");
 
-        System.out.println("filter: "+pengyuan);
         if( pengyuan != null ){
             chain.doFilter(request,response );
         }

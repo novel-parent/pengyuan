@@ -13,16 +13,6 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface UserMapper {
 
-    /**
-     *
-     *  根据用户名和密码
-     *
-     * @param userName
-     * @param password
-     * @return
-     */
-    @Select("SELECT * FROM USER WHERE userName=#{userName} AND password=#{password}")
-    User selByLogin(@Param("userName") String userName, @Param("password") String password);
 
 	/**
 	 *       得到用户的列表

@@ -31,10 +31,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private FactoryMapper fm;
 
-    @Override
-    public User login(String userName, String password) {
-        return userMapper.selByLogin(userName, password);
-    }
 
 	@Override
 	public List<User> getUserList() {
