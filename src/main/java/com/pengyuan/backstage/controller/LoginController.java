@@ -21,7 +21,7 @@ public class LoginController {
     private LoginService loginService;
 
     @ResponseBody
-    @PostMapping("/login.u")
+    @PostMapping("/login.b")
     public String login(@RequestParam(value = "username") String username , @RequestParam(value = "password") String password, HttpServletRequest request){
 
         String msg = "-1";

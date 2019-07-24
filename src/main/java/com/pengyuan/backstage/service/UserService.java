@@ -12,13 +12,6 @@ import com.pengyuan.backstage.bean.User;
  */
 public interface UserService {
 
-    /**
-     *    用户进行 登录功能
-     * @param userName
-     * @param password
-     * @return
-     */
-    User login(String userName,String password);
 
 	/**
 	 *       查询所有 员工

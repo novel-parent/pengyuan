@@ -17,7 +17,7 @@ import java.util.Map;
  * @author LX
  * @date 2019/6/8 - 21:57
  */
-//@Configuration
+@Configuration
 public class DruidConfig {
 
     @ConfigurationProperties(prefix = "spring.datasource")
@@ -35,30 +35,14 @@ public class DruidConfig {
     public ServletRegistrationBean servletRegistrationBean(){
 
         ServletRegistrationBean registrationBean =
-                new ServletRegistrationBean(new StatViewServlet(),"/druid");
+                new ServletRegistrationBean(new StatViewServlet(),"/druid/*");
 
         Map<String,String> initParams = new HashMap<>();
         initParams.put("loginUsername", "admin");
         initParams.put("loginPassword", "a");
         initParams.put("allow", "");
+        initParams.put("resetEnable", "false");
         registrationBean.setInitParameters(initParams);
         return  registrationBean;
-    }
-
-    @Bean
-    public FilterRegistrationBean filterRegistrationBean(){
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        registrationBean.setFilter(new WebStatFilter());
-        Map<String,String> initParams = new HashMap<>();
-
-//        initParams.put("exclusions", "*.js,*.jpg,*.png,*.ico,*.css,/druid/*");
-
-//        registrationBean.setInitParameters(initParams);
-        // 拦截所有请求
-
-        registrationBean.addUrlPatterns("/*");
-        registrationBean.addInitParameter("exclusions", "*.js,*.jpg,*.png,*.ico,*.css,/druid/*");
-//        registrationBean.setUrlPatterns(Arrays.asList("/*"));
-        return registrationBean;
     }
 }

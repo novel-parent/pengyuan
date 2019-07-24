@@ -27,15 +27,7 @@ public class UserController {
     private UserService userService;
     
 
-    @ResponseBody
-    @RequestMapping("/login/{userName}/{password}")
-    public User login(@PathVariable("userName") String userName, @PathVariable("password") String password, HttpServletRequest req){
 
-        User user = userService.login(userName, password);
-
-        return user;
-    }
-    
    /**
     * 	修改用户信息时给模态框赋值
     * @param uid ：员工id

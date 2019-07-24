@@ -288,7 +288,7 @@
 
       var token = $('#token').val();
       $.ajax({
-         url:"newOrder",
+         url:"newOrder.b",
          data:{"token":token,"documents":newDocuments,"corporateName":newCorporateName,
          "goodsName":newGoodsName,"price":newPrice,"number":newNumber,
          "company":newCompany,"money":newMoney,"signatory":newSignatory},
@@ -352,7 +352,7 @@ function getSearchKey() {
     value = key
 
    $.ajax({
-       url:"orderSearchKeys?key="+key,
+       url:"orderSearchKeys.b?key="+key,
        error:function(){
            alert("请求出错.")
        },
@@ -385,7 +385,7 @@ function getSearchKey() {
       var corporateName1 = $('#corporateName')
 
       $.ajax({
-             url:"corporateName",
+             url:"corporateName.b",
              error:function(){
                  alert("请求出错.")
              },
@@ -412,7 +412,7 @@ function getSearchKey() {
 
        goodsName.html(goodsName.val())
 
-       var tUrl = "goodsName"
+       var tUrl = "goodsName.b"
        var corporateName = $('#corporateName').val()
 
        if(corporateName !='' && corporateName !=null ){
@@ -541,7 +541,7 @@ function changeSearch(){
        changUrl = tUrl
 	}
      var index = tUrl.lastIndexOf('&')
-     tUrl ="/order?"+tUrl.substring(0,index)
+     tUrl ="/order.b?"+tUrl.substring(0,index)
      // if(index>=0){
      //    tUrl ="/order?"+tUrl.substring(0,index)
      // }else {
@@ -676,7 +676,7 @@ function del(oid){
 
 	if(confirm("您确定要删除吗?")){
 		$.ajax({
-           url:"delOrder?oid="+oid,
+           url:"delOrder.b?oid="+oid,
            error:function(){
                alert("请求出错.")
            },

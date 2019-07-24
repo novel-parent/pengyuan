@@ -20,7 +20,7 @@ public class HotKeyController {
     private HotKeyService hotKeyService;
 
     @ResponseBody
-    @RequestMapping("/corporateName")
+    @RequestMapping("/corporateName.b")
     public List<String> corporateNameKey(){
 
         List<String> list = null ;
@@ -35,7 +35,7 @@ public class HotKeyController {
     }
 
     @ResponseBody
-    @RequestMapping("/goodsName")
+    @RequestMapping("/goodsName.b")
     public List<String> goodsName(@RequestParam(required = false) String corporateName){
 
         List<String> list = null ;
@@ -50,7 +50,7 @@ public class HotKeyController {
     }
 
     @ResponseBody
-    @RequestMapping("/orderSearchKeys")
+    @RequestMapping("/orderSearchKeys.b")
     public List<String> getOrderSearchKeys(@RequestParam(required = false) String key){
 
         List<String> searchKeys = null ;

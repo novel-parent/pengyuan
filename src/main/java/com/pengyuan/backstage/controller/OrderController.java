@@ -25,14 +25,14 @@ public class OrderController {
     private OrderService service;
 
     @ResponseBody
-    @RequestMapping("/updOrder")
+    @RequestMapping("/updOrder.b")
     public String updOrder(Order order){
 
         return null;
     }
 
     @ResponseBody
-    @RequestMapping("/newOrder")
+    @RequestMapping("/newOrder.b")
     public String newOrder(Order order){
 
         String msg = "-1";
@@ -47,7 +47,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping("/order")
+    @RequestMapping("/order.b")
     public OrderListDiv search(@RequestParam(required = false) String corporateName ,
                                @RequestParam(required = false) String goodsName,
                                @RequestParam(required = false) Long startTime ,
@@ -70,7 +70,7 @@ public class OrderController {
     }
 
     @ResponseBody
-    @RequestMapping("/delOrder")
+    @RequestMapping("/delOrder.b")
     public String delOrder( Long oid){
 
         String msg = "-1";

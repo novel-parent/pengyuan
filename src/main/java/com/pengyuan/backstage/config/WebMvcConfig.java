@@ -6,6 +6,7 @@ import com.pengyuan.backstage.interceptor.UserInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -24,7 +25,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
         filterRegistrationBean.setFilter(new UserFilter());
 
-        filterRegistrationBean.addUrlPatterns("/index.html","/list.html");
+        filterRegistrationBean.addUrlPatterns("/index.html","/list.html",
+                "/staff.html","/productEdit.html","/procedureInfo.html","/procedureList.html");
 
         return filterRegistrationBean;
     }
@@ -35,11 +37,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(new TokenInterceptor());
 
-        interceptorRegistration.addPathPatterns("/newOrder").addPathPatterns("/updateUser");
+        interceptorRegistration.addPathPatterns("/newOrder.b").addPathPatterns("/updateUser.b");
 
         InterceptorRegistration interceptorRegistration1 = registry.addInterceptor(new UserInterceptor());
 
-        interceptorRegistration1.addPathPatterns("/*").order(1).excludePathPatterns("/login.u");
+        interceptorRegistration1.addPathPatterns("/*").order(1).excludePathPatterns("/login.b","/druid/*");
 
     }
 }
