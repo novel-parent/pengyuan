@@ -37,41 +37,50 @@
 				}else if(data.code == 1){
 					
 					
-					
 					var dataString = data.obj.main;
 					
 					var dataArr = parseJsonString(dataString);
 					
+					
+					var trName=new Date().getTime();
+					
 					//遍历工序模板信息
 					for(let i=0;i<dataArr.length;i++){
 						
+						trName ++ ;
+						
 						var html = '';
-						let name=dataArr[i].split(",")[0].split(":")[1];
-						let price=dataArr[i].split(",")[1].split(":")[1];
+						let name = dataArr[i].split(",")[0].split(":")[1];
+						let price = dataArr[i].split(",")[1].split(":")[1];
+						let num1 = dataArr[i].split(",")[2].split(":")[1];
+						let uname1 = dataArr[i].split(",")[3].split(":")[1];
+						let account1 = dataArr[i].split(",")[4].split(":")[1];
+						let num2 = dataArr[i].split(",")[5].split(":")[1];
+						let uname2 = dataArr[i].split(",")[6].split(":")[1];
+						let account2 = dataArr[i].split(",")[7].split(":")[1]; 
 						
-						var trName=new Date().getTime();
 						
-						console.log('Ending_'+i+"  :  "+trName);
+						
+						
 						
 						html+="<tr id='title_"+trName+"'>";
 						html+="<td>"+name+"</td>";
 						html+="<td>"+price+"</td>";
-						html+="<td></td>";
-						html+="<td></td>";
-						html+="<td></td>";
-						html+="<td></td>";
-						html+="<td></td>";
-						html+="<td></td>";
+						html+="<td>"+num1+"</td>";
+						html+="<td>"+uname1+"</td>";
+						html+="<td>"+account1+"</td>";
+						html+="<td>"+num2+"</td>";
+						html+="<td>"+uname2+"</td>";
+						html+="<td>"+account2+"</td>";
 						html+="<td>";
 						html+="<div class='button-group'>";
-						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+trName+")'><span class='icon-edit'></span>添加</a>";
+						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedureData("+trName+")'><span class='icon-edit'></span>添加</a>";
 						html+="<a class='button border-main' href='javascript:void(0)' onclick='edit("+trName+")'> <span class='icon-edit'></span> 修改</a>";
 						html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+")'> <span class='icon-trash-o'></span>删除</a>";
 						html+="</div>";
 						html+="</td>";
 						html+="</tr>";
 						
-						console.log('Ending_'+i+"  :  "+trName);
 						
 						$("#procedureInfo").append(html);
 					}
@@ -167,14 +176,14 @@
 		<table class="table table-hover text-center" name="procedureTable" id="procedureInfo">
 			<tr id="titleBegin">
 				<th width="120">工序</th>
-				<th width="120">单价</th>
-				<th width="180">数量</th>
-				<th width="120">姓名</th>
-				<th width="180">合计</th>
-				<th width="180">数量</th>
-				<th width="120">姓名</th>
-				<th width="180">合计</th>
-				<th>操作</th>
+				<th width="80">单价</th>
+				<th width="100">数量</th>
+				<th width="80">姓名</th>
+				<th width="120">合计</th>
+				<th width="100">数量</th>
+				<th width="80">姓名</th>
+				<th width="120">合计</th>
+				<th width="220">操作</th>
 			</tr>
 			
 			
@@ -184,28 +193,57 @@
 		</table>
 	</div>
 
-	<!-- 模态框 -->
+	<!-- 添加的模态框 -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+		aria-labelledby="myModalLabel" aria-hidden="true" >
+		<div class="modal-dialog" style="width:1000px;">
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					添加工序
+					添加工序信息
 				</div>
 				<div class="modal-body">
 					<input type="hidden" name="trid" value="">
+					
+					<table class="table" >
+
+						<thead>
+							<tr>
+								<th style="width:180px;">工序名</th>
+								<th style="width:80px;">单价</th>
+								<th style="width:90px;">数量</th>
+								<th style="width:80px;">姓名</th>
+								<th style="width:100px;">合计</th>
+								<th style="width:90px;">数量</th>
+								<th style="width:80px;">姓名</th>
+								<th style="width:100px;">合计</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr id="trList">
+								<td><input type="text" class="form-control"  id="proceduresName" disabled="disabled" ></td>
+								<td><input type="text" class="form-control" id="proceduresPrice" disabled="disabled" ></td>
+								<td><input type="text" class="form-control"  id="number1" placeholder="数量"  onkeyup="getAmmount(this.value,'account1')"></td>
+								<td><input type="text" class="form-control" id="username1" placeholder="员工姓名"  ></td>
+								<td><input type="text" class="form-control" id="account1" placeholder="总金额"  ></td>
+								<td><input type="text" class="form-control" id="number2" placeholder="数量"  onkeyup="getAmmount(this.value,'account2')"></td>
+								<td><input type="text" class="form-control" id="username2" placeholder="员工姓名"  ></td>
+								<td><input type="text" class="form-control" id="account2" placeholder="总金额"  ></td>
+								
+							</tr>
+						</tbody>
+					</table>
 				
-					<span>工序名</span><input type="text" style="width: 320px;" name="procedureName"  class="form-control">
+					
 						
-					<span>单价</span><input style="width: 320px;"  name="procedurePrice" class="form-control">
+					
 						
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+					<button type="button" class="btn btn-default"  >保存当前工序
 					</button>
-					<button type="button" class="btn btn-primary" onclick="save()" >保存</button>
+					<button type="button" class="btn btn-primary" onclick="" >下一工序</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -213,7 +251,7 @@
 		<!-- /.modal -->
 	</div>
 	
-	<!-- 模态框 -->
+	<!-- 修改的模态框 -->
 	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -226,9 +264,11 @@
 				<div class="modal-body">
 					<input type="hidden" name="edittrid" value="">
 				
-					<span>工序名</span><input type="text" style="width: 320px;" name="afterEditProcedureName"  class="form-control">
+					<span>数量</span><input type="text" style="width: 320px;" name="num"  class="form-control">
 						
-					<span>单价</span><input style="width: 320px;"  name="afterEditProcedurePrice" class="form-control">
+					<span>姓名</span><input style="width: 320px;"  name="afterEditProcedurePrice" class="form-control">
+					
+					<span>合计</span><input style="width: 320px;"  name="afterEditProcedurePrice" class="form-control">
 						
 				</div>
 				<div class="modal-footer">
@@ -245,29 +285,27 @@
 
 	<script type="text/javascript">
 	
-		function checkName(obj){
-			var procedureName = obj.value;
+	
+		function getAmmount(num,id){
+			//单价
+			var price = $("#proceduresPrice").val();
 			
-			$.ajax({
-				url:'checkProcedureName.b',
-				data:'name='+procedureName,
-				type:'post',
-				success: function(data){
-					if(data.code > 0){
-						alert('与先前的模板名称有冲突，建议换一个名字');
-					}
-				}
-			})
+			//price转换位为数字类型
+			price = Number(price)*1000;
+			
+			//price转换位为数字类型
+			num = Number(num);
+			
+			let account = price*num;
+			
+			account = account/1000;
+			
+			//保留小数点后三位小数，即 '离'
+			account= Number(account).toFixed(3);
+			
+			$("#"+id).val(account);
 		}
-		
-		//删除工序信息
-		function del(obj){
-			
-			if(confirm('确定删除该工序吗？')){
-				$('#title_'+obj).remove();
-			}
-			
-		}
+	
 		
 
 		//保存模板信息，上传到数据库
@@ -299,7 +337,8 @@
 				var tdList = trList.eq(i).children();
 
 				arr += ",{name:" + tdList.eq(0).html() + ",price:"
-						+ tdList.eq(1).html() + "}"
+				+ tdList.eq(1).html() +",num1:"+tdList.eq(2).html()+",uname1:"+tdList.eq(3).html()+",account1:"+tdList.eq(4).html()
+				+",num2:"+tdList.eq(5).html()+",uname2:"+tdList.eq(6).html()+",account2:"+tdList.eq(7).html()+"}"
 
 			}
 
@@ -339,10 +378,22 @@
 		
 		
 		//新增工序之前的相关操作
-		function addProcedure(obj) {
+		function addProcedureData(obj) {
+			
+			$("input[name = 'trid']").val('title_'+obj);
+			var trList = $("#trList").children();
+			
+			var data = $('#title_'+obj).children();
+			
+			let name = data.eq(0).html();
+			let price = data.eq(1).html();
+			
+			
+			$("#proceduresName").val(name);
+			$("#proceduresPrice").val(price);
 			
 			$("#myModal").modal('show');
-			$("input[name = 'trid']").val('title_'+obj);
+			
 			
 		}
 	
