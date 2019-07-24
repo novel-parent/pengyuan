@@ -4,7 +4,7 @@ import com.pengyuan.backstage.bean.User;
 import com.pengyuan.backstage.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +21,7 @@ public class LoginController {
     private LoginService loginService;
 
     @ResponseBody
-    @RequestMapping("/login")
+    @PostMapping("/login.u")
     public String login(@RequestParam(value = "username") String username , @RequestParam(value = "password") String password, HttpServletRequest request){
 
         String msg = "-1";
@@ -32,7 +32,7 @@ public class LoginController {
 
             msg = "uid="+user.getUid();
 
-            request.getSession().setAttribute("pengyuan",user.getUserName() );
+            request.getSession().setAttribute("pengyuan",user );
         }
 
         return msg;

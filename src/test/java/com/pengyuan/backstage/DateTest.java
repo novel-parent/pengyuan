@@ -19,6 +19,15 @@ public class DateTest {
 
 
     @Test
+    public void regexTest(){
+
+        String str = "/login..u";
+
+        System.out.println(str.matches("^.{0,30}(.u)$"));
+    }
+
+
+    @Test
     public void test5(){
 
         String monthAndDayForAdmin = DateUtil.getMonthAndDayForAdmin();

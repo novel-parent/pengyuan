@@ -1,5 +1,7 @@
 package com.pengyuan.backstage;
 
+import com.pengyuan.backstage.bean.Director;
+import com.pengyuan.backstage.mapper.DirectorMapper;
 import com.pengyuan.backstage.mapper.HotKeyMapper;
 import com.pengyuan.backstage.mapper.OrderMapper;
 import com.pengyuan.backstage.service.HotKeyService;
@@ -28,6 +30,9 @@ public class BackstageApplicationTests {
 	OrderMapper orderMapper;
 
 	@Autowired
+	DirectorMapper directorMapper;
+
+	@Autowired
 	HotKeyMapper hotKeyMapper;
 
 	@Autowired
@@ -35,17 +40,10 @@ public class BackstageApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		List<String> strings = hotKeyMapper.selAllCorporateName();
+		Director director =
+				directorMapper.selByUid(30L);
+		System.out.println(director);
 
-		strings.forEach(ele->{
-			stringRedisTemplate.opsForValue().set("corporateName:"+ele,"1" );
-		});
-
-		List<String> strings1 = hotKeyMapper.selGoodsName(null);
-
-		strings1.forEach(ele->{
-			stringRedisTemplate.opsForValue().set("goodsName:"+ele,"1" );
-		});
 
 	}
 

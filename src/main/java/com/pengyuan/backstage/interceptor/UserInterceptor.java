@@ -1,47 +1,31 @@
 package com.pengyuan.backstage.interceptor;
 
-import com.pengyuan.backstage.util.JedisUtil;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author LX
- * @date 2019/7/19 - 19:33
+ * @date 2019/7/23 - 19:49
  */
-public class TokenInterceptor implements HandlerInterceptor {
-
-    private final String prefix = "token:";
-    private JedisUtil jedisUtil;
-
-    public TokenInterceptor() {
-        jedisUtil = new JedisUtil();
-    }
+public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-        System.out.println(99);
+        HttpSession session = request.getSession();
 
-        String token = request.getParameter("token");
-        
-        String uid = request.getParameter("uid");
-        
-        
-        //uid为空表示此次操作为更新用户信息，不做处理 
-        if( uid != null) {
-        	return true;
+        Object pengyuan = session.getAttribute("pengyuan");
+
+        if( pengyuan == null ){
+
+            return false;
         }
-        
-        if(jedisUtil.del(prefix+token)>0){
-            return true;
-        }
-        response.getWriter().write("-1");
-        return false;
+
+        return true;
     }
 
     @Override

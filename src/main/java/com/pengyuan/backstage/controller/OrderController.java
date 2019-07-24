@@ -58,6 +58,7 @@ public class OrderController {
 
         OrderListDiv orderListDiv = null ;
 
+        System.out.println("1:"+corporateName+"===="+goodsName);
         try {
 
             orderListDiv = service.searchOrder(corporateName, goodsName, startTime, endTime, key, pageSize, page);

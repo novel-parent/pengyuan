@@ -14,7 +14,6 @@ public class User implements Serializable{
 	
 	private Long uid ;
     private String userName;
-    private String password;
     private Long fid;
     private Factory factory;
     private String tel;
@@ -31,11 +30,11 @@ public class User implements Serializable{
         return "User{" +
                 "uid=" + uid +
                 ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
                 ", fid=" + fid +
                 ", factory=" + factory +
                 ", tel='" + tel + '\'' +
                 ", flag=" + flag +
+                ", director=" + director +
                 '}';
     }
 
@@ -61,14 +60,6 @@ public class User implements Serializable{
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public Long getFid() {
@@ -103,13 +94,13 @@ public class User implements Serializable{
         this.flag = flag;
     }
 
-    public User(Long uid, String userName, String password, Long fid, Factory factory, String tel, Integer flag) {
+    public User(Long uid, String userName, Long fid, Factory factory, String tel, Integer flag, Director director) {
         this.uid = uid;
         this.userName = userName;
-        this.password = password;
         this.fid = fid;
         this.factory = factory;
         this.tel = tel;
         this.flag = flag;
+        this.director = director;
     }
 }

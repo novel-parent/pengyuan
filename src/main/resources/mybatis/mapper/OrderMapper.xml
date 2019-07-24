@@ -46,13 +46,13 @@
 
     <select id="selForSearch" resultType="com.pengyuan.backstage.bean.Orders">
         SELECT * FROM orders WHERE flag=1
-        <if test="corporateName !=null">
+        <if test="corporateName !=null and corporateName!='' ">
             AND corporateName = #{corporateName}
         </if>
-        <if test="goodsName !=null">
+        <if test="goodsName !=null and goodsName !='' ">
             AND goodsName = #{goodsName}
         </if>
-        <if test="key !=null">
+        <if test="key !=null and key!='' ">
             <bind name="key" value="'%'+key+'%'"></bind>
             AND (corporateName like #{key} or documents like #{key} or goodsName like #{key})
         </if>
@@ -65,13 +65,13 @@
     <select id="selAllForGetSize" resultType="java.lang.Integer">
 
         SELECT COUNT(*) FROM orders WHERE flag=1
-        <if test="corporateName !=null">
+        <if test="corporateName !=null and corporateName!='' ">
             AND corporateName = #{corporateName}
         </if>
-        <if test="goodsName !=null">
+        <if test="goodsName !=null and goodsName !=''  ">
             AND goodsName = #{goodsName}
         </if>
-        <if test="key !=null">
+        <if test="key !=null  and key!='' ">
             <bind name="key" value="'%'+key+'%'"></bind>
             AND (corporateName like #{key} or documents like #{key} or goodsName like #{key})
         </if>

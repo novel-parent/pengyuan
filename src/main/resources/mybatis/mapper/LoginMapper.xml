@@ -13,6 +13,6 @@
 
     <select id="selByUsernamePwd" resultMap="loginUserMap">
 
-        SELECT * FROM user WHERE username = #{username} AND password = #{password}
+        SELECT * FROM user WHERE flag = 1 AND username = #{username} AND password = #{password}
     </select>
 </mapper>

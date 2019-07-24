@@ -16,6 +16,33 @@ public class  DateUtil {
 
     /**
      *       此方法用于 格式化   数据库 里面的    long 类型的数据类型
+     *                 格式为   天数
+     * @param time
+     * @return
+     */
+
+    public static String getDayForAdmin(Object time){
+
+        String times = null;
+        if(time instanceof Long){
+            times = time + "";
+        }else if(time instanceof String){
+            times =(String) time;
+        }
+
+        String year = times.substring( 0 , 4 );
+
+        String month = times.substring( 4 , 6 );
+
+        String day = times.substring( 6 , 8 );
+
+        String date = year + "/" + month + "/" + day;
+
+        return date;
+    }
+
+    /**
+     *       此方法用于 格式化   数据库 里面的    long 类型的数据类型
      * @param time
      * @return
      */

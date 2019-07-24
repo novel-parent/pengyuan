@@ -195,7 +195,7 @@
     function getToken() {
 
       $.ajax({
-               url:"getToken",
+               url:"getToken.b",
                error:function(){
                    alert("请求出错.")
                },
@@ -432,13 +432,24 @@ function getSearchKey() {
                   }
                   data =eval(data)
 
-                  goodsName.append("<option value=\"\">商品类型</option>")
+                  goodsName.append("<option  onclick='setGoodsName(this)' value=\"\">商品类型</option>")
                   $(data).each(function(index,ele) {
-                      goodsName.append("<option value=\""+ele+"\">"+ele+"</option>")
+                      goodsName.append("<option onclick='setGoodsName(this)' value=\""+ele+"\">"+ele+"</option>")
                   })
               },
               type:'GET'
           });
+    }
+
+    function setGoodsName(data) {
+
+        if(data.innerText =='' ||data.innerText ==null){
+
+            $('#goodsName').html("<option  onclick='setGoodsName(this)' value=\"\">商品类型</option>")
+            return
+        }
+        $('#goodsName').val(data.innerText)
+
     }
 
 
@@ -457,19 +468,17 @@ function changeSearch(){
 	var corporateName = $('#corporateName').val()
 
 	if (corporateName !=null && corporateName!=''){
-	    tUrl+="corporateName="+corporateName+"&"
+      tUrl+="corporateName="+corporateName+"&"
 	    flag++;
 	}
 
 	var goodsName = $('#goodsName').val()
 	if ( goodsName !=null && goodsName!=''){
-	    tUrl+="goodsName="+goodsName+"&"
 	    flag++;
 	}
 
 	var key = $('#key').val()
     if ( key !=null && key!=''){
-	    tUrl+="key="+key+"&"
 	    flag++;
     }
 
@@ -532,7 +541,13 @@ function changeSearch(){
        changUrl = tUrl
 	}
      var index = tUrl.lastIndexOf('&')
-     tUrl ="order?"+tUrl.substring(0,index)
+     tUrl ="/order?"+tUrl.substring(0,index)
+     // if(index>=0){
+     //    tUrl ="/order?"+tUrl.substring(0,index)
+     // }else {
+     //     tUrl = "/order"
+     // }
+
      var r =''
       r+="<tr>"
       r+="<th width='100' style='text-align:left; padding-left:20px;'>ID</th>"
@@ -551,7 +566,8 @@ function changeSearch(){
 
 
     $.ajax({
-        url:tUrl+"&page="+page,
+        url:tUrl,
+        data:{"goodsName":goodsName,"key":key,"page":page},
         error:function(){
             alert("请求出错.")
         },
@@ -598,6 +614,7 @@ function changeSearch(){
 
                var tPageNumber = $('#pageNumber').val()
 
+               console.log(tPageNumber+"   pageNumber")
                for (var i=0;i<tPageNumber;i++){
 
                     var t1 = parseInt(i)+1
@@ -614,7 +631,7 @@ function changeSearch(){
               t+="</tr>"
                order.append(t)
         },
-        type:'GET'
+        type:'POST'
     });
 
 }
