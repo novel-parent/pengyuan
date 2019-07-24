@@ -10,7 +10,7 @@ import com.pengyuan.backstage.bean.Procedures;
 
 public interface ProcedureMapper {
 
-	@Insert("insert into procedures(name,main,remarks,path) values(#{name},#{main},#{remarks},#{path})")
+	@Insert("insert into procedures(name,main,remarks,path,times,flag) values(#{name},#{main},#{remarks},#{path},#{times},#{flag})")
 	int saveProcedure(Procedures procedure);
 	
 	@Select("select * from procedures where name = #{name}")
@@ -19,5 +19,8 @@ public interface ProcedureMapper {
 	List<Procedures> searchProcedureByPage(@Param("procedures")Procedures procedures,@Param("pageBeginIndex") int pageBeginIndex);
 
 	int searchAllColumn(@Param("procedures")Procedures p);
+
+	@Select("select distinct times from procedures")
+	List<Procedures> serachAllDate();
 
 }

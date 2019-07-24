@@ -13,6 +13,7 @@ import com.pengyuan.backstage.bean.ProcedureModel;
 import com.pengyuan.backstage.bean.Procedures;
 import com.pengyuan.backstage.mapper.ProcedureMapper;
 import com.pengyuan.backstage.service.ProcedureService;
+import com.pengyuan.backstage.util.DateUtil;
 import com.pengyuan.backstage.util.OssUtil;
 
 @Service
@@ -39,6 +40,11 @@ public class ProcedureImpl implements ProcedureService {
 			}
 			
 			procedure.setMain(procedure.getMain().trim());
+			
+			//设置时间精确到天
+			procedure.setTimes(Long.valueOf(DateUtil.getMonthAndDay()));
+			
+			procedure.setFlag(1);
 			
 		    return	pm.saveProcedure(procedure);
 			
@@ -78,6 +84,13 @@ public class ProcedureImpl implements ProcedureService {
 			p.setRemarks(pd.getRemarks());
 		}
 		
+		if(pd.getTimes() != null) {
+			p.setTimes(pd.getTimes());
+		}
+		
+		//默认查找flag为1的
+		p.setFlag(1);
+		
 		ProcedureModel ppb=new ProcedureModel();
 		
 		System.out.println("1: "+pd);
@@ -102,6 +115,13 @@ public class ProcedureImpl implements ProcedureService {
 		
 		
 		return ppb;
+	}
+
+
+	@Override
+	public List<Procedures> searchAllDate() {
+		
+		return pm.serachAllDate();
 	}
 
 

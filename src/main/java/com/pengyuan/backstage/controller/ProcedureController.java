@@ -89,4 +89,26 @@ public class ProcedureController {
 		return pp;
 	}
 	
+	/**
+	  *  获取所有日期信息
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("serachAllDate.b")
+	public Object serachAllDate() {
+		JsonModel jm = new JsonModel();
+		try {
+		
+			List<Procedures> pdList =  ps.searchAllDate();
+		
+			jm.setObj(pdList);
+			jm.setCode(1);
+		}catch (Exception e) {
+			e.printStackTrace();
+			jm.setCode(-1);
+		}
+		
+		return jm;
+	}
+	
 }
