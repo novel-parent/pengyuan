@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pengyuan.backstage.mapper.WagesNodeMapper">
+
+    <resultMap id="wagesNodeMap" type="com.pengyuan.backstage.bean.WagesNode">
+
+        <result column="uid" property="uid"></result>
+        <result column="pid" property="pid"></result>
+        <result column="procedure" property="procedure"></result>
+        <association property="user" column="uid" select="com.pengyuan.backstage.mapper.UserMapper.selUserByUid"></association>
+        <association property="procedures" column="pid" select="com.pengyuan.backstage.mapper.ProcedureMapper.searchProcedureById"></association>
+    </resultMap>
+
+    <select id="selWagesNode" resultMap="wagesNodeMap">
+
+        SELECT * FROM wages_node WHERE ( times BETWEEN #{startTime} and #{endTime})
+               <if test="procedureNode!=null">
+                   and  procedureNode = #{procedureNode}
+               </if>
+               <if test="uid!=null">
+                  and uid = #{uid}
+               </if>
+        order by times asc limit #{index},#{pageSize}
+    </select>
+    <select id="selWagesNodeNumber" resultType="java.lang.Integer">
+
+        SELECT COUNT(*) FROM wages_node WHERE  times BETWEEN #{startTime} and #{endTime}
+        <if test="procedureNode!=null">
+            and  procedureNode = #{procedureNode}
+        </if>
+        <if test="uid!=null">
+            and uid = #{uid}
+        </if>
+
+    </select>
+
+
+</mapper>
