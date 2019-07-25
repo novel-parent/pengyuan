@@ -1,5 +1,6 @@
 package com.pengyuan.backstage.service.impl;
 
+import com.pengyuan.backstage.bean.ProcedureHotKey;
 import com.pengyuan.backstage.mapper.HotKeyMapper;
 import com.pengyuan.backstage.service.HotKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class HotKeyServiceImpl implements HotKeyService {
 
     @Autowired
     private HotKeyMapper hotKeyMapper;
+
+    @Override
+    public List<ProcedureHotKey> getProcedure(Long startTime, Long endTime) {
+
+        List<ProcedureHotKey> list = hotKeyMapper.selProcedure(startTime, endTime);
+        return list;
+    }
 
     @Override
     public List<String> userNameList(String key) {

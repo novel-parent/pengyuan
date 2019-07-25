@@ -87,12 +87,8 @@
         </li>
         <if condition="$iscid eq 1">
           <li>
-            <select name="cid" class="input" id="procedureNode" style="width:120px; line-height:17px;" onchange="changeSearch()">
-              <option value="">袋子型号</option>
-              <option value="车提手">车提手</option>
-              <option value="拉水线">拉水线</option>
-              <option value="拉头">拉头</option>
-              <option value="背带">背带</option>
+            <select name="cid" class="input" onfocus="getProcedures()"  id="pid" style="width:120px; line-height:17px;" onchange="changeSearch()">
+             <option value=''>袋子型号</option>
             </select>
           </li>
         </if>
@@ -109,6 +105,10 @@
   </div>
 <script type="text/javascript">
 
+
+var startTime = ''
+
+var endTime = ''
 var tUrl = ''
 var page = 1
 //搜索    只 支持搜索  某日 到 某日   不支持单独的 某年的查询
@@ -116,9 +116,6 @@ function changeSearch(){
      $('#wagesList').html('')
 
     var url = '/getWagesNode.b?'
-    var startTime = ''
-
-    var endTime = ''
 
     var startYear = $('#startYear').val()
 
@@ -203,9 +200,9 @@ function changeSearch(){
         }
     }
 
-    var procedureNode = $('#procedureNode').val()
-    if( procedureNode!=null && procedureNode!='' ){
-        url += "procedureNode="+procedureNode +"&"
+    var pid = $('#pid').val()
+    if( pid!=null && pid!='' ){
+        url += "pid="+pid +"&"
     }
 
     var username = $('#username').val()
@@ -229,7 +226,6 @@ function changeSearch(){
     if(endTime<startTime){
         return
     }
-
     url+="startTime="+startTime+"&endTime="+endTime
 
     if( tUrl!=url ){
@@ -268,7 +264,7 @@ function changeSearch(){
              result+="<tr>"
              result+="<td style='text-align:left; padding-left:20px;'>"
              result+=""+ele.user.userName+"</td>"
-             result+="<td>"+ele.procedures.name+"</td>"
+             result+="<td>"+ele.procedures.pName+"</td>"
              result+="<td width='10%'>"+ele.procedureNode+"</td>"
              result+="<td>"+ele.price+"</td>"
              result+="<td>"+ele.number+"</td>"
@@ -312,6 +308,39 @@ function changeSearch(){
     // alert("查询的终止时间: "+endTime)
 
 }
+
+function getProcedures() {
+
+     $('#pid').html('')
+     $('#pid').append( "<option value=''>袋子型号</option>")
+    if(startTime ==''){
+        alert("请先输入起始时间")
+        return
+    }
+
+    $.ajax({
+           url: "/getProcedures.b",
+           data:{"startTime":startTime,"endTime":endTime},
+           error:function(){
+               alert("请求出错.")
+           },
+           success:function(data){
+
+               if (data==null||data==''){
+                   return
+               }
+               data = eval(data)
+
+               $(data).each(function(index,ele) {
+                   $('#pid').append( "<option value='"+ele.pid+"'>"+ele.pName+"</option>")
+               })
+
+
+           },
+           type:'POST'
+       });
+}
+
 
 function toPage(data) {
   page=data

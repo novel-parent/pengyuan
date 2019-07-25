@@ -14,9 +14,9 @@ public interface WagesNodeService {
      * @param pageSize
      * @param startTime
      * @param endTime
-     * @param procedures
+     * @param pid
      * @param username
      * @return
      */
-    UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime,  String procedureNode, String username);
+    UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime, Long pid, String username);
 }

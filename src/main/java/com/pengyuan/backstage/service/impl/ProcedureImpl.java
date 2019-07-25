@@ -77,8 +77,8 @@ public class ProcedureImpl implements ProcedureService {
 		
 		int pageBeginIndex = (currentPage-1)*8;
 		
-		if(pd.getName() != null ) {
-			p.setName(pd.getName());
+		if(pd.getpName() != null ) {
+			p.setpName(pd.getpName());
 		}
 		
 		if(pd.getRemarks() != null ) {

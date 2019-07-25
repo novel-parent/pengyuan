@@ -47,4 +47,14 @@ public class UserInfoWagesNodes {
     public void setSize(int size) {
         this.size = size;
     }
+
+    @Override
+    public String toString() {
+        return "UserInfoWagesNodes{" +
+                "wagesNodes=" + wagesNodes +
+                ", money='" + money + '\'' +
+                ", size=" + size +
+                ", pageNumber=" + pageNumber +
+                '}';
+    }
 }

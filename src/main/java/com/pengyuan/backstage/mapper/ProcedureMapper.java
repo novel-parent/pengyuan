@@ -24,6 +24,6 @@ public interface ProcedureMapper {
 	List<Procedures> serachAllDate();
 
 	@Select("select * from procedures where pid = #{pid}")
-	Procedures searchProcedureById(Long fid);
+	Procedures searchProcedureById(@Param("pid") Long pid);
 
 }

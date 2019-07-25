@@ -52,6 +52,7 @@ public class WagesNode {
                 ", money='" + money + '\'' +
                 ", flag=" + flag +
                 ", user=" + user +
+                ", procedures=" + procedures +
                 '}';
     }
 
