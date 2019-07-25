@@ -1,5 +1,8 @@
 package com.pengyuan.backstage.bean;
 
+import com.pengyuan.backstage.util.DateUtil;
+import com.pengyuan.backstage.util.MoneyUtil;
+
 /**
  * @author LX
  * @date 2019/7/24 - 23:46
@@ -12,7 +15,7 @@ public class WagesNode {
 
     private long pid;
 
-    private String procedure;
+    private String procedureNode;
 
     private String price;
 
@@ -24,19 +27,40 @@ public class WagesNode {
 
     private int flag;
 
+    private User user;
+
+    private Procedures procedures;
+
+    public Procedures getProcedures() {
+        return procedures;
+    }
+
+    public void setProcedures(Procedures procedures) {
+        this.procedures = procedures;
+    }
+
     @Override
     public String toString() {
         return "WagesNode{" +
                 "wid=" + wid +
                 ", uid=" + uid +
                 ", pid=" + pid +
-                ", procedure='" + procedure + '\'' +
+                ", procedureNode='" + procedureNode + '\'' +
                 ", price='" + price + '\'' +
                 ", number=" + number +
                 ", times='" + times + '\'' +
                 ", money='" + money + '\'' +
                 ", flag=" + flag +
+                ", user=" + user +
                 '}';
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public long getWid() {
@@ -63,20 +87,20 @@ public class WagesNode {
         this.pid = pid;
     }
 
-    public String getProcedure() {
-        return procedure;
+    public String getProcedureNode() {
+        return procedureNode;
     }
 
-    public void setProcedure(String procedure) {
-        this.procedure = procedure;
+    public void setProcedureNode(String procedureNode) {
+        this.procedureNode = procedureNode;
     }
 
     public String getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setPrice(long price) {
+        this.price = MoneyUtil.formatMoney(price);
     }
 
     public int getNumber() {
@@ -92,7 +116,7 @@ public class WagesNode {
     }
 
     public void setTimes(String times) {
-        this.times = times;
+        this.times = DateUtil.getDayForAdmin(times);
     }
 
     public String getMoney() {

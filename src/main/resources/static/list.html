@@ -153,7 +153,6 @@
 					<li><select name="cid" onchange="changeSearch()"
 						onfocus="getGoodsName()" id="goodsName" class="input"
 						style="width: 160px; line-height: 17px;">
-							<option value="">商品类型</option>
 
 					</select></li>
 					</if>
@@ -404,12 +403,11 @@ function getSearchKey() {
              type:'GET'
          });
    }
-
+getGoodsName()
 
    function getGoodsName() {
 
        var goodsName = $('#goodsName')
-
        goodsName.html(goodsName.val())
 
        var tUrl = "goodsName.b"
@@ -432,7 +430,7 @@ function getSearchKey() {
                   }
                   data =eval(data)
 
-                  goodsName.append("<option  onclick='setGoodsName(this)' value=\"\">商品类型</option>")
+                  goodsName.append("<option   value=\"\">商品类型</option>")
                   $(data).each(function(index,ele) {
                       goodsName.append("<option onclick='setGoodsName(this)' value=\""+ele+"\">"+ele+"</option>")
                   })
@@ -445,7 +443,7 @@ function getSearchKey() {
 
         if(data.innerText =='' ||data.innerText ==null){
 
-            $('#goodsName').html("<option  onclick='setGoodsName(this)' value=\"\">商品类型</option>")
+            $('#goodsName').html("<option  value=\"\">商品类型</option>")
             return
         }
         $('#goodsName').val(data.innerText)
@@ -614,7 +612,6 @@ function changeSearch(){
 
                var tPageNumber = $('#pageNumber').val()
 
-               console.log(tPageNumber+"   pageNumber")
                for (var i=0;i<tPageNumber;i++){
 
                     var t1 = parseInt(i)+1

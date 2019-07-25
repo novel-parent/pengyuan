@@ -13,6 +13,21 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface UserMapper {
 
+	/**
+	 *      根据用户名查询  对应的工资
+	 * @param username
+	 * @return
+	 */
+	@Select("SELECT * FROM user WHERE userName = #{username} ")
+	User selUserByName(@Param("username") String username);
+
+	/**
+	 *      根据uid 查询
+	 * @param uid
+	 * @return
+	 */
+	@Select("SELECT * FROM user WHERE uid = #{uid}")
+	User selUserByUid(@Param("uid") long uid);
 
 	/**
 	 *       得到用户的列表
