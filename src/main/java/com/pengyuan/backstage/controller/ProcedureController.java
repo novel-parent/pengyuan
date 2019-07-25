@@ -99,7 +99,9 @@ public class ProcedureController {
 		JsonModel jm = new JsonModel();
 		try {
 		
-			List<Procedures> pdList =  ps.searchAllDate();
+			List<Procedures> rowpdList =  ps.searchAllDate();
+			
+			List<Procedures> pdList = ps.HandleYear(rowpdList);
 		
 			jm.setObj(pdList);
 			jm.setCode(1);

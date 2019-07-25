@@ -57,11 +57,13 @@ public class UserController {
      * @return
      */
     @ResponseBody
-    @RequestMapping("updateUser.b")
-    public JsonModel updateUser(User user) {
+    @RequestMapping("updateUser.b/{currentPage}")
+    public JsonModel updateUser(User user,@PathVariable("currentPage") String currentPage) {
     	
     	
     	JsonModel jm = new JsonModel();
+    	
+    	
     	//判断用户是的uid是否为空，为空为新增员工，不为空为更新员工信息
     	try {
     		
@@ -75,7 +77,7 @@ public class UserController {
 	    		 }
 	    	}else {
 	    		if(userService.updateUser(user)>0){
-	    			jm.setCode(1);
+	    			jm.setCode(Integer.valueOf(currentPage));
 	   			 	jm.setMsg("修改成功！");
 	    		}else {
 	    			 jm.setCode(-1);

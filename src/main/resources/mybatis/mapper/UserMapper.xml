@@ -49,10 +49,10 @@
 				select * from user 
 				<where>
 					<if test="userName != null">
-						userName like "%"#{userName}"%"
+						userName like '%${userName}%'
 					</if>
 					<if test="tel != null">
-						and tel like  "%"#{tel}"%"
+						and tel like  '%${tel}%'
 					</if>
 					<if test="flag != null">
 						and flag = #{flag}
@@ -68,10 +68,10 @@
 				select * from user 
 				<where>
 					<if test="user.userName != null">
-						userName like "%"#{user.userName}"%"
+						and userName like '%${user.userName}%'
 					</if>
 					<if test="user.tel != null">
-						and tel like  "%"#{user.tel}"%"
+						and tel like  '%${user.tel}%'
 					</if>
 					<if test="user.flag != null">
 						and flag = #{user.flag}
@@ -87,10 +87,10 @@
 				select count(*) from user 
 				<where>
 					<if test="user.userName != null">
-						userName like "%"#{user.userName}"%"
+						and userName like '%${user.userName}%'
 					</if>
 					<if test="user.tel != null">
-						and tel like  "%"#{user.tel}"%"
+						and tel like  '%${user.tel}%'
 					</if>
 					<if test="user.flag != null">
 						and flag = #{user.flag}

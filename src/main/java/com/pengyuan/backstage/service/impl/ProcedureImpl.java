@@ -1,6 +1,7 @@
 package com.pengyuan.backstage.service.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,6 +129,50 @@ public class ProcedureImpl implements ProcedureService {
 	@Override
 	public Procedures searchProcedureById(Long pid) {
 		return pm.searchProcedureById(pid);
+	}
+
+
+	@Override
+	public List<Procedures> HandleYear(List<Procedures> rowpdList) {
+		List<String> yearList = new ArrayList<String>();
+		
+		
+		for(Procedures p:rowpdList) {
+			String yearStr = (""+p.getTimes()).substring(0,4).trim();
+			
+			boolean flag = false;
+			
+			
+			if(yearList.isEmpty()) {
+				yearList.add(yearStr);
+			}else {
+			
+				for(String y : yearList) {
+					
+					if(yearStr.equals(y)) {
+						flag = true;
+						
+						rowpdList.remove(p);
+						
+						break;
+					}
+				}
+				
+				if(flag == false) {
+					
+					yearList.add(yearStr);
+					
+					Long times = Long.valueOf(yearStr);
+					
+					p.setTimes(times);
+					
+					System.out.println(p);
+				}
+			}
+		}
+		
+		
+		return rowpdList;
 	}
 
 

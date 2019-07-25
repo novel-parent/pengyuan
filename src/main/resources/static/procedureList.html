@@ -12,7 +12,7 @@
 <script src="js/pintuer.js"></script>
 
 <script type="text/javascript">
-	$(function(){
+	 $(function(){
 		
 		$.ajax({
 			url: 'serachAllDate.b',
@@ -40,7 +40,7 @@
 		
 		
 	})
-
+ 
 </script>
 
 
@@ -52,26 +52,27 @@
       <ul class="search" style="padding-left:10px;">
         <li>
         
-        名称: <input type="text" placeholder="请输入搜索关键字" name="name" onblur="ProcedureListsearch()" class="input" style="width:250px; line-height:17px;display:inline-block" />
+        名称: <input type="text" placeholder="请输入搜索关键字" name="name" onkeyup="ProcedureListsearch(1)" class="input" style="width:250px; line-height:17px;display:inline-block" />
           	
-        备注:  <input type="text" placeholder="请输入搜索关键字" name="remarks" onblur="ProcedureListsearch()" class="input" style="width:250px; line-height:17px;display:inline-block" />
+        备注:  <input type="text" placeholder="请输入搜索关键字" name="remarks" onkeyup="ProcedureListsearch(1)" class="input" style="width:250px; line-height:17px;display:inline-block" />
         	
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	
         	<select name="year" class="input"  style="width:120px; line-height:17px; display:inline-block">
             <option value="-1">请选择年份</option>
+           
             
         </select>
      
           
-        年	<select name="month" class="input" onchange="ProcedureListsearch()" style="width:120px; line-height:17px; display:inline-block">
+        年	<select name="month" class="input" onchange="ProcedureListsearch(-1)" style="width:120px; line-height:17px; display:inline-block">
             <option value="-1">请选择月份</option><option value="01">1</option><option value="02">2</option><option value="03">3</option>
             <option value="04">4</option><option value="05">5</option><option value="06">6</option> <option value="07">7</option><option value="08">8</option>
             <option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
         </select>
-       月    <input type="text" placeholder="请输入日期" name="day" onblur="ProcedureListsearch()" class="input" style="width:120px; line-height:17px;display:inline-block" />
+       月    <input type="text" placeholder="请输入日期" name="day"  class="input" style="width:120px; line-height:17px;display:inline-block" />
      日
      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-          <a href="javascript:void(0)" class="button border-main icon-search" onclick="ProcedureListsearch()" > 搜索</a></li>
+          <a href="javascript:void(0)" class="button border-main icon-search" onclick="ProcedureListsearch(-1)" > 搜索</a></li>
     
       </ul>
     </div>
@@ -99,13 +100,15 @@
 	var totalPage;
 	var currentPage = 1;
 	
-	function ProcedureListsearch(){
+	function ProcedureListsearch(type){
 		
 		var name  = $("input[name = 'name']").val();
 		var remarks = $("input[name = 'remarks']").val();
 		var year = $("select[name = 'year']").val();
 		var month = $("select[name = 'month']").val();
 		var day = $("input[name = 'day']").val();
+		
+		
 		
 		var times = '';
 		
@@ -129,12 +132,21 @@
 			times += month;
 			flag += 'm';
 		}
+		
+		var parttern = /^\d{0,2}$/
+		
+		let f = parttern.test(day);
+		
+		if(parseInt(day) > 31 || !f){
+			alert('请输入正确的日期格式');
+			return;
+		}
+		
 		if(day != ''){
 			times += day
 			flag += 'd';
 		}
 		
-		console.log('flag :'+flag +'   ==========   '+ 'times:   '+times);
 		
 		if(times != ''){
 		
@@ -237,7 +249,9 @@
 						$("#proceduresTable").append(html);
 					
 				}else if(data.code == -1){
-					alert(data.msg);
+					if(type != 1){
+						alert(data.msg);
+					}
 				}
 			}
 		})

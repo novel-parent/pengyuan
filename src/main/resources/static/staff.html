@@ -83,12 +83,12 @@ $(function(){
 							<tr >
 								<td style="width:100px;">
 								<input type="hidden" name="token" value=""/>
-								<input type="text" class="form-control" onblur="searchUser()" data-toggle="tooltip" data-placement="top" title="请输入姓名"  style="width:120px;" name="name"
+								<input type="text" class="form-control" onkeyup="searchUser(1)" data-toggle="tooltip" data-placement="top" title="请输入姓名"  style="width:120px;" name="name"
 									placeholder="姓名"  ></td>
-								<td style="width:100px;"><input type="text" onblur="searchUser()" data-toggle="tooltip" data-placement="top" title="请输入电话" class="form-control" style="width:120px;" name="tel"
+								<td style="width:100px;"><input type="text" onkeyup="searchUser(1)" data-toggle="tooltip" data-placement="top" title="请输入电话" class="form-control" style="width:120px;" name="tel"
 									placeholder="电话" ></td>
 								<td style="width:140px;"><select id="factory"
-									class="form-control" onchange="searchUser()">
+									class="form-control" onchange="searchUser(-1)">
 										
 								</select></td>
 								<td style="width:120px;">
@@ -98,7 +98,7 @@ $(function(){
 									</select>
 								</td>
 								<td>
-								<button type="button" class="btn btn-primary" onclick="searchUser()" >搜索</button>
+								<button type="button" class="btn btn-primary" onclick="searchUser(-1)" >搜索</button>
 								</td>
 								<td>
 								<button type="button" class="btn btn-primary" onclick="addUserBtn()" >添加员工</button>
@@ -262,7 +262,7 @@ $(function(){
 	var totalPage = 0;
 	
 	//查询员工
-	function searchUser(){
+	function searchUser(type){
 		var name = $('input[name="name"]').val();
 		var tel = $('input[name="tel"]').val();
 		var fid = $('#factory').val();
@@ -301,8 +301,9 @@ $(function(){
 				data:data,
 				success: function(data){
 					if(data.code == -1){
-						
-						alert(data.msg);
+						if(type != 1){
+							alert(data.msg);
+						}
 					}else if(data.code == 1){
 						
 						//清空之前的元素
@@ -519,13 +520,18 @@ $(function(){
 			
 			
 				$.ajax({
-					url:'updateUser.b',
+					url:'updateUser.b/'+currentPage,
 					type:'post',
 					data:data,
 					success: function(data){
-						if(data.code == 1){
+						if(data.code > 0){
+							
+							currentPage = data.code;
+							
+							searchUser(1);
+							
 							alert(data.msg);
-							window.location.reload();
+							
 						}else if(data == -1){
 							alert('请求失败');
 							getToken();
