@@ -17,14 +17,11 @@
 <script type="text/javascript">
 
 	$(function(){
-		//获取名字为AAA的模板信息，并加载到页面上
-		
-		var ProcedureName='AAA';
-		
+		//获取模板信息
 		$.ajax({
 			url:'getProcedureInfo.b',
 			type:'post',
-			data:'baseModel='+ProcedureName,
+			data:'baseModel=AAA',
 			success: function(data){
 				if(data.code == -1){
 					alert(data.msg);
