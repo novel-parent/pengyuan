@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class HotKeyServiceImpl implements HotKeyService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
+    @Resource
     private HotKeyMapper hotKeyMapper;
 
     @Override
