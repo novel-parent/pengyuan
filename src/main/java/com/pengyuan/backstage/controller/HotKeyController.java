@@ -1,6 +1,7 @@
 package com.pengyuan.backstage.controller;
 
 import com.pengyuan.backstage.bean.ProcedureHotKey;
+import com.pengyuan.backstage.bean.UserHotKey;
 import com.pengyuan.backstage.service.HotKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,10 +22,18 @@ public class HotKeyController {
     private HotKeyService hotKeyService;
 
     @ResponseBody
-    @RequestMapping("/getProcedures.b")
-    public List<ProcedureHotKey> getProcedureKey(Long startTime, Long endTime){
+    @RequestMapping("/getUser.b")
+    List<UserHotKey> getUserKey(@RequestParam(required = false) Long fid){
 
-        List<ProcedureHotKey> procedure = hotKeyService.getProcedure(startTime, endTime);
+        return hotKeyService.getUser(fid);
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/getProcedures.b")
+    public List<ProcedureHotKey> getProcedureKey(){
+
+        List<ProcedureHotKey> procedure = hotKeyService.getProcedure();
         return procedure;
     }
 

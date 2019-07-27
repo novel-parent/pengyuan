@@ -15,7 +15,7 @@
   <div class="logo margin-big-left fadein-top">
     <h1><img src="images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />鹏远后台管理中心</h1>
   </div>
-  <div class="head-l"> &nbsp;&nbsp; &nbsp;&nbsp;<a class="button button-little bg-red" href="login.html"><span class="icon-power-off"></span> 退出登录</a> </div>
+  <div class="head-l"> &nbsp;&nbsp; &nbsp;&nbsp;<a class="button button-little bg-red" href="javascript:void(0)" onclick="exit()"><span class="icon-power-off"></span> 退出登录</a> </div>
 </div>
 <div class="leftnav">
   <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
@@ -29,6 +29,26 @@
   </ul>
 </div>
 <script type="text/javascript">
+
+function exit() {
+
+    $.ajax({
+      url: "/exit.b",
+      error:function(){
+          alert("请求出错.")
+      },
+      success:function(data){
+
+          if (data==null || data==''){
+              alert("暂无数据")
+              return
+          }
+          window.location.href=data
+      },
+      type:'GET'
+           });
+}
+
 $(function(){
   $(".leftnav h2").click(function(){
 	  $(this).next().slideToggle(200);	

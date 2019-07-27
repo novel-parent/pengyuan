@@ -1,6 +1,7 @@
 package com.pengyuan.backstage.service;
 
 import com.pengyuan.backstage.bean.ProcedureHotKey;
+import com.pengyuan.backstage.bean.UserHotKey;
 
 import java.util.List;
 
@@ -10,13 +11,13 @@ import java.util.List;
  */
 public interface HotKeyService {
 
+    List<UserHotKey> getUser(Long fid);
+
     /**
-     *    得到   从起始时间 到 终止时间的 袋子类型
-     * @param startTime
-     * @param endTime
+     *     袋子类型
      * @return
      */
-    List<ProcedureHotKey> getProcedure(Long startTime, Long endTime);
+    List<ProcedureHotKey> getProcedure();
 
     /**
      *        得到key   用户 有关的  查询

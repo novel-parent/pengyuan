@@ -85,17 +85,28 @@
             <input type="text" placeholder="日" onchange="changeSearch()" id="endDay" name="s_istop" class="input"
           style="width: 60px; line-height: 17px; display: inline-block">
         </li>
-        <if condition="$iscid eq 1">
           <li>
             <select name="cid" class="input" onfocus="getProcedures()"  id="pid" style="width:120px; line-height:17px;" onchange="changeSearch()">
              <option value=''>袋子型号</option>
             </select>
           </li>
-        </if>
-        <li>
 
-          <input type="text" placeholder="请输入员工姓名" name="keywords" id="username" class="input" style="width:160px; line-height:17px;display:inline-block" />
-          <a href="javascript:void(0)" class="button border-main icon-search" onclick="changeSearch()" > 搜索</a></li>
+          <li>
+          <select name="cid" class="input"  id="fid" style="width:120px; line-height:17px;" onchange="changeSearch()">
+             <option value=''>工厂</option>
+             <option value='2'>二楼</option>
+             <option value='3'>三楼</option>
+             <option value='4'>四楼</option>
+             <option value='5'>五楼</option>
+         </select>
+        </li>
+
+        <li>
+          <select name="cid" class="input" onfocus="getUserName()"  id="username" style="width:120px; line-height:17px;" onchange="changeSearch()">
+         <option value=''>员工姓名</option>
+         </select>
+        </li>
+
       </ul>
     </div>
     <table class="table table-hover text-center" id="wagesList">
@@ -105,6 +116,36 @@
   </div>
 <script type="text/javascript">
 
+function getUserName() {
+    var username = $('#username')
+    username.html('')
+    username.append("<option value=''>员工姓名</option>")
+    var url = "/getUser.b"
+    var fid = $('#fid').val()
+    if( fid != null && fid != '' ){
+
+        url+="?fid="+fid
+    }
+
+    $.ajax({
+           url: url,
+           error:function(){
+               alert("请求出错.")
+           },
+           success:function(data){
+
+               if(data==null ||data==''){
+                   return
+               }
+               data = eval(data)
+
+               $(data).each(function(index,ele) {
+                 username.append("<option value='"+ele.uid+"'>"+ele.userName+"</option>")
+               })
+           },
+           type:'GET'
+       });
+}
 
 var startTime = ''
 
@@ -205,11 +246,12 @@ function changeSearch(){
         url += "pid="+pid +"&"
     }
 
+
     var username = $('#username').val()
 
     if( username!=null && username!='' ){
 
-        url+="username="+username+"&"
+        url+="uid="+username+"&"
     }
 
     var pageSize = $('#pageSize').val()
@@ -218,6 +260,7 @@ function changeSearch(){
 
         url+="pageSize="+pageSize+"&"
     }
+
 
     if( endTime==''){
         endTime = startTime
@@ -235,7 +278,7 @@ function changeSearch(){
           var result =''
           result+="<tr>"
           result+="<th width='100' style='text-align:left; padding-left:20px;'>姓名</th>"
-          result+="<th width='10%'>袋子型号</th>"
+          result+="<th width='20%'>袋子型号和备注</th>"
           result+="<th>工序名称</th>"
           result+="<th>单价</th>"
           result+="<th>数目</th>"
@@ -264,7 +307,7 @@ function changeSearch(){
              result+="<tr>"
              result+="<td style='text-align:left; padding-left:20px;'>"
              result+=""+ele.user.userName+"</td>"
-             result+="<td>"+ele.procedures.pName+"</td>"
+             result+="<td>"+ele.procedures.pName+ele.procedures.remarks+"</td>"
              result+="<td width='10%'>"+ele.procedureNode+"</td>"
              result+="<td>"+ele.price+"</td>"
              result+="<td>"+ele.number+"</td>"
@@ -313,14 +356,9 @@ function getProcedures() {
 
      $('#pid').html('')
      $('#pid').append( "<option value=''>袋子型号</option>")
-    if(startTime ==''){
-        alert("请先输入起始时间")
-        return
-    }
 
     $.ajax({
            url: "/getProcedures.b",
-           data:{"startTime":startTime,"endTime":endTime},
            error:function(){
                alert("请求出错.")
            },
@@ -334,8 +372,6 @@ function getProcedures() {
                $(data).each(function(index,ele) {
                    $('#pid').append( "<option value='"+ele.pid+"'>"+ele.pName+"</option>")
                })
-
-
            },
            type:'POST'
        });

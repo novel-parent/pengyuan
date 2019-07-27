@@ -26,11 +26,10 @@ public class WagesNodeController {
     @ResponseBody
     @RequestMapping("/getWagesNode.b")
     public UserInfoWagesNodes getWagesNode(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "1") int pageSize, Long startTime,
-                                        Long endTime, @RequestParam(required = false) Long pid,@RequestParam(required = false) String username){
+                                        Long endTime, @RequestParam(required = false) Long pid,@RequestParam(required = false) Long uid){
 
-        UserInfoWagesNodes wagesNode = wagesNodeService.getWagesNode(page, pageSize, startTime, endTime, pid, username);
+        UserInfoWagesNodes wagesNode = wagesNodeService.getWagesNode(page, pageSize, startTime, endTime, pid, uid);
 
-        System.out.println(wagesNode);
         return wagesNode;
     }
     

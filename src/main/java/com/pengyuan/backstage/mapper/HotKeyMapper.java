@@ -1,6 +1,7 @@
 package com.pengyuan.backstage.mapper;
 
 import com.pengyuan.backstage.bean.ProcedureHotKey;
+import com.pengyuan.backstage.bean.UserHotKey;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -13,13 +14,18 @@ import java.util.List;
 public interface HotKeyMapper {
 
     /**
-     *      查询所有工序名
-     * @param startTime
-     * @param endTime
+     *      根据工程来 查询user 名字
+     * @param fid
      * @return
      */
-    @Select("SELECT pid ,pName FROM procedures WHERE ( times BETWEEN #{startTime} and #{endTime}) GROUP BY pName ")
-    List<ProcedureHotKey> selProcedure(@Param("startTime") Long startTime, @Param("endTime") Long endTime);
+    List<UserHotKey> selUser(@Param("fid") Long fid);
+
+    /**
+     *      查询所有工序名
+     * @return
+     */
+    @Select("SELECT pid ,pName FROM procedures GROUP BY pName ")
+    List<ProcedureHotKey> selProcedure();
 
     /**
      *         搜索 所有的 corporateName 的名字 作为关键词  提示

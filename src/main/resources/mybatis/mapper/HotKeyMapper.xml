@@ -12,4 +12,13 @@
         </if>
 
     </select>
+
+    <select id="selUser" resultType="com.pengyuan.backstage.bean.UserHotKey">
+        SELECT uid ,userName FROM user
+            <where>
+                <if test="fid!=null">
+                    AND fid = #{fid}
+                </if>
+            </where>
+    </select>
 </mapper>

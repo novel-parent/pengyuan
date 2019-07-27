@@ -436,7 +436,7 @@ getGoodsName()
                   })
               },
               type:'GET'
-          });
+       });
     }
 
     function setGoodsName(data) {
@@ -605,7 +605,7 @@ function changeSearch(){
                    result=''
             })
                var t =''
-              t+="<tr><td colspan ='3'>本页显示 共:"+data.size+"条记录 </td  > <td colspan ='2'>单价总和:"+data.priceSum+"元 </td  ><td colspan ='3'>总数目:"+data.number+" </td  > <td  colspan ='2'>总金额:"+data.sum+"元 </td>   </tr>"
+              t+="<tr><td colspan ='3'>本页显示 共:"+data.size+"条记录 </td  > <td colspan ='2'>单价总和:"+data.priceSum+"元 </td  ><td colspan ='3'>总数目:"+data.number+" </td  > <td  colspan ='3'>总金额:"+data.sum+"元 </td>   </tr>"
               t+="<tr>"
               t+="  <td colspan='12'> <div class='pagelist'>"
               t+= " <a href=\"javascript:void(0)\" onclick='lastPage()'>上一页</a> "
