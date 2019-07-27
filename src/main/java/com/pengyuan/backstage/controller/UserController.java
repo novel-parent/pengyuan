@@ -25,7 +25,18 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    
+
+	/**
+	 *     用户 退出登陆
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("/exit.b")
+	public String exitLogin(HttpServletRequest request){
+
+		request.getSession().removeAttribute("pengyuan");
+		return "/login.html";
+	}
 
 
    /**
