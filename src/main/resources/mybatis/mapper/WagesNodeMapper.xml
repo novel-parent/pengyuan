@@ -8,7 +8,6 @@
 
         <result column="uid" property="uid"></result>
         <result column="pid" property="pid"></result>
-        <result column="procedure" property="procedure"></result>
         <association property="user" column="uid" select="com.pengyuan.backstage.mapper.UserMapper.selUserByUid"></association>
         <association property="procedures" column="pid" select="com.pengyuan.backstage.mapper.ProcedureMapper.searchProcedureById"></association>
     </resultMap>
@@ -16,8 +15,8 @@
     <select id="selWagesNode" resultMap="wagesNodeMap">
 
         SELECT * FROM wages_node WHERE ( times BETWEEN #{startTime} and #{endTime})
-               <if test="procedureNode!=null">
-                   and  procedureNode = #{procedureNode}
+               <if test="pid!=null">
+                   and  pid = #{pid}
                </if>
                <if test="uid!=null">
                   and uid = #{uid}
@@ -27,8 +26,8 @@
     <select id="selWagesNodeNumber" resultType="java.lang.Integer">
 
         SELECT COUNT(*) FROM wages_node WHERE  times BETWEEN #{startTime} and #{endTime}
-        <if test="procedureNode!=null">
-            and  procedureNode = #{procedureNode}
+        <if test="pid!=null">
+            and  pid = #{pid}
         </if>
         <if test="uid!=null">
             and uid = #{uid}

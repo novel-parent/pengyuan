@@ -1,5 +1,6 @@
 package com.pengyuan.backstage.service.impl;
 
+import com.pengyuan.backstage.bean.ProcedureHotKey;
 import com.pengyuan.backstage.mapper.HotKeyMapper;
 import com.pengyuan.backstage.service.HotKeyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -21,8 +23,15 @@ public class HotKeyServiceImpl implements HotKeyService {
     @Autowired
     private RedisTemplate redisTemplate;
 
-    @Autowired
+    @Resource
     private HotKeyMapper hotKeyMapper;
+
+    @Override
+    public List<ProcedureHotKey> getProcedure(Long startTime, Long endTime) {
+
+        List<ProcedureHotKey> list = hotKeyMapper.selProcedure(startTime, endTime);
+        return list;
+    }
 
     @Override
     public List<String> userNameList(String key) {

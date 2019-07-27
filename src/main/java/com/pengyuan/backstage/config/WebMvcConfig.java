@@ -37,7 +37,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter{
 
         InterceptorRegistration interceptorRegistration = registry.addInterceptor(new TokenInterceptor());
 
-        interceptorRegistration.addPathPatterns("/newOrder.b").addPathPatterns("/updateUser.b").addPathPatterns("SaveProcedureData.b").addPathPatterns("putIntoWage.b");
+        interceptorRegistration.addPathPatterns("/newOrder.b","/updOrder.b").addPathPatterns("/updateUser.b").addPathPatterns("SaveProcedureData.b").addPathPatterns("putIntoWage.b");
 
         InterceptorRegistration interceptorRegistration1 = registry.addInterceptor(new UserInterceptor());
 

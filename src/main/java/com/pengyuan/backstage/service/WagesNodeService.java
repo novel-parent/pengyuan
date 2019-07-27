@@ -17,7 +17,7 @@ public interface WagesNodeService {
      * @param pageSize
      * @param startTime
      * @param endTime
-     * @param procedures
+     * @param pid
      * @param username
      * @return
      */
@@ -35,4 +35,5 @@ public interface WagesNodeService {
 
 	int deleteFromWagesNode(Long wid);
 
+    UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime, Long pid, String username);
 }

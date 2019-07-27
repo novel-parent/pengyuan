@@ -1,5 +1,6 @@
 package com.pengyuan.backstage.mapper;
 
+import com.pengyuan.backstage.bean.ProcedureHotKey;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
@@ -11,6 +12,14 @@ import java.util.List;
  */
 public interface HotKeyMapper {
 
+    /**
+     *      查询所有工序名
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    @Select("SELECT pid ,pName FROM procedures WHERE ( times BETWEEN #{startTime} and #{endTime}) GROUP BY pName ")
+    List<ProcedureHotKey> selProcedure(@Param("startTime") Long startTime, @Param("endTime") Long endTime);
 
     /**
      *         搜索 所有的 corporateName 的名字 作为关键词  提示

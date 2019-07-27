@@ -20,12 +20,12 @@ public interface WagesNodeMapper {
      *     查询 页数
      * @param startTime
      * @param endTime
-     * @param procedureNode
+     * @param pid
      * @param uid
      * @return
      */
     int selWagesNodeNumber( @Param("startTime") Long startTime, @Param("endTime") Long endTime,
-                           @Param("procedureNode") String procedureNode,@Param("uid") Long uid);
+                           @Param("pid") Long pid ,@Param("uid") Long uid);
 
     /**
      *       查询  员工 工资节点
@@ -33,22 +33,13 @@ public interface WagesNodeMapper {
      * @param pageSize
      * @param startTime
      * @param endTime
-     * @param procedureNode
+     * @param pid
      * @param uid
      * @return
      */
     List<WagesNode> selWagesNode(@Param("index") int index, @Param("pageSize") int pageSize,
                                  @Param("startTime") Long startTime, @Param("endTime") Long endTime,
                                  @Param("procedureNode") String procedureNode,@Param("uid") Long uid);
-    /**
-         *  把WageNode对象里面的数据插入数据库
-     * @param times 
-     * @param wn
-     * @param times 
-     * @return 
-     */
-   
-	
 	/**
 	  * 查出WageNode
 	 * @param money 
