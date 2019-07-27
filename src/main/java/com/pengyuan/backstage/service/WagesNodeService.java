@@ -31,8 +31,8 @@ public interface WagesNodeService {
      * @param startTime
      * @param endTime
      * @param pid
-     * @param username
+     * @param  uid
      * @return
      */
-    UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime, Long pid, String username);
+    UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime, Long pid, Long uid);
 }

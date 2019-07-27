@@ -27,23 +27,12 @@ public class WagesNodeServiceImpl implements WagesNodeService {
     private UserMapper userMapper;
 
     @Override
-    public UserInfoWagesNodes getWagesNode(int page, int pageSize, Long startTime, Long endTime, Long pid, String username){
+    public UserInfoWagesNodes getWagesNode(int page, int pageSize, Long startTime, Long endTime, Long pid, Long uid){
 
         UserInfoWagesNodes userInfoWagesNodes = null ;
 
         int index = (page-1)*pageSize;
 
-        Long uid = null ;
-
-        if(username!=null){
-
-            User user = userMapper.selUserByName(username);
-
-            if( user!=null ){
-
-                uid = user.getUid();
-            }
-        }
         userInfoWagesNodes = new UserInfoWagesNodes();
 
         List<WagesNode> wagesNodes = wagesNodeMapper.selWagesNode(index, pageSize, startTime, endTime, pid, uid);
@@ -64,6 +53,13 @@ public class WagesNodeServiceImpl implements WagesNodeService {
             wagesNode.setMoney(MoneyUtil.formatMoney(money));
         }
         userInfoWagesNodes.setMoney(MoneyUtil.formatMoney(sum));
+
+        if( userInfoWagesNodes != null ){
+
+            userInfoWagesNodes.getWagesNodes().forEach(ele->
+                    ele.getProcedures().setMain("")
+            );
+        }
         return userInfoWagesNodes;
     }
 
