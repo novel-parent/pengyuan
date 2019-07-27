@@ -12,7 +12,9 @@
 <script src="js/pintuer.js"></script>
 
 <script type="text/javascript">
-	 $(function(){
+
+//获取年份信息
+	/*  $(function(){
 		
 		$.ajax({
 			url: 'serachAllDate.b',
@@ -40,7 +42,7 @@
 		
 		
 	})
- 
+  */
 </script>
 
 
@@ -56,22 +58,29 @@
           	
        &nbsp;&nbsp;&nbsp;&nbsp; 备注:  <input type="text" placeholder="请输入搜索关键字" name="remarks" onkeyup="ProcedureListsearch(1)" class="input" style="width:200px; line-height:17px;display:inline-block" />
         	
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	
-        	<select name="year" class="input"  style="width:120px; line-height:17px; display:inline-block">
+         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 	
+        	<select name="year" class="input"  style="width:120px; line-height:17px; display:inline-block;display:none;">
             <option value="-1">请选择年份</option>
-           
+            <option value="2019">2019</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+            <option value="2024">2024</option>
+            <option value="2025">2025</option>
+            <option value="2026">2026</option>
             
         </select>
      
           
-        年&nbsp;&nbsp;	<select name="month" class="input" onchange="ProcedureListsearch(-1)" style="width:120px; line-height:17px; display:inline-block">
+        <!-- 年  -->&nbsp;&nbsp;	<select name="month" class="input" onchange="ProcedureListsearch(-1)" style="width:120px; line-height:17px; display:inline-block;display:none;">
             <option value="-1">请选择月份</option><option value="01">1</option><option value="02">2</option><option value="03">3</option>
             <option value="04">4</option><option value="05">5</option><option value="06">6</option> <option value="07">7</option><option value="08">8</option>
             <option value="09">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
         </select>
-       月 &nbsp;&nbsp;   <input type="text" placeholder="请输入日期" name="day"  class="input" style="width:120px; line-height:17px;display:inline-block" />
-     日
-     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      <!-- 月  -->  &nbsp;&nbsp;   <input type="text" placeholder="请输入日期" name="day"  class="input" style="width:120px; line-height:17px;display:none" />
+      
+     <!-- 日 -->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
           <a href="javascript:void(0)" class="button border-main icon-search" onclick="ProcedureListsearch(-1)" > 搜索</a></li>
     
       </ul>
@@ -186,7 +195,6 @@
 				html+='<th width="10%" style="text-align:left; padding-left:40px;">模板名称</th>';
 				html+='<th width="15%">备注</th>';
 				html+='<th width="20%">图片</th>';
-				html+='<th width="10%">时间</th>';
 				html+='<th width="20%">操作</th>';
 				html+='</tr>';
 				
@@ -204,30 +212,35 @@
 						
 						var obj = data.obj[i];
 						
-						var html = '';
+						if(obj.pName != 'AAA'){
 						
-						var trName = new Date().getTime();
+							
+							
+							var html = '';
+							
+							var trName = new Date().getTime();
+							
+							var objYears = ('' + obj.times).substring(0,4);
+							var objMonth = ('' + obj.times).substring(4,6);
+							var objDay = ('' + obj.times).substring(6,8);
+							
+							var dateString = objYears+'/'+ objMonth + '/' +objDay;
+							
+							html+='<tr id="procedure_+'+trName+'">';
+							html+='<td style="text-align:left; padding-left:40px;"> '+obj.pName+'</td>';
+							html+='<td>'+obj.remarks+'</td>';
+							html+='<td width="10%"><img src="'+obj.path+'" alt="" width="70" height="50" /></td>';
+							html+='<td>';
+							html+='<div class="button-group">';
+							html+=' <a class="button border-main" href="procedureInfo.html?pid='+obj.pid+'"><span class="icon-edit"></span> 查看详情</a>';
+							html+=' <a class="button border-red" href="javascript:void(0)" onclick="del(procedure_'+trName+','+obj.pid+')"><span class="icon-trash-o"></span> 删除</a>';
+							html+='</div>';
+							html+='</td>';
+							html+='</tr>';
 						
-						var objYears = ('' + obj.times).substring(0,4);
-						var objMonth = ('' + obj.times).substring(4,6);
-						var objDay = ('' + obj.times).substring(6,8);
+							$("#proceduresTable").append(html);
 						
-						var dateString = objYears+'/'+ objMonth + '/' +objDay;
-						
-						html+='<tr id="procedure_+'+trName+'">';
-						html+='<td style="text-align:left; padding-left:40px;"> '+obj.pName+'</td>';
-						html+='<td>'+obj.remarks+'</td>';
-						html+='<td width="10%"><img src="'+obj.path+'" alt="" width="70" height="50" /></td>';
-						html+='<td>'+dateString+'</td>';
-						html+='<td>';
-						html+='<div class="button-group">';
-						html+=' <a class="button border-main" href="procedureInfo.html?pid='+obj.pid+'"><span class="icon-edit"></span> 查看详情</a>';
-						html+=' <a class="button border-red" href="javascript:void(0)" onclick="del(procedure_'+trName+','+obj.pid+')"><span class="icon-trash-o"></span> 删除</a>';
-						html+='</div>';
-						html+='</td>';
-						html+='</tr>';
-					
-						$("#proceduresTable").append(html);
+						}
 						
 					}
 					
@@ -287,8 +300,6 @@
 	}
 	
 	function del(trid,pid){
-		
-		
 		
 		 $('#'+trid).css('display','none');
 		

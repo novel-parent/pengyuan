@@ -42,10 +42,6 @@ public class ProcedureImpl implements ProcedureService {
 			
 			procedure.setMain(procedure.getMain().trim());
 			
-			//设置时间精确到天
-			procedure.setTimes(Long.valueOf(DateUtil.getMonthAndDay()));
-			
-			procedure.setFlag(1);
 			
 		    return	pm.saveProcedure(procedure);
 			
@@ -85,13 +81,6 @@ public class ProcedureImpl implements ProcedureService {
 			p.setRemarks(pd.getRemarks());
 		}
 		
-		if(pd.getTimes() != null) {
-			p.setTimes(pd.getTimes());
-		}
-		
-		//默认查找flag为1的
-		p.setFlag(1);
-		
 		ProcedureModel ppb=new ProcedureModel();
 		
 		List<Procedures>  ProcedureList = pm.searchProcedureByPage(p,pageBeginIndex);
@@ -129,47 +118,9 @@ public class ProcedureImpl implements ProcedureService {
 	}
 
 
-	@Override
-	public List<Procedures> HandleYear(List<Procedures> rowpdList) {
-		List<Procedures> yearList = new ArrayList<Procedures>();
-		
-		
-		for(Procedures p:rowpdList) {
-			
-			Procedures pd = new Procedures();
-			
-			String yearStr = (""+p.getTimes()).substring(0,4).trim();
-			
-			boolean flag = false;
-			
-			
-			if(yearList.isEmpty()) {
-				pd.setTimes(Long.valueOf(yearStr));
-				yearList.add(pd);
-			}else {
-			
-				for(Procedures y : yearList) {
-					
-					if(yearStr.equals(y.getTimes()+"")) {
-						flag = true;
-						
-						break;
-					}
-				}
-				
-				if(flag == false) {
-					
-					pd.setTimes(Long.valueOf(yearStr));
-					yearList.add(pd);
-					
-				}
-			}
-		}
-		
-		
-		return yearList;
-	}
 
+
+	
 
 
 	

@@ -7,8 +7,6 @@ public class Procedures {
 	private String main;
 	private String remarks;
 	private String path;
-	private Long times;
-	private Integer flag;
 	public long getPid() {
 		return pid;
 	}
@@ -39,23 +37,12 @@ public class Procedures {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	public Long getTimes() {
-		return times;
-	}
-	public void setTimes(Long times) {
-		this.times = times;
-	}
-	public Integer getFlag() {
-		return flag;
-	}
-	public void setFlag(Integer flag) {
-		this.flag = flag;
-	}
 	@Override
 	public String toString() {
 		return "Procedures [pid=" + pid + ", pName=" + pName + ", main=" + main + ", remarks=" + remarks + ", path="
-				+ path + ", times=" + times + ", flag=" + flag + "]";
+				+ path + "]";
 	}
+
 	
 	
 }

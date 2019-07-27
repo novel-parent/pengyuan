@@ -45,11 +45,5 @@ public interface ProcedureService {
 	 * @return
 	 */
 	Procedures searchProcedureById(Long pid);
-	/**
-	  *  过滤重复的年份
-	 * @param rowpdList
-	 * @return
-	 */
-	List<Procedures> HandleYear(List<Procedures> rowpdList);
 
 }

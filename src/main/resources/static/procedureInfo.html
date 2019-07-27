@@ -171,7 +171,7 @@
 				<input type="hidden" name="token" value="">
 				</li> 
 				<li>商品备注</li>
-				<li><input type="text" name="remark" class="form-control" disabled="disabled" ></li>
+				<li><input type="text" name="remark" class="form-control" style="width:250px;" disabled="disabled" ></li>
 			</ul>
 		</div>
 		<table class="table table-hover text-center" name="procedureTable" id="procedureInfo">
@@ -315,37 +315,50 @@
 		var account = $("#account").val();
 		var number = $("#number").val();
 		
-		if(username == '' || account == '' || number == ''){
-			if(confirm('当前工序信息未填写完成，确认进入下一工序吗？')){
-				
-			}else{
-				//保存上一工序的信息
-				saveAddModalValue(trid);
-			}
+		
+		
+		if(username != '' && account != '' && number != ''){
+			
+			//保存上一工序的信息
+			saveAddModalValue(trid);
+			
 		}
+		
 		
 		var trnum= trid.substring(6,trid.length);
 
 		trnum = parseInt(trnum);
 		
-		trnum += 1;
+		trnum = trnum + 1;
 		
 		trid = 'title_'+trnum;
-		
-		
+		//获取下一个 工序 <tr>的id
+	
 		loadDataIntoModal(trid);
+			
+		
+		
+		
+		
+		
+	
+		
+		
+		
+		
+		
 		
 		
 	}
 	
 	function saveAddModalValue(trid){
-		var number = $("#number").val();
-		var username = $("#username").val();
-		var account = $("#account").val();
-		var pid = $("input[name = 'pid']").val();
-		var price = $("#proceduresPrice").val();
-		var procedureNode = $("#proceduresName").val();
-		var token = $("input[name = 'token']").val();
+		var number = $("#number").val().trim();
+		var username = $("#username").val().trim();
+		var account = $("#account").val().trim();
+		var pid = $("input[name = 'pid']").val().trim();
+		var price = $("#proceduresPrice").val().trim();
+		var procedureNode = $("#proceduresName").val().trim();
+		var token = $("input[name = 'token']").val().trim();
 		
 		var reg = new RegExp("^[0-9]*$");
 		
@@ -380,7 +393,7 @@
 		data.uid = dataBaseUid;
 		data.price = price;
 		data.pid = pid;
-		data.procedureNode =procedureNode;
+		data.procedureNode = procedureNode;
 		data.token = token;
 		
 		//上传数据至数据库
@@ -395,8 +408,7 @@
 					
 					var trName = new Date().getTime();
 					
-					console.log(trName+" : "+price+" :"+number+" ： "+username+" : "+account);
-					
+						
 					html+="<tr id='title_"+trName+"'>";
 					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
 					html+="<td ><input type='hidden' name='hideprice' value='"+price+"'</td>";
@@ -439,66 +451,7 @@
 		
 	}
 	
-	// 上传模块
-	function upLoadWagesNodeToDataBase(data){
-		
-		var trid = $("input[name = 'trid']").val();
-		
-		var number = $("#number").val();
-		var username = $("#username").val();
-		var account = $("#account").val();
-		var pid = $("input[name = 'pid']").val();
-		var price = $("#proceduresPrice").val();
-		var procedureNode = $("#proceduresName").val();
-		var token = $("input[name = 'token']").val();
-		
-		$.ajax({
-			url:'putIntoWage.b',
-			type:'post',
-			data: data,
-			success: function(data){
-				
-				if(data.code == 1){
-					var html = '';
-					
-					var trName = new Date().getTime();
-					
-					html+="<tr id='title_"+trName+"'>";
-					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
-					html+="<td ><input type='hidden' name='hideprice' value='"+price+"'</td>";
-					html+="<td>"+number+"</td>";
-					html+="<td>"+username+"</td>";
-					html+="<td>"+$("#account").val()+"</td>";
-					html+="<td>";
-					html+="<div class='button-group'>";
-					html+="<a class='button border-main' href='javascript:void(0)' onclick='editProcedure("+trName+","+data.obj.wid+")'><span class='icon-edit'></span>修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改</a>";
-					html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+","+data.obj.wid+")'> <span class='icon-trash-o'></span>删除</a>";
-					html+="</div>";
-					html+="</td>";
-					html+="</tr>";
-					
-					$("#"+trid).after(html);
-					
-					$("#number").val('');
-					$("#username").val('');
-					$("#account").val('');
-					$("input[name = 'pid']").val();
-					$("#proceduresPrice").val(price/1000);
-					$("#proceduresName").val(procedureNode);
-					
-					
-					
-					//改变模态框的标题
-					changeModalTitle('add',procedureNode);
-				}
-				if(data.code == -1){
-					alert(data.msg);
-				}
-				getToken();
-			}
-		
-		})
-	}
+	
 	
 	
 	
@@ -559,10 +512,8 @@
 		
 		var reg = new RegExp("^[0-9]*$");
 		
-		if(!reg.test(num)){
-			alert('请输入数字');
-			return;
-		}
+		num = parseInt(num);
+		
 		
 		//price转换位为数字类型
 		price = Number(price);
@@ -627,6 +578,7 @@
 			
 			var reg = new RegExp("^[0-9]*$");
 			
+			number = parseInt(number);
 			
 			if(number == ''){
 				alert('数量不能为空');
@@ -666,7 +618,6 @@
 			
 			//上传数据至数据库
 			
-		
 		
 		$.ajax({
 			url:'putIntoWage.b',

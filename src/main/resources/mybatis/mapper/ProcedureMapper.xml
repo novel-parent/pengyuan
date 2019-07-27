@@ -13,12 +13,7 @@
 				<if test="procedures.remarks != null">
 					and remarks like '%${procedures.remarks}%'
 				</if>
-				<if test="procedures.times != null">
-					and times like '${procedures.times}%'
-				</if>
-				<if test="procedures.flag != null">
-					and flag = #{procedures.flag}
-				</if>
+				
 			</where>
 			
 			limit #{pageBeginIndex},8
@@ -33,12 +28,7 @@
 				<if test="procedures.remarks != null">
 					and remarks like '%${procedures.remarks}%'
 				</if>
-				<if test="procedures.times != null">
-					and times like '${procedures.times}%'
-				</if>
-				<if test="procedures.flag != null">
-					and flag = #{procedures.flag}
-				</if>
+				
 			</where>
 	</select>
 	

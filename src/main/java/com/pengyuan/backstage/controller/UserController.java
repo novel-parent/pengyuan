@@ -171,7 +171,11 @@ public class UserController {
     public Object getUidByUname(String uname) {
     	JsonModel jm = new JsonModel();
     	
+    	System.out.println(uname);
+    	
     	User user= userService.SerachUserByUserName(uname);
+    	
+    	System.out.println("====================== "+user);
     	
     	if(user == null) {
     		jm.setCode(-1);

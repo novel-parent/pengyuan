@@ -94,7 +94,7 @@ public class ProcedureController {
 	  *  获取所有日期信息
 	 * @return
 	 */
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping("serachAllDate.b")
 	public Object serachAllDate() {
 		JsonModel jm = new JsonModel();
@@ -112,7 +112,7 @@ public class ProcedureController {
 		}
 		
 		return jm;
-	}
+	}*/
 	
 	@ResponseBody
 	@RequestMapping("checkProcedureName.b")
