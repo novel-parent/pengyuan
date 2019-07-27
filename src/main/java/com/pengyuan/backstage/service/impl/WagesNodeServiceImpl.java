@@ -117,5 +117,7 @@ public class WagesNodeServiceImpl implements WagesNodeService {
 		return wagesNodeMapper.deleteWagesNodeByWid(wid);
 	}
 
+	
+
 
 }
