@@ -158,5 +158,32 @@ public class UserController {
 		return userList;
     	
     }
+    
+    /**
+         *    通过uid获取 userName
+     * @param uname
+     * @return
+     */
+    
+    
+    @ResponseBody
+    @RequestMapping("/getUidByUname.b")
+    public Object getUidByUname(String uname) {
+    	JsonModel jm = new JsonModel();
+    	
+    	User user= userService.SerachUserByUserName(uname);
+    	
+    	if(user == null) {
+    		jm.setCode(-1);
+    		jm.setMsg("该用户不存在");
+    	}else {
+    		jm.setCode(1);
+    		jm.setObj(user);
+    	}
+    	
+    	
+		return jm;
+    	
+    }
 
 }

@@ -7,8 +7,8 @@
 	<select id="searchProcedureByPage" resultType="com.pengyuan.backstage.bean.Procedures">
 			select * from procedures
 			<where>
-				<if test="procedures.name != null">
-					and name like '%${procedures.name}%'
+				<if test="procedures.pName != null">
+					and pName like '%${procedures.pName}%'
 				</if>
 				<if test="procedures.remarks != null">
 					and remarks like '%${procedures.remarks}%'
@@ -27,8 +27,8 @@
 	<select id="searchAllColumn" resultType="Integer">
 		select count(*) from procedures
 			<where>
-				<if test="procedures.name != null">
-					 and name like '%${procedures.name}%'
+				<if test="procedures.pName != null">
+					 and pName like '%${procedures.pName}%'
 				</if>
 				<if test="procedures.remarks != null">
 					and remarks like '%${procedures.remarks}%'

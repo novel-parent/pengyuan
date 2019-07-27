@@ -77,8 +77,8 @@ public class ProcedureImpl implements ProcedureService {
 		
 		int pageBeginIndex = (currentPage-1)*8;
 		
-		if(pd.getName() != null ) {
-			p.setName(pd.getName());
+		if(pd.getpName() != null ) {
+			p.setpName(pd.getpName());
 		}
 		
 		if(pd.getRemarks() != null ) {
@@ -93,9 +93,6 @@ public class ProcedureImpl implements ProcedureService {
 		p.setFlag(1);
 		
 		ProcedureModel ppb=new ProcedureModel();
-		
-		System.out.println("1: "+pd);
-		System.out.println("2: "+p);
 		
 		List<Procedures>  ProcedureList = pm.searchProcedureByPage(p,pageBeginIndex);
 		
@@ -134,25 +131,27 @@ public class ProcedureImpl implements ProcedureService {
 
 	@Override
 	public List<Procedures> HandleYear(List<Procedures> rowpdList) {
-		List<String> yearList = new ArrayList<String>();
+		List<Procedures> yearList = new ArrayList<Procedures>();
 		
 		
 		for(Procedures p:rowpdList) {
+			
+			Procedures pd = new Procedures();
+			
 			String yearStr = (""+p.getTimes()).substring(0,4).trim();
 			
 			boolean flag = false;
 			
 			
 			if(yearList.isEmpty()) {
-				yearList.add(yearStr);
+				pd.setTimes(Long.valueOf(yearStr));
+				yearList.add(pd);
 			}else {
 			
-				for(String y : yearList) {
+				for(Procedures y : yearList) {
 					
-					if(yearStr.equals(y)) {
+					if(yearStr.equals(y.getTimes()+"")) {
 						flag = true;
-						
-						rowpdList.remove(p);
 						
 						break;
 					}
@@ -160,19 +159,15 @@ public class ProcedureImpl implements ProcedureService {
 				
 				if(flag == false) {
 					
-					yearList.add(yearStr);
+					pd.setTimes(Long.valueOf(yearStr));
+					yearList.add(pd);
 					
-					Long times = Long.valueOf(yearStr);
-					
-					p.setTimes(times);
-					
-					System.out.println(p);
 				}
 			}
 		}
 		
 		
-		return rowpdList;
+		return yearList;
 	}
 
 

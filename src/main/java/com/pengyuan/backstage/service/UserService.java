@@ -69,4 +69,6 @@ public interface UserService {
 
 	UserModel SerachPageBean(User user, int pageNum);
 
+	User SerachUserByUserName(String uname);
+
 }

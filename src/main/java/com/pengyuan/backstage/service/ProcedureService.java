@@ -44,7 +44,7 @@ public interface ProcedureService {
 	 * @param fid
 	 * @return
 	 */
-	Procedures searchProcedureById(Long fid);
+	Procedures searchProcedureById(Long pid);
 	/**
 	  *  过滤重复的年份
 	 * @param rowpdList

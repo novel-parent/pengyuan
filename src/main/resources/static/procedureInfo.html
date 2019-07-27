@@ -1,59 +1,54 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="renderer" content="webkit">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-<meta name="applicable-device" content="pc,mobile">
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
 <title></title>
 <link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<script src="js/jquery.js"></script>
+<script src="js/jquery-3.1.1.js"></script>
 <script src="js/pintuer.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/list.css">
 <script type="text/javascript">
 
 	$(function(){
+		//获取名字为AAA的模板信息，并加载到页面上
 		
-		var searchString = window.location.search;
+		var searchStr = window.location.search;
 		
-		var rowData = searchString.split('?')[1];
+		var rowData = searchStr.split('?')[1];
 		
-		var fid = rowData.split('&')[0].split('=')[1];
+		var rowpid = rowData.split('&')[0];
 		
-				
+		var pid = rowpid.split('=')[1];
 		
-		//获取模板信息
+		
 		$.ajax({
 			url:'addDataForProcedure.b',
 			type:'post',
-			data:'fid='+fid,
+			data:'pid='+pid,
 			success: function(data){
 				if(data.code == -1){
 					alert(data.msg);
 				}else if(data.code == 1){
 					
-					
 					var dataString = data.obj.main;
 					
-					var dataArr = parsepJsonString(dataString);
+					var dataArr = parseJsonString(dataString);
 					
+					$("input[name = 'name']").val(data.obj.pName);
+					
+					$("input[name = 'remark']").val(data.obj.remarks);
 					
 					var trName=new Date().getTime();
 					
 					//遍历工序模板信息
 					for(let i=0;i<dataArr.length;i++){
-						
-						trName ++ ;
 						
 						var html = '';
 						let name = dataArr[i].split(",")[0].split(":")[1];
@@ -61,13 +56,9 @@
 						let num1 = dataArr[i].split(",")[2].split(":")[1];
 						let uname1 = dataArr[i].split(",")[3].split(":")[1];
 						let account1 = dataArr[i].split(",")[4].split(":")[1];
-						let num2 = dataArr[i].split(",")[5].split(":")[1];
-						let uname2 = dataArr[i].split(",")[6].split(":")[1];
-						let account2 = dataArr[i].split(",")[7].split(":")[1]; 
 						
 						
-						
-						
+						trName = trName + 1;
 						
 						html+="<tr id='title_"+trName+"'>";
 						html+="<td>"+name+"</td>";
@@ -75,14 +66,9 @@
 						html+="<td>"+num1+"</td>";
 						html+="<td>"+uname1+"</td>";
 						html+="<td>"+account1+"</td>";
-						html+="<td>"+num2+"</td>";
-						html+="<td>"+uname2+"</td>";
-						html+="<td>"+account2+"</td>";
 						html+="<td>";
 						html+="<div class='button-group'>";
-						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedureData("+trName+")'><span class='icon-edit'></span>添加</a>";
-						html+="<a class='button border-main' href='javascript:void(0)' onclick='edit("+trName+")'> <span class='icon-edit'></span> 修改</a>";
-						html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+")'> <span class='icon-trash-o'></span>删除</a>";
+						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+trName+")'><span class='icon-edit'></span>填写数据</a>";
 						html+="</div>";
 						html+="</td>";
 						html+="</tr>";
@@ -96,11 +82,11 @@
 					html+='<td colspan="15">';
 					html+='<div class="pagelist">';
 					html+='<div onclick="file.click()">';
-					html+='<img src="images/timg.jfif" name="fileimg" style="width: 120px; height: 120px; left: 60px;" class="img-responsive" " alt="Cinque Terre" width="304" height="236">';
+					html+='<img src="'+data.obj.path+'" name="fileimg" style="width: 120px; height: 120px; left: 60px;" class="img-responsive" " alt="该商品未添加图片" width="304" height="236">';
 					html+='<div style="float: left;">';
-					html+='<span>上传图片</span>';
 					html+='</div>';
-					html+='<input type="file" onchange="changeImg(this)" style="display: none" id="file">';
+					html+='<input type="hidden" name="pid" value="'+data.obj.pid+'">';
+					html+='<input type="hidden" name="lastTrId" value="title_'+trName+'">';
 					html+='</div>';
 					html+='<div class="button-group">';
 					html+='<a class="button border-main" href="javascript:void(0)" onclick="saveProcedureInfo()" style="background-color: blue; color: white; width: 120px; text-decoration: none;"> 保存 </a>';
@@ -110,11 +96,6 @@
 					html+='</tr>';
 					
 					$("#procedureInfo").append(html);
-					
-					
-					
-					$("input[name = 'name']").val(data.obj.name);
-					$("input[name = 'remark']").val(data.obj.remarks);
 					 
 				}
 				
@@ -131,7 +112,7 @@
 	
 	
 	//解析Json数组
-	function parsepJsonString(dataString){
+	function parseJsonString(dataString){
 		
 		let m = indexOf(dataString,'[');
 		let n = indexOf(dataString,']');
@@ -163,6 +144,17 @@
 		}
 	}
 	
+	function getToken(){
+		$.ajax({
+			url:'getToken.b',
+			data:'',
+			type:'post',
+			success: function(data){
+				$("input[name^='token']").val(data);
+			}
+		})
+	}
+	
 </script>
 
 
@@ -174,18 +166,18 @@
 		<div class="padding border-bottom">
 			<ul class="search">
 				<li>商品名称</li>
-				<li><input type="text" name="name" onblur="checkName(this)" class="form-control"></li>
+				<li> 
+				<input type="text" name="name" class="form-control" disabled="disabled">
+				<input type="hidden" name="token" value="">
+				</li> 
 				<li>商品备注</li>
-				<li><input type="text" name="remark" class="form-control"></li>
+				<li><input type="text" name="remark" class="form-control" disabled="disabled" ></li>
 			</ul>
 		</div>
 		<table class="table table-hover text-center" name="procedureTable" id="procedureInfo">
 			<tr id="titleBegin">
 				<th width="120">工序</th>
 				<th width="80">单价</th>
-				<th width="100">数量</th>
-				<th width="80">姓名</th>
-				<th width="120">合计</th>
 				<th width="100">数量</th>
 				<th width="80">姓名</th>
 				<th width="120">合计</th>
@@ -199,7 +191,7 @@
 		</table>
 	</div>
 
-	<!-- 添加的模态框 -->
+	<!-- 模态框 -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true" >
 		<div class="modal-dialog" style="width:1000px;">
@@ -207,7 +199,7 @@
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
 						aria-hidden="true">&times;</button>
-					添加工序信息
+					<b name="addModalTitle"></b>
 				</div>
 				<div class="modal-body">
 					<input type="hidden" name="trid" value="">
@@ -221,6 +213,55 @@
 								<th style="width:90px;">数量</th>
 								<th style="width:80px;">姓名</th>
 								<th style="width:100px;">合计</th>
+							</tr>
+						</thead>
+						<tbody  >
+							<tr id="trList">
+								<td><input type="text" class="form-control"  id="proceduresName" disabled="disabled" ></td>
+								<td><input type="text" class="form-control" id="proceduresPrice" disabled="disabled" ></td>
+								<td><input type="text" class="form-control"  id="number" placeholder="数量"  onkeyup="getAmmount(this.value,'account')"></td>
+								<td>
+								<input type="text" class="form-control" id="username" onblur=" getUidByUname(this.value,'add')" placeholder="员工姓名"  >
+								<input type="hidden" name="uid" value="">
+								</td>
+								<td><input type="text" class="form-control" id="account" placeholder="总金额"  ></td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" onclick="nextStaff()" >下一员工</button>
+				
+					
+					
+					<button type="button" class="btn btn-primary" onclick="nextProcedure()" >下一工序</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal -->
+	</div>
+	
+	<!-- 修改模态框 -->
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" >
+		<div class="modal-dialog" style="width:1000px;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<b name="editModalTitle"></b>
+				</div>
+				<div class="modal-body">
+					<input type="hidden" name="e_trid" value="">
+					
+					<table class="table" >
+
+						<thead>
+							<tr>
+								<th style="width:180px;">工序名</th>
+								<th style="width:80px;">单价</th>
 								<th style="width:90px;">数量</th>
 								<th style="width:80px;">姓名</th>
 								<th style="width:100px;">合计</th>
@@ -228,30 +269,26 @@
 						</thead>
 						<tbody>
 							<tr id="trList">
-								<td><input type="text" class="form-control"  id="proceduresName" disabled="disabled" ></td>
-								<td><input type="text" class="form-control" id="proceduresPrice" disabled="disabled" ></td>
-								<td><input type="text" class="form-control"  id="number1" placeholder="数量"  onkeyup="getAmmount(this.value,'account1')"></td>
-								<td><input type="text" class="form-control" id="username1" placeholder="员工姓名"  ></td>
-								<td><input type="text" class="form-control" id="account1" placeholder="总金额"  ></td>
-								<!-- <td><input type="text" class="form-control" id="number2" placeholder="数量"  onkeyup="getAmmount(this.value,'account2')"></td>
-								<td><input type="text" class="form-control" id="username2" placeholder="员工姓名"  ></td>
-								<td><input type="text" class="form-control" id="account2" placeholder="总金额"  ></td> -->
+								<td><input type="text" class="form-control"  id="e_proceduresName" disabled="disabled" ></td>
+								<td><input type="text" class="form-control" id="e_proceduresPrice" disabled="disabled" ></td>
+								<td><input type="text" class="form-control"  id="e_number" placeholder="数量"  onkeyup="getAmmount(this.value,'e_account')"></td>
+								<td>
+								<input type="text" class="form-control" id="e_username" onblur=" getUidByUname(this.value,'edit')" placeholder="员工姓名"  >
+								<input type="hidden" name="wid" value="">
+								<input type="hidden" name="uid_e" value="">
+								</td>
+								<td><input type="text" class="form-control" id="e_account" placeholder="总金额"  ></td>
 								
 							</tr>
 						</tbody>
 					</table>
-				
-					
-						
-					
-						
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" onclick="nextStaff()" >下一员工</button>
+					<button type="button" class="btn btn-primary" onclick="cancel()" >取消</button>
 				
-					<button type="button" class="btn btn-default"  onclick="saveCurrentProcedure()">保存当前工序</button>
 					
-					<button type="button" class="btn btn-primary" onclick="nextProcedure()" >下一工序</button>
+					
+					<button type="button" class="btn btn-primary" onclick="saveEditProcedure()" >保存</button>
 				</div>
 			</div>
 			<!-- /.modal-content -->
@@ -263,387 +300,520 @@
 
 	<script type="text/javascript">
 	
-		var pJsonStr = ''; 
+	//下一工序
+	function nextProcedure(){
+		var trid = $("input[name = 'trid']").val();
 		
-		pJsonStrInit();
+		var lastTrid = $("input[name='lastTrId']").val();
 		
-		//对pJsonStr的初始化
-		function pJsonStrInit(){
-			pJsonStr += '[{number:number,username:username,account:account}';
-		}
-	
-		 
-		//下一个员工的信息，从 <tr>里面读取
-		function nextStaff(){
-			
-			var trid  =	$("input[name = 'trid']").val();
-			
-			//获取第一次输入的值
-			let number1 = $("#number1").val();
-			let username1 = $("#number1").val();
-			let account1 = $("#account1").val();
-			
-			pJsonStr += ',{number1:'+number1+',username1:'+username1+',account1:'+account1+'}';
-			
-			var data = $('#'+trid).children();
-			 
-		 	
-			let number2 = data.eq(5).html();
-			let username2 = data.eq(6).html();
-			let account2 = data.eq(7).html();
-			
-			
-			$("#number2").val(number2);
-			$("#username2").val(username2);
-			$("#account2").val(account2);
-			
-		}
-	
-		//下一工序
-		function nextProcedure(){
-			
-			//获取模态框的name为trid的值，该值为当前操作的 <tr> 的id 
-			
-			 var trid  =	$("input[name = 'trid']").val();
-			
-			/*
-				把 模态框中 name = trid 的框的数字截取出来，因为 <tr> 的 id 是递增的，举个例子，第一个
-				<tr> 的 id = title_1234567 则该 <tr>的紧接着的下一个 
-				<tr>的   id = title_1234568  ， 再下一个 
-				<tr> 的 id = title_12345679 。
-				
-			 */
-			 trid = trid.substring(6,trid.length);
-			 
-			 trid = parseInt(trid);
-			 
-			 trid+=1;
-			 
-			 trid = 'title_'+trid;
-			 
-			 $("input[name = 'trid']").val(trid);
-			 
-			 //给 <tr> 的 <td> 赋值
-			 
-			 setTrOneVal(trid);
-			 
-			 
+		if(trid == lastTrid){
+			alert('当前已经是最后一个工序');
+			return;
 		}
 		
-		function setOneTrVal(trid){
-			var data = $('#'+trid).children();
-			 
-		 	let name = data.eq(0).html();
-			let price = data.eq(1).html();
-			let number1 = data.eq(2).html();
-			let username1 = data.eq(3).html();
-			let account1 = data.eq(4).html();
-			
-			
-			
-			$("#proceduresName").val(name);
-			$("#proceduresPrice").val(price);
-			$("#number1").val(number1);
-			$("#username1").val(username1);
-			$("#account1").val(account1);
-			
-		}
+		//保存上一工序的信息
+		saveAddModalValue(trid);
 		
-		function setTrVal(trid){
-			
-			var data = $('#'+trid).children();
+		
+		var trnum= trid.substring(6,trid.length);
 
-			
-			let number2 = data.eq(5).html();
-			let username2 = data.eq(6).html();
-			let account2 = data.eq(7).html();
-			
-			$("#number2").val(number2);
-			$("#username2").val(username2);
-			$("#account2").val(account2);
-			
-			setOneTrVal(trid);
-			
-		}
+		trnum = parseInt(trnum);
+		
+		trnum += 1;
+		
+		trid = 'title_'+trnum;
+		
+		
+		loadDataIntoModal(trid);
+		
+		
+	}
 	
-		function saveCurrentProcedure(){
-			
-			
-		    var trid  =	$("input[name = 'trid']").val();
-			
-		    var number1 = $('#number1').val();
-		    var username1 = $('#username1').val().trim();
-		    var account1 = $('#account1').val();
-		    var number2 = $('#number1').val();
-		    var username2 = $('#username2').val().trim();
-		    var account2 = $('#account2').val();
-		    
-		    
-		    var parrtten = /^\d{n}$/ ;
-		    
-		   
-		    
-		   
-		    
-		    if(number1 == ''){
-		    	alert('请输入第一个工件数量');
-		    	return;
-		    }
-		    if(username1 == ''){
-		    	alert('请输入第一个员工姓名');
-		    	return;
-		    }
-		    
-		    if(number2 != '' && username2 == ''){
-		    	alert('请输入第二个员工姓名');
-		    	return;
-		    }
-		    
-		    if(number2 == '' && username2 != ''){
-		    	alert('请输入第二个工件数量');
-		    	return;
-		    }
-		    
-		    if(account1 == '' || account2 == ''){
-		    	alert('请输入金额');
-		    	return;
-		    }
-		    
-		    if(username1 == username2){
-		    	
-		    	if(!confirm('两次输入的员工姓名相同,确认提交吗？')){
-					return;		    		
-		    	}
-		    	
-		    }
-		    
-		    if(!confirm('所有计算出来的金额仅供参考,保存前请确认无误')){
-		    	return;
-		    }
-		    
-		    
-		    var trList = $('#'+trid).children();
-		    
-		    trList.eq(2).html(number1);
-		    trList.eq(3).html(username1);
-		    trList.eq(4).html(account1);
-		    trList.eq(5).html(number2);
-		    trList.eq(6).html(username2);
-		    trList.eq(7).html(account2);
-		    
-		    alert('保存成功');
-		    
-		}
-	
-	
-		function getAmmount(num,id){
-			
-			
-				//单价
-				var price = $("#proceduresPrice").val();
-				
-				//price转换位为数字类型
-				price = Number(price);
-				
-				//price转换位为数字类型
-				num = Number(num);
-				
-				let account = price*num;
-				
-				account = account;
-				
-				//保留小数点后三位小数，即 '离'
-				account= Number(account).toFixed(3);
-				
-				
-				
-				$("#"+id).val(account);
-				
+	function saveAddModalValue(trid){
+		var number = $("#number").val();
+		var username = $("#username").val();
+		var account = $("#account").val();
+		var pid = $("input[name = 'pid']").val();
+		var price = $("#proceduresPrice").val();
+		var procedureNode = $("#proceduresName").val();
+		var token = $("input[name = 'token']").val();
+		
+		var reg = new RegExp("^[0-9]*$");
+		
+		
+		if(number == ''){
+			alert('数量不能为空');
+			return;
+		}else if(!reg.test(number)){
+			alert('请输入数字');
+			return;
 		}
 		
-			//去除字符串尾部的0
-		function removeTailZero(str){
-			if(str.substring(str.length-1,str.length) == 0){
-				str = str.substring(0,str.length-1);
-				removeTailZero(str);
-			}else{
-				return str;
+		if(username == ''){
+			alert('姓名不能为空');
+			return;
+		}
+		
+		
+		var dataBaseUid = $("input[name = 'uid']").val();
+		
+		
+		if(dataBaseUid == '-1'){
+			alert('该员工不存在');
+			return;
+		}
+		
+		price = (Number(price) * 1000).toFixed(0);
+		
+		var data = {};
+		
+		data.number = number;
+		data.uid = dataBaseUid;
+		data.price = price;
+		data.pid = pid;
+		data.procedureNode =procedureNode;
+		data.token = token;
+		
+		//上传数据至数据库
+		$.ajax({
+			url:'putIntoWage.b',
+			type:'post',
+			data: data,
+			success: function(data){
+				
+				if(data.code == 1){
+					var html = '';
+					
+					var trName = new Date().getTime();
+					
+					console.log(trName+" : "+price+" :"+number+" ： "+username+" : "+account);
+					
+					html+="<tr id='title_"+trName+"'>";
+					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
+					html+="<td ><input type='hidden' name='hideprice' value='"+price+"'</td>";
+					html+="<td>"+number+"</td>";
+					html+="<td>"+username+"</td>";
+					html+="<td>"+account+"</td>";
+					html+="<td>";
+					html+="<div class='button-group'>";
+					html+="<a class='button border-main' href='javascript:void(0)' onclick='editProcedure("+trName+","+data.obj.wid+")'><span class='icon-edit'></span>修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改</a>";
+					html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+","+data.obj.wid+")'> <span class='icon-trash-o'></span>删除</a>";
+					html+="</div>";
+					html+="</td>";
+					html+="</tr>";
+					
+					$("#"+trid).after(html);
+					
+					var trnum= trid.substring(6,trid.length);
+
+					trnum = parseInt(trnum);
+					
+					trnum += 1;
+					
+					trid = 'title_'+trnum;
+					
+					
+					loadDataIntoModal(trid);
+					
+					$("input[name = 'trid']").val(trid);
+					
+					//改变模态框的标题
+					changeModalTitle('add',procedureNode);
+				}
+				if(data.code == -1){
+					alert(data.msg);
+				}
+				getToken();
 			}
-		}
+		
+		})
+		
+	}
 	
+	// 上传模块
+	function upLoadWagesNodeToDataBase(data){
 		
-
-		//保存模板信息，上传到数据库
-		function saveProcedureInfo() {
-			
-			var name=$("input[name='name']").val();
-			var remark=$("input[name='remark']").val();
-			var fd=new FormData();
-			
+		var trid = $("input[name = 'trid']").val();
 		
-			
-			if(name == ''){
-				alert('请输入模板名称');
-				return;
+		var number = $("#number").val();
+		var username = $("#username").val();
+		var account = $("#account").val();
+		var pid = $("input[name = 'pid']").val();
+		var price = $("#proceduresPrice").val();
+		var procedureNode = $("#proceduresName").val();
+		var token = $("input[name = 'token']").val();
+		
+		$.ajax({
+			url:'putIntoWage.b',
+			type:'post',
+			data: data,
+			success: function(data){
+				
+				if(data.code == 1){
+					var html = '';
+					
+					var trName = new Date().getTime();
+					
+					html+="<tr id='title_"+trName+"'>";
+					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
+					html+="<td ><input type='hidden' name='hideprice' value='"+price/1000+"'</td>";
+					html+="<td>"+number+"</td>";
+					html+="<td>"+username+"</td>";
+					html+="<td>"+$("#account").val()+"</td>";
+					html+="<td>";
+					html+="<div class='button-group'>";
+					html+="<a class='button border-main' href='javascript:void(0)' onclick='editProcedure("+trName+","+data.obj.wid+")'><span class='icon-edit'></span>修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改</a>";
+					html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+","+data.obj.wid+")'> <span class='icon-trash-o'></span>删除</a>";
+					html+="</div>";
+					html+="</td>";
+					html+="</tr>";
+					
+					$("#"+trid).after(html);
+					
+					$("#number").val('');
+					$("#username").val('');
+					$("#account").val('');
+					$("input[name = 'pid']").val();
+					$("#proceduresPrice").val(price/1000);
+					$("#proceduresName").val(procedureNode);
+					
+					
+					
+					//改变模态框的标题
+					changeModalTitle('add',procedureNode);
+				}
+				if(data.code == -1){
+					alert(data.msg);
+				}
+				getToken();
 			}
-			
-			if(remark == ''){
-				alert('请输入备注');
-				return;
-			}
-			
-			
-			var trList = $("tr[id ^= 'title']");
-
-			var arr = "[{name:工序名,price:单价}";
-
-			for (var i = 1; i < trList.size() - 1; i++) {
-
-				var tdList = trList.eq(i).children();
-
-				arr += ",{name:" + tdList.eq(0).html() + ",price:"
-				+ tdList.eq(1).html() +",num1:"+tdList.eq(2).html()+",uname1:"+tdList.eq(3).html()+",account1:"+tdList.eq(4).html()
-				+",num2:"+tdList.eq(5).html()+",uname2:"+tdList.eq(6).html()+",account2:"+tdList.eq(7).html()+"}"
-
-			}
-
-			arr += "]";
-			
-			if($("#file")[0].files[0] == null){
-				if(!confirm('你还没有选择图片确认要保存该模板吗？')){
-					return ;
+		
+		})
+	}
+	
+	
+	
+	//保存编辑过后的工序信息
+	function saveEditProcedure(){
+		
+		var trid = $("input[name = 'e_trid']").val();
+		var wid = $("input[name = 'wid']").val();
+		var account = $("#e_account").val();
+		
+		
+		var username = $("#e_username").val();
+		var number = $("#e_number").val();
+		var uid = $("input[name = 'uid_e']").val();
+		var price = $("#e_proceduresPrice").val();
+		
+		price = Number(price)*1000;
+		
+		var data = {};
+		
+		data.number = number;
+		data.wid = wid;
+		data.uid = uid;
+		data.price = price;
+		
+		$.ajax({
+			url:'saveEditProcedure.b',
+			type:'post',
+			data:data,
+			success: function(data){
+				if(data.code == 1){
+					
+					var tdList = $(trid).children();
+					
+					tdList.eq(2).html(number);
+					tdList.eq(3).html(username);
+					tdList.eq(4).html(account);
+					
+					alert('保存成功');
 				}
 			}
-			
-			
-			fd.append('name',name);
-			fd.append('remarks',remark);
-			fd.append('main',arr);
-			fd.append('file',$("#file")[0].files[0]);
-			
-			console.log(fd.get('procedures'));
-			
-			console.log(fd.get('file'));
-			
+		})
+		
+	}
+	
+	function changeModalTitle(prefix,content){
+		
+		var selector = prefix+'ModalTitle';
+		
+		$('b[name = '+selector+']').html(content);
+		
+	}
+	
+	//计算金额
+	function getAmmount(num,id){
+		//单价
+		var price = $("#proceduresPrice").val();
+		
+		var reg = new RegExp("^[0-9]*$");
+		
+		if(!reg.test(num)){
+			alert('请输入数字');
+			return;
+		}
+		
+		//price转换位为数字类型
+		price = Number(price);
+		
+		//price转换位为数字类型
+		num = Number(num);
+		
+		let account = price*num;
+		
+		account = account;
+		
+		//保留小数点后三位小数，即 '离'
+		account= Number(account).toFixed(3);
+		
+		
+		
+		$("#"+id).val(account);
+		
+		}
+	
+		//通过userName获取uid
+		function getUidByUname(uname,type){
 			$.ajax({
-				url : 'SaveProcedureString.b',
-				type : 'post',
-				data : fd,
-				processData: false,
-				contentType: false,
-				success : function(data) {
+				url:'getUidByUname.b',
+				data: 'uname='+uname,
+				type: 'post',
+				success: function(data){
 					if(data.code == 1){
-						alert(data.msg);
-						window.location.reload();
+						
+						if(type == 'edit'){
+							 $("input[name = 'uid_e']").val(data.obj.uid);
+						}else{
+							 $("input[name = 'uid']").val(data.obj.uid);
+						}
+						
+					}
+					if(data.code == -1){
+						
+						if(type == 'edit'){
+							 $("input[name = 'uid_e']").val(data.code);
+						}else{
+							 $("input[name = 'uid']").val(data.code);
+						}
+						
 					}
 				}
 			})
+		}
+	
+		//下一员工
+		function nextStaff(){
 			
+			var trid = $("input[name = 'trid']").val();
+			
+			var number = $("#number").val();
+			var username = $("#username").val();
+			var account = $("#account").val();
+			var pid = $("input[name = 'pid']").val();
+			var price = $("#proceduresPrice").val();
+			var procedureNode = $("#proceduresName").val();
+			var token = $("input[name = 'token']").val();
+			
+			var reg = new RegExp("^[0-9]*$");
+			
+			
+			if(number == ''){
+				alert('数量不能为空');
+				return;
+			}else if(!reg.test(number)){
+				alert('请输入数字');
+				return;
+			}
+			
+			if(username == ''){
+				alert('姓名不能为空');
+				return;
+			}
+			
+			
+			var dataBaseUid = $("input[name = 'uid']").val();
+			
+			
+			if(dataBaseUid == '-1'){
+				alert('该员工不存在');
+				return;
+			}
+			
+			price = (Number(price) * 1000).toFixed(0);
+			
+			var data = {};
+			
+			
+			
+			data.number = number;
+			data.uid = dataBaseUid;
+			data.price = price;
+			data.pid = pid;
+			data.procedureNode =procedureNode;
+			data.token = token;
+			data.username = username;
+			
+			//上传数据至数据库
+			upLoadWagesNodeToDataBase(data);
 		}
 		
 		
-		//新增工序之前的相关操作
-		function addProcedureData(obj) {
+		//编辑员工信息前的模态框赋值操作
+		function editProcedure(trName,wid){
+			var trid = '#title_'+trName;
 			
-			$("input[name = 'trid']").val('title_'+obj);
-			var trList = $("#trList").children();
+			$("input[name = 'e_trid']").val(trid);
 			
-			var trid = 'title_'+obj;
+			var trList = $(trid).children();
 			
-			setTrVal(trid);
+			var name = trList.eq(0).children().eq(0).val();
 			
-			$("#myModal").modal('show');
+			var price = trList.eq(1).children().eq(0).val();
 			
+			var number = trList.eq(2).html();
+			
+			var uname = trList.eq(3).html();
+			
+			var account = trList.eq(4).html();
+			
+			$("input[name = 'wid']").val(wid);
+			
+			$("#e_number").val(number);
+			
+			$("#e_proceduresName").val(name);
+			
+			$("#e_proceduresPrice").val(price);
+			
+			$("#e_username").val(uname);
+			
+			getUidByUname(uname,'edit');
+			
+			$("#e_account").val(account);
+			
+			changeModalTitle('edit',name);
+			
+			$('#editModal').modal('show');
 			
 		}
 	
-		//新增工序的保存方法
-		function save() {
-			
-			let trName = new Date().getTime();
-			
-			let name = $("input[name = 'procedureName']").val();
-			
-			let price = $("input[name = 'procedurePrice']").val();
-			
-			let objName = $("input[name = 'trid']").val();
-			
-			
-			let trObj = $("#"+objName);
-			
-			let html = '';
-			
-			html+="<tr id='title_"+trName+"'>";
-			html+="<td>"+name+"</td>";
-			html+="<td>"+price+"</td>";
-			html+="<td></td>";
-			html+="<td></td>";
-			html+="<td></td>";
-			html+="<td></td>";
-			html+="<td></td>";
-			html+="<td></td>";
-			html+="<td>";
-			html+="<div class='button-group'>";
-			html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+trName+")'><span class='icon-edit'></span>添加</a>";
-			html+="<a class='button border-main' href='javascript:void(0)' onclick='edit("+trName+")'> <span class='icon-edit'></span> 修改</a>";
-			html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+")'> <span class='icon-trash-o'></span>删除</a>";
-			html+="</div>";
-			html+="</td>";
-			html+="</tr>";
-			
-			trObj.after(html);
-			
-			alert('添加成功');
-			
-			$("input[name = 'trid']").val('');
-			
-		}
 		
-		//编辑工序信息之前的相关操作
-		function edit(obj){
+		//删除工序信息
+		function del(obj,wid){
 			
-			var objId = '#title_'+obj;
-			
-			var trList = $(objId).children();
-			
-			$("input[name = 'edittrid']").val(objId);
-			
-			$("input[name = 'afterEditProcedureName']").val(trList.eq(0).html());
-			
-			$("input[name = 'afterEditProcedurePrice']").val(trList.eq(1).html());
-			
-			$("#editModal").modal('show');
-		}
-		
-		
-		
-		
-		//隐藏模态框
-		function cancel() {
-			$("#myModal").modal('hide');
-		}
-		
-		//	将用户上传的图片显示在页面上
-		function changeImg(obj) {
-
-			var url = getObjectURL(obj);
-
-			$("img[name='fileimg']").attr('src', url);
-		}
-
-		//获取文件真实路径
-		function getObjectURL(file) {
-			var url = null;
-			var fileObj = file.files[0];
-			if (window.createObjcectURL != undefined) {
-				url = window.createOjcectURL(fileObj);
-			} else if (window.URL != undefined) {
-				url = window.URL.createObjectURL(fileObj);
-			} else if (window.webkitURL != undefined) {
-				url = window.webkitURL.createObjectURL(fileObj);
+			if(confirm('确定删除该工序吗？')){
+				
+				$.ajax({
+					url:'deleteFromWageNode.b',
+					data:'wid='+wid,
+					type:'post',
+					success:function(data){
+						if(data.code == 1){
+							
+							$('#title_'+obj).remove();
+							
+							alert('删除成功');
+						}
+						
+						if(data.code == -1){
+							alert('请求失败');
+						}
+					}
+				})
+				
+				
 			}
-			return url;
+			
+			//数据库删除该数据
+			
 		}
+		
+		var jsonStr = '[{name:工序名,price:单价,num1:数量,name1:姓名,account:总计}';
+		
+		function initJsonStr(){
+			jsonStr = '[{name:工序名,price:单价,num1:数量,name1:姓名,account:总计}';
+		}
+
+		//保存模板信息，上传到数据库
+		function saveProcedureInfo() {
+			//获取整个模板的信息，然后插入到数据库
+			
+			var trList = $("tr[id ^= 'title']");
+			
+			for(var i = 0 ;i < trList.length ; i++){
+				var tr = trList.eq(i);
+				
+				var tdList = tr.children();
+				
+				let procedureName = tdList.eq(0).html();
+				let price = tdList.eq(1).html();
+				let number = tdList.eq(2).html();
+				let uname = tdList.eq(3).html();
+				let account = tdList.eq(4).html();
+				
+				jsonStr += ",{name:"+procedureName+",price:"+price+"number:"+number+",uname:"
+					
+					//未完待续
+				
+			}
+				
+				alert('已获取员工工资信息');
+			
+			
+		}
+		
+		
+		//新增工序之前的相关操作 tr的id为  'title_'+id
+		function addProcedure(obj) {
+			
+			
+			$("input[name = 'trid']").val('title_'+obj);
+			
+			var trid = 'title_'+obj;
+			
+			loadDataIntoModal(trid);
+			
+			
+			$("#myModal").modal('show');
+		}
+		
+		
+		//加载模态框数据  trid为 操作的 <tr>的id
+		function loadDataIntoModal(trid){
+			
+			var tdList = $("#"+trid).children();
+			
+			let name = tdList.eq(0).html();
+			
+			let price = tdList.eq(1).html();
+			
+			let number = tdList.eq(2).html();
+			
+			let uname = tdList.eq(3).html();
+			
+			let account = tdList.eq(4).html();
+			
+			changeModalTitle('add',name);
+			
+			$("#proceduresName").val(name);
+			
+			$("#proceduresPrice").val(price);
+			
+			$("#number").val(number);
+			
+			$("#account").val(account);
+			
+			$("#username").val(uname);
+			
+		}
+	
+		//隐藏编辑模态框
+		function cancel() {
+			$("#editModal").modal('hide');
+		}
+		
+	
 	</script>
 </body>
 </html>

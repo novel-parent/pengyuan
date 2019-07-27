@@ -1,6 +1,9 @@
 package com.pengyuan.backstage.service;
 
+import java.util.List;
+
 import com.pengyuan.backstage.bean.UserInfoWagesNodes;
+import com.pengyuan.backstage.bean.WagesNode;
 
 /**
  * @author LX
@@ -19,4 +22,17 @@ public interface WagesNodeService {
      * @return
      */
     UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime,  String procedureNode, String username);
+    
+    /**
+         *  把WageNode对象里的数据插入数据库，并返回WageNode在数据库里的wid  
+     * @param wn
+     * @param price 
+     * @return
+     */
+	WagesNode putIntoWage(WagesNode wn, Long price);
+
+	int updateWagesNode(Long wid, Long uid, Integer number,Long price);
+
+	int deleteFromWagesNode(Long wid);
+
 }

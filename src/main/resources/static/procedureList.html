@@ -117,7 +117,7 @@
 		let data = {};
 		
 		if(name != ''){
-			data.name = name;
+			data.pName = name;
 		}
 		
 		if(remarks != ''){
@@ -215,7 +215,7 @@
 						var dateString = objYears+'/'+ objMonth + '/' +objDay;
 						
 						html+='<tr id="procedure_+'+trName+'">';
-						html+='<td style="text-align:left; padding-left:40px;"> '+obj.name+'</td>';
+						html+='<td style="text-align:left; padding-left:40px;"> '+obj.pName+'</td>';
 						html+='<td>'+obj.remarks+'</td>';
 						html+='<td width="10%"><img src="'+obj.path+'" alt="" width="70" height="50" /></td>';
 						html+='<td>'+dateString+'</td>';

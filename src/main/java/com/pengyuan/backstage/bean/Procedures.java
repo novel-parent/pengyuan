@@ -3,7 +3,7 @@ package com.pengyuan.backstage.bean;
 public class Procedures {
 
 	private long pid;
-	private String name;
+	private String pName;
 	private String main;
 	private String remarks;
 	private String path;
@@ -15,11 +15,11 @@ public class Procedures {
 	public void setPid(long pid) {
 		this.pid = pid;
 	}
-	public String getName() {
-		return name;
+	public String getpName() {
+		return pName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
 	public String getMain() {
 		return main;
@@ -53,11 +53,7 @@ public class Procedures {
 	}
 	@Override
 	public String toString() {
-		return "Procedures [pid=" + pid + ", name=" + name + ", main=" + main + ", remarks=" + remarks + ", path="
+		return "Procedures [pid=" + pid + ", pName=" + pName + ", main=" + main + ", remarks=" + remarks + ", path="
 				+ path + ", times=" + times + ", flag=" + flag + "]";
 	}
-	
-	
-	
-	
 }

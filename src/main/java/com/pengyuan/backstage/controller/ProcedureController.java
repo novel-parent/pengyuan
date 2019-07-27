@@ -77,6 +77,7 @@ public class ProcedureController {
 	@RequestMapping("getProcedureList.b")
 	public Object getProcedureList(Procedures pd,int currentPage) {
 		
+		
 		ProcedureModel pp = ps.searchProcedureByPage(pd,currentPage);
 		
 		if(pp.getObj().isEmpty()) {
@@ -130,11 +131,11 @@ public class ProcedureController {
 	
 	@ResponseBody
 	@RequestMapping("addDataForProcedure.b")
-	public Object addDataForProcedure(Long fid) {
+	public Object addDataForProcedure(Long pid) {
 		JsonModel jm = new JsonModel();
 		
 		try {
-			Procedures procedure = ps.searchProcedureById(fid);
+			Procedures procedure = ps.searchProcedureById(pid);
 			jm.setObj(procedure);
 			jm.setCode(1);
 		}catch(Exception e) {
@@ -142,6 +143,16 @@ public class ProcedureController {
 			jm.setMsg("请求失败");
 			e.printStackTrace();
 		}
+		return jm;
+	}
+	
+	@ResponseBody
+	@RequestMapping("SaveProcedureData.b")
+	public Object SaveProcedureData(Procedures p) {
+		JsonModel jm=new JsonModel();
+		
+		System.out.println(p);
+		
 		return jm;
 	}
 	

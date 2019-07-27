@@ -37,8 +37,12 @@
 					
 					console.log(dataString);
 					
+					var trName=new Date().getTime();
+					
 					//遍历工序模板信息
 					for(let i=0;i<dataArr.length;i++){
+						
+						trName = trName +1;
 						
 						var html = '';
 						let name = dataArr[i].split(",")[0].split(":")[1];
@@ -46,11 +50,9 @@
 						let num1 = dataArr[i].split(",")[2].split(":")[1];
 						let uname1 = dataArr[i].split(",")[3].split(":")[1];
 						let account1 = dataArr[i].split(",")[4].split(":")[1];
-						let num2 = dataArr[i].split(",")[5].split(":")[1];
-						let uname2 = dataArr[i].split(",")[6].split(":")[1];
-						let account2 = dataArr[i].split(",")[7].split(":")[1]; 
 						
-						var trName=new Date().getTime();
+						
+						
 						
 						
 						html+="<tr id='title_"+trName+"'>";
@@ -59,9 +61,7 @@
 						html+="<td>"+num1+"</td>";
 						html+="<td>"+uname1+"</td>";
 						html+="<td>"+account1+"</td>";
-						html+="<td>"+num2+"</td>";
-						html+="<td>"+uname2+"</td>";
-						html+="<td>"+account2+"</td>";
+						
 						html+="<td>";
 						html+="<div class='button-group'>";
 						html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+trName+")'><span class='icon-edit'></span>添加</a>";
@@ -102,11 +102,22 @@
 		})
 		
 	})
+	
+	
+	 getToken();
 
 	
-	
-	
-	
+	//获取票据
+	function getToken(){
+		$.ajax({
+			url:'getToken.b',
+			data:'',
+			type:'post',
+			success: function(data){
+				$("input[name^='token']").val(data);
+			}
+		})
+	}
 	
 	
 	
@@ -154,7 +165,10 @@
 		<div class="padding border-bottom">
 			<ul class="search">
 				<li>商品名称</li>
-				<li><input type="text" name="name" onblur="checkName(this)" class="form-control"></li>
+				<li>
+				<input type="hidden" name="token" value="">
+				<input type="text" name="name" onblur="checkName(this)" class="form-control">
+				</li>
 				<li>商品备注</li>
 				<li><input type="text" name="remark" class="form-control"></li>
 			</ul>
@@ -166,9 +180,7 @@
 				<th width="100">数量</th>
 				<th width="80">姓名</th>
 				<th width="120">合计</th>
-				<th width="100">数量</th>
-				<th width="80">姓名</th>
-				<th width="120">合计</th>
+				
 				<th width="220">操作</th>
 			</tr>
 			
@@ -251,6 +263,8 @@
 					if(data.code < 0){
 						if(confirm('与先前的商品名称重名,确认使用此名字吗？')){
 							
+						}else{
+							$("input[name = 'name']").val('');
 						}
 					}
 				}
@@ -262,7 +276,9 @@
 			
 			if(confirm('确定删除该工序吗？')){
 				$('#title_'+obj).remove();
-			}
+				
+				alert('删除成功');
+			} 
 			
 		}
 		
@@ -289,15 +305,15 @@
 			
 			var trList = $("tr[id ^= 'title']");
 
-			var arr = "[{name:工序名,price:单价,num1:数量,uname1:姓名,account1:合计,num2:数量,uname2:姓名,account2:合计}";
+			var arr = "[{name:工序名,price:单价,num1:数量,uname1:姓名,account1:合计}";
 
 			for (var i = 1; i < trList.size() - 1; i++) {
 
 				var tdList = trList.eq(i).children();
 
 				arr += ",{name:" + tdList.eq(0).html() + ",price:"
-						+ tdList.eq(1).html() +",num1:"+tdList.eq(2).html()+",uname1:"+tdList.eq(3).html()+",account1:"+tdList.eq(4).html()
-						+",num2:"+tdList.eq(5).html()+",uname2:"+tdList.eq(6).html()+",account2:"+tdList.eq(7).html()+"}"
+						+ tdList.eq(1).html() +",num1:"+tdList.eq(2).html()+",uname1:"+tdList.eq(3).html()+",account1:"+tdList.eq(4).html() +"}"
+						
 
 			}
 
@@ -310,14 +326,11 @@
 			}
 			
 			
-			fd.append('name',name);
+			fd.append('pName',name);
 			fd.append('remarks',remark);
 			fd.append('main',arr);
 			fd.append('file',$("#file")[0].files[0]);
-			
-			console.log(fd.get('procedures'));
-			
-			console.log(fd.get('file'));
+			fd.append('token',$("input[name = 'token']").val());
 			
 			$.ajax({
 				url : 'SaveProcedureString.b',
@@ -366,9 +379,7 @@
 			html+="<td></td>";
 			html+="<td></td>";
 			html+="<td></td>";
-			html+="<td></td>";
-			html+="<td></td>";
-			html+="<td></td>";
+	
 			html+="<td>";
 			html+="<div class='button-group'>";
 			html+="<a class='button border-main' href='javascript:void(0)' onclick='addProcedure("+trName+")'><span class='icon-edit'></span>添加</a>";

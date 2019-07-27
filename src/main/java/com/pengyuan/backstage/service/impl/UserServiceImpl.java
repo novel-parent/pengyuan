@@ -208,5 +208,13 @@ public class UserServiceImpl implements UserService {
 		return pb;
 	}
 
+	@Override
+	public User SerachUserByUserName(String uname) {
+		
+		User u = userMapper.selUserByName(uname);
+		
+		return u;
+	}
+
 	
 }
