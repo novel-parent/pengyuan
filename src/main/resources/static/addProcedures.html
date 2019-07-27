@@ -30,7 +30,6 @@
 					alert(data.msg);
 				}else if(data.code == 1){
 					
-					
 					var dataString = data.obj.main;
 					
 					var dataArr = parseJsonString(dataString);
@@ -51,10 +50,6 @@
 						let uname1 = dataArr[i].split(",")[3].split(":")[1];
 						let account1 = dataArr[i].split(",")[4].split(":")[1];
 						
-						
-						
-						
-						
 						html+="<tr id='title_"+trName+"'>";
 						html+="<td>"+name+"</td>";
 						html+="<td>"+price+"</td>";
@@ -71,7 +66,6 @@
 						html+="</td>";
 						html+="</tr>";
 						
-						console.log('Ending_'+i+"  :  "+trName);
 						
 						$("#procedureInfo").append(html);
 					}
@@ -155,8 +149,6 @@
 	}
 	
 </script>
-
-
 </head>
 <body>
 
@@ -184,9 +176,7 @@
 				<th width="220">操作</th>
 			</tr>
 			
-			
 			<!-- 工序列表内容 -->
-			
 			
 		</table>
 	</div>
@@ -320,7 +310,6 @@
 
 			arr += "]";
 			
-			console.log(arr);
 			
 			if($("#file")[0].files[0] == null){
 				if(!confirm('你还没有选择图片确认要保存该模板吗？')){
