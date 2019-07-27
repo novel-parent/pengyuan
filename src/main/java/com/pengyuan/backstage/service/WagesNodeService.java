@@ -11,18 +11,7 @@ import com.pengyuan.backstage.bean.WagesNode;
  */
 public interface WagesNodeService {
 
-    /**
-     *      查询  员工 工资 节点
-     * @param page
-     * @param pageSize
-     * @param startTime
-     * @param endTime
-     * @param pid
-     * @param username
-     * @return
-     */
-    UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime,  String procedureNode, String username);
-    
+
     /**
          *  把WageNode对象里的数据插入数据库，并返回WageNode在数据库里的wid  
      * @param wn
@@ -35,5 +24,15 @@ public interface WagesNodeService {
 
 	int deleteFromWagesNode(Long wid);
 
+    /**
+     *     查询  员工 工资 节点
+     * @param page
+     * @param pageSize
+     * @param startTime
+     * @param endTime
+     * @param pid
+     * @param username
+     * @return
+     */
     UserInfoWagesNodes getWagesNode( int page,  int pageSize,  Long startTime, Long endTime, Long pid, String username);
 }

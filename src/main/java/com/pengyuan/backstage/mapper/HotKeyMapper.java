@@ -18,8 +18,8 @@ public interface HotKeyMapper {
      * @param endTime
      * @return
      */
-    @Select("SELECT pid ,pName FROM procedures WHERE ( times BETWEEN #{startTime} and #{endTime}) GROUP BY pName ")
-    List<ProcedureHotKey> selProcedure(@Param("startTime") Long startTime, @Param("endTime") Long endTime);
+    @Select("SELECT pid ,pName FROM procedures GROUP BY pName ")
+    List<ProcedureHotKey> selProcedure();
 
     /**
      *         搜索 所有的 corporateName 的名字 作为关键词  提示

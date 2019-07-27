@@ -27,9 +27,9 @@ public class HotKeyServiceImpl implements HotKeyService {
     private HotKeyMapper hotKeyMapper;
 
     @Override
-    public List<ProcedureHotKey> getProcedure(Long startTime, Long endTime) {
+    public List<ProcedureHotKey> getProcedure() {
 
-        List<ProcedureHotKey> list = hotKeyMapper.selProcedure(startTime, endTime);
+        List<ProcedureHotKey> list = hotKeyMapper.selProcedure();
         return list;
     }
 

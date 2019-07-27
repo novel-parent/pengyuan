@@ -12,11 +12,9 @@ public interface HotKeyService {
 
     /**
      *    得到   从起始时间 到 终止时间的 袋子类型
-     * @param startTime
-     * @param endTime
      * @return
      */
-    List<ProcedureHotKey> getProcedure(Long startTime, Long endTime);
+    List<ProcedureHotKey> getProcedure();
 
     /**
      *        得到key   用户 有关的  查询

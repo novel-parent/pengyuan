@@ -27,7 +27,7 @@ public class WagesNodeServiceImpl implements WagesNodeService {
     private UserMapper userMapper;
 
     @Override
-    public UserInfoWagesNodes getWagesNode(int page, int pageSize, Long startTime, Long endTime, String procedureNode, String username) {
+    public UserInfoWagesNodes getWagesNode(int page, int pageSize, Long startTime, Long endTime, Long pid, String username){
 
         UserInfoWagesNodes userInfoWagesNodes = null ;
 
@@ -46,8 +46,8 @@ public class WagesNodeServiceImpl implements WagesNodeService {
         }
         userInfoWagesNodes = new UserInfoWagesNodes();
 
-        List<WagesNode> wagesNodes = wagesNodeMapper.selWagesNode(index, pageSize, startTime, endTime, procedureNode, uid);
-        int size = wagesNodeMapper.selWagesNodeNumber(startTime, endTime, procedureNode, uid);
+        List<WagesNode> wagesNodes = wagesNodeMapper.selWagesNode(index, pageSize, startTime, endTime, pid, uid);
+        int size = wagesNodeMapper.selWagesNodeNumber(startTime, endTime, pid, uid);
         userInfoWagesNodes.setWagesNodes(wagesNodes);
         userInfoWagesNodes.setPageNumber(size%pageSize==0?size/pageSize:(size/pageSize +1));
         long sum = 0;
@@ -116,13 +116,4 @@ public class WagesNodeServiceImpl implements WagesNodeService {
 		
 		return wagesNodeMapper.deleteWagesNodeByWid(wid);
 	}
-
-	@Override
-	public UserInfoWagesNodes getWagesNode(int page, int pageSize, Long startTime, Long endTime, Long pid,
-			String username) {
-		
-		return null;
-	}
-
-
 }

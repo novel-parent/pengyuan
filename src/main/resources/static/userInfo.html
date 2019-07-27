@@ -313,14 +313,9 @@ function getProcedures() {
 
      $('#pid').html('')
      $('#pid').append( "<option value=''>袋子型号</option>")
-    if(startTime ==''){
-        alert("请先输入起始时间")
-        return
-    }
 
     $.ajax({
            url: "/getProcedures.b",
-           data:{"startTime":startTime,"endTime":endTime},
            error:function(){
                alert("请求出错.")
            },
@@ -334,8 +329,6 @@ function getProcedures() {
                $(data).each(function(index,ele) {
                    $('#pid').append( "<option value='"+ele.pid+"'>"+ele.pName+"</option>")
                })
-
-
            },
            type:'POST'
        });

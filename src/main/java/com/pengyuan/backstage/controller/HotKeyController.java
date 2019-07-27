@@ -22,9 +22,9 @@ public class HotKeyController {
 
     @ResponseBody
     @RequestMapping("/getProcedures.b")
-    public List<ProcedureHotKey> getProcedureKey(Long startTime, Long endTime){
+    public List<ProcedureHotKey> getProcedureKey(){
 
-        List<ProcedureHotKey> procedure = hotKeyService.getProcedure(startTime, endTime);
+        List<ProcedureHotKey> procedure = hotKeyService.getProcedure();
         return procedure;
     }
 
