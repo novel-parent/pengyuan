@@ -316,8 +316,11 @@
 						
 
 			}
+			
 
 			arr += "]";
+			
+			console.log(arr);
 			
 			if($("#file")[0].files[0] == null){
 				if(!confirm('你还没有选择图片确认要保存该模板吗？')){
@@ -367,6 +370,23 @@
 			let price = $("input[name = 'procedurePrice']").val();
 			
 			let objName = $("input[name = 'trid']").val();
+			
+			if(name  == ''){
+				alert('工序名不能为空');
+				return;
+			}
+			
+			if(price == ''){
+				alert('价格不能为空');
+				return;
+			}
+			
+			var reg = new RegExp("^[0-9]+$");
+			
+			if(!reg.test(price)){
+				alert('单价不为数字');
+				return;
+			}
 			
 			
 			let trObj = $("#"+objName);

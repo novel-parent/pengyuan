@@ -311,9 +311,18 @@
 			return;
 		}
 		
-		//保存上一工序的信息
-		saveAddModalValue(trid);
+		var username = $("#username").val();
+		var account = $("#account").val();
+		var number = $("#number").val();
 		
+		if(username == '' || account == '' || number == ''){
+			if(confirm('当前工序信息未填写完成，确认进入下一工序吗？')){
+				
+			}else{
+				//保存上一工序的信息
+				saveAddModalValue(trid);
+			}
+		}
 		
 		var trnum= trid.substring(6,trid.length);
 
@@ -456,7 +465,7 @@
 					
 					html+="<tr id='title_"+trName+"'>";
 					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
-					html+="<td ><input type='hidden' name='hideprice' value='"+price/1000+"'</td>";
+					html+="<td ><input type='hidden' name='hideprice' value='"+price+"'</td>";
 					html+="<td>"+number+"</td>";
 					html+="<td>"+username+"</td>";
 					html+="<td>"+$("#account").val()+"</td>";
@@ -656,7 +665,55 @@
 			data.username = username;
 			
 			//上传数据至数据库
-			upLoadWagesNodeToDataBase(data);
+			
+		
+		
+		$.ajax({
+			url:'putIntoWage.b',
+			type:'post',
+			data: data,
+			success: function(data){
+				
+				if(data.code == 1){
+					var html = '';
+					
+					var trName = new Date().getTime();
+					
+					html+="<tr id='title_"+trName+"'>";
+					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
+					html+="<td ><input type='hidden' name='hideprice' value='"+price+"'</td>";
+					html+="<td>"+number+"</td>";
+					html+="<td>"+username+"</td>";
+					html+="<td>"+$("#account").val()+"</td>";
+					html+="<td>";
+					html+="<div class='button-group'>";
+					html+="<a class='button border-main' href='javascript:void(0)' onclick='editProcedure("+trName+","+data.obj.wid+")'><span class='icon-edit'></span>修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;改</a>";
+					html+="<a class='button border-red' href='javascript:void(0)' onclick='del("+trName+","+data.obj.wid+")'> <span class='icon-trash-o'></span>删除</a>";
+					html+="</div>";
+					html+="</td>";
+					html+="</tr>";
+					
+					$("#"+trid).after(html);
+					
+					$("#number").val('');
+					$("#username").val('');
+					$("#account").val('');
+					$("input[name = 'pid']").val();
+					$("#proceduresPrice").val(price/1000);
+					$("#proceduresName").val(procedureNode);
+					
+					
+					
+					//改变模态框的标题
+					changeModalTitle('add',procedureNode);
+				}
+				if(data.code == -1){
+					alert(data.msg);
+				}
+				getToken();
+			}
+		
+		})
 		}
 		
 		
