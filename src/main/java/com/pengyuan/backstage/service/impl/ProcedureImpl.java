@@ -132,6 +132,13 @@ public class ProcedureImpl implements ProcedureService {
 	}
 
 
+	@Override
+	public int deleteProcedureByPid(Long pid) {
+		
+		return pm.deleteProcedureByPid(pid);
+	}
+
+
 
 
 	

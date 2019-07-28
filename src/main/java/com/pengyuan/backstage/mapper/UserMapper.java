@@ -69,8 +69,20 @@ public interface UserMapper {
 	 * @return
 	 */
 	List<User> selectUserByCondition(User u);
+	/**
+	 * 	用户的分页查询
+	 * @param user ：查询条件
+	 * @param pageNum ：查询的页数
+	 * @return
+	 */
 
 	List<User> serachUserPage(@Param("user")User user,@Param("pageNum") int pageNum);
+	
+	/**
+	 * 	获取带条件查询的总记录数
+	 * @param user
+	 * @return
+	 */
 
 	int getTotalPage(@Param("user")User user);
 

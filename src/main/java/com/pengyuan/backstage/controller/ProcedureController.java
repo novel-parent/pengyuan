@@ -1,13 +1,10 @@
 package com.pengyuan.backstage.controller;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -82,7 +79,7 @@ public class ProcedureController {
 		
 		if(pp.getObj().isEmpty()) {
 			pp.setCode(-1);
-			pp.setMsg("查无此数据");
+			pp.setMsg("没有查找到与条件匹配的数据");
 		}else {
 			pp.setCode(1);
 		}
@@ -152,6 +149,24 @@ public class ProcedureController {
 		JsonModel jm=new JsonModel();
 		
 		System.out.println(p);
+		
+		return jm;
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteProcedureByPid.b/{currentPage}")
+	public Object deleteProcedureByPid(Long pid,@PathVariable("currentPage")int currentPage) {
+		JsonModel jm = new JsonModel();
+		
+		int i = ps.deleteProcedureByPid(pid);
+		
+		if(i>0) {
+			jm.setCode(currentPage);
+			jm.setMsg("删除成功");
+		}else {
+			jm.setCode(-1);
+			jm.setMsg("请求失败");
+		}
 		
 		return jm;
 	}

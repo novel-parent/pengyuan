@@ -176,32 +176,30 @@
 		}
 		
 		
+		
+		
+		trid = 'title_'+getNextTrId(trid);
+		
+		
+		//获取下一个 工序 <tr>的id
+	
+		loadDataIntoModal(trid);
+		
+	}
+	
+	//根据当前tr的id获取下一个tr的id
+	function getNextTrId(trid){
+		
 		var trnum= trid.substring(6,trid.length);
 
 		trnum = parseInt(trnum);
 		
 		trnum = trnum + 1;
 		
-		trid = 'title_'+trnum;
-		//获取下一个 工序 <tr>的id
-	
-		loadDataIntoModal(trid);
-			
-		
-		
-		
-		
-		
-	
-		
-		
-		
-		
-		
-		
-		
+		return trnum;
 	}
 	
+	// 保存（id=myModal）模态框的值
 	function saveAddModalValue(trid){
 		var number = $("#number").val().trim();
 		var username = $("#username").val().trim();
@@ -347,6 +345,7 @@
 		
 	}
 	
+	//改变模态框的标题
 	function changeModalTitle(prefix,content){
 		
 		var selector = prefix+'ModalTitle';
@@ -510,7 +509,7 @@
 					
 					
 					//改变模态框的标题
-					changeModalTitle('add',procedureNode);
+					changeModalTitle('add',"添加 : "+procedureNode);
 				}
 				if(data.code == -1){
 					alert(data.msg);
@@ -556,7 +555,7 @@
 			
 			$("#e_account").val(account);
 			
-			changeModalTitle('edit',name);
+			changeModalTitle('edit',"修改 : "+name);
 			
 			$('#editModal').modal('show');
 			

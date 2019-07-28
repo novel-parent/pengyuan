@@ -157,7 +157,7 @@
 							html+='<td>';
 							html+='<div class="button-group">';
 							html+=' <a class="button border-main" href="procedureInfo.html?pid='+obj.pid+'"><span class="icon-edit"></span> 查看详情</a>';
-							html+=' <a class="button border-red" href="javascript:void(0)" onclick="del(procedure_'+trName+','+obj.pid+')"><span class="icon-trash-o"></span> 删除</a>';
+							html+=" <a class=\"button border-red\" href=\"javascript:void(0)\" onclick=\"del('procedure_"+trName+"','"+obj.pid+"')\"><span class=\"icon-trash-o\"></span> 删除</a>";
 							html+='</div>';
 							html+='</td>';
 							html+='</tr>';
@@ -224,6 +224,25 @@
 	}
 	
 	function del(trid,pid){
+		
+		$.ajax({
+			url:"deleteProcedureByPid.b/"+currentPage,
+			data:'pid='+pid,
+			type:'post',
+			success: function(data){
+				if(data.code > 0){
+					
+					alert(data.msg);
+					
+					currentPage = data.code;
+					
+					ProcedureListsearch(1);
+					
+				}else{
+					alert(data.msg);
+				}
+			}
+		})
 		
 		 $('#'+trid).css('display','none');
 		

@@ -68,6 +68,11 @@ public interface UserService {
 	 */
 
 	UserModel SerachPageBean(User user, int pageNum);
+	/**
+	 * 	通过用户名查询用户的所有信息
+	 * @param uname
+	 * @return
+	 */
 
 	User SerachUserByUserName(String uname);
 

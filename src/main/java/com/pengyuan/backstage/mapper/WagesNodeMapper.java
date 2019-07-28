@@ -42,7 +42,15 @@ public interface WagesNodeMapper {
                                  @Param("pid") Long pid,@Param("uid") Long uid);
 
 
-
+    /**
+     * 	查询wages_node对象
+     * @param uid
+     * @param pid
+     * @param procedureNode
+     * @param price
+     * @param times
+     * @return
+     */
 
     @Select("select * from wages_node where pid=#{pid} and price=#{price} and procedureNode = #{procedureNode} and times=#{times} and uid=#{uid}")
 	List<WagesNode> selectWageNode(@Param("uid")long uid,@Param("pid") long pid,@Param("procedureNode") String procedureNode,@Param("price") Long price,@Param("times") long times);
