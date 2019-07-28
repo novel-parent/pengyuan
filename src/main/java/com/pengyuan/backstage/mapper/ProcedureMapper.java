@@ -10,7 +10,7 @@ import com.pengyuan.backstage.bean.Procedures;
 
 public interface ProcedureMapper {
 
-	@Insert("insert into procedures(pName,main,remarks,path,times,flag) values(#{pName},#{main},#{remarks},#{path},#{times},#{flag})")
+	@Insert("insert into procedures(pName,main,remarks,path) values(#{pName},#{main},#{remarks},#{path})")
 	int saveProcedure(Procedures procedure);
 	
 	@Select("select * from procedures where pName = #{pName}")

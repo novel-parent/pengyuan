@@ -536,6 +536,8 @@
 	
 		//通过userName获取uid
 		function getUidByUname(uname,type){
+			uname = uname.trim();
+			
 			$.ajax({
 				url:'getUidByUname.b',
 				data: 'uname='+uname,
