@@ -341,6 +341,10 @@ $(function(){
 							if(user.flag == 0 ){
 								flag='离职';
 							}
+							
+							if(user.factory == null){
+								continue;
+							}
 
 							var html='';
 							html+='<tr id=user_'+listId+'>';

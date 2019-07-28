@@ -157,7 +157,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserModel SerachPageBean(User user, int pageNum) {
 		
-		System.out.println(user+"=======================");
 		
 		UserModel pb=new UserModel();
 		
@@ -175,16 +174,18 @@ public class UserServiceImpl implements UserService {
 		if(user.getTel() != null) {
 			u.setTel(user.getTel());
 		}
-		if(user.getFlag() == 1) {
+		if(user.getFlag() != null) {
 			u.setFlag(1);
-		}else if(user.getFlag() == 0){
-			u.setFlag(0);
+		}else{
+			u.setFlag(user.getFlag());
 		}
 		
 		
 		pb.setCurrentPage(pageNum);
 		
 		pageNum=(pageNum-1)*8;
+		
+		System.out.println(u);
 		
 		List<User> userList = userMapper.serachUserPage(u,pageNum);
 		
@@ -193,11 +194,15 @@ public class UserServiceImpl implements UserService {
 		
 		int totalPage=userMapper.getTotalPage(u);
 		
+		
+		
 		if(totalPage%8==0) {
 			totalPage=totalPage/8;
 		}else {
 			totalPage=(totalPage/8)+1;
 		}
+		
+		System.out.println("totalPage:"+totalPage);
 		
 		pb.setTotalPage(totalPage);
 		

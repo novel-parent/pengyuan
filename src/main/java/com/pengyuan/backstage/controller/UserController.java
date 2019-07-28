@@ -186,7 +186,6 @@ public class UserController {
     	
     	User user= userService.SerachUserByUserName(uname);
     	
-    	System.out.println("====================== "+user);
     	
     	if(user == null) {
     		jm.setCode(-1);

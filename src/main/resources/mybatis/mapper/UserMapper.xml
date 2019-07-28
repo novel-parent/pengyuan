@@ -80,7 +80,7 @@
 						and fid = #{user.fid}
 					</if>
 				</where>
-				   	limit #{pageNum},8				
+				   	 limit #{pageNum},8				
 			</select>
 			
 			<select id="getTotalPage" resultType="Integer">
