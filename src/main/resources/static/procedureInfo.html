@@ -170,7 +170,7 @@
 				<input type="text" name="name" class="form-control" disabled="disabled">
 				<input type="hidden" name="token" value="">
 				</li> 
-				<li>商品备注</li>0
+				<li>商品备注</li>
 				<li><input type="text" name="remark" class="form-control" style="width:250px;" disabled="disabled" ></li>
 			</ul>
 		</div>
@@ -219,7 +219,7 @@
 							<tr id="trList">
 								<td><input type="text" class="form-control"  id="proceduresName" disabled="disabled" ></td>
 								<td><input type="text" class="form-control" id="proceduresPrice" disabled="disabled" ></td>
-								<td><input type="text" class="form-control"  id="number" placeholder="数量"  onkeyup="getAmmount(this.value,'account')"></td>
+								<td><input type="text" class="form-control"  id="number" placeholder="数量"  onkeyup="getAmmount(this.value,'proceduresPrice','account')"></td>
 								<td>
 								<input type="text" class="form-control" id="username" onblur=" getUidByUname(this.value,'add')" placeholder="员工姓名"  >
 								<input type="hidden" name="uid" value="">
@@ -271,7 +271,7 @@
 							<tr id="trList">
 								<td><input type="text" class="form-control"  id="e_proceduresName" disabled="disabled" ></td>
 								<td><input type="text" class="form-control" id="e_proceduresPrice" disabled="disabled" ></td>
-								<td><input type="text" class="form-control"  id="e_number" placeholder="数量"  onkeyup="getAmmount(this.value,'e_account')"></td>
+								<td><input type="text" class="form-control"  id="e_number" placeholder="数量"  onkeyup="getAmmount(this.value,'e_proceduresPrice','e_account')"></td>
 								<td>
 								<input type="text" class="form-control" id="e_username" onblur=" getUidByUname(this.value,'edit')" placeholder="员工姓名"  >
 								<input type="hidden" name="wid" value="">
@@ -316,6 +316,12 @@
 		var number = $("#number").val();
 		
 		
+		if(username == '' || account == '' || number == ''){
+			
+			alert('请先填写当前工序信息');
+			return;
+		}
+		
 		
 		if(username != '' && account != '' && number != ''){
 			
@@ -357,8 +363,8 @@
 		var account = $("#account").val().trim();
 		var pid = $("input[name = 'pid']").val().trim();
 		var price = $("#proceduresPrice").val().trim();
-		var procedureNode = $("#proceduresName").val().trim();
-		var token = $("input[name = 'token']").val().trim();
+		var procedureNode = $("#proceduresName").val();
+		var token = $("input[name = 'token']").val();
 		
 		var reg = new RegExp("^[0-9]*$");
 		
@@ -408,6 +414,7 @@
 					
 					var trName = new Date().getTime();
 					
+					price = (Number(price) / 1000).toFixed(3);
 						
 					html+="<tr id='title_"+trName+"'>";
 					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
@@ -506,9 +513,9 @@
 	}
 	
 	//计算金额
-	function getAmmount(num,id){
+	function getAmmount(num,priceId,accountId){
 		//单价
-		var price = $("#proceduresPrice").val();
+		var price = $("#"+priceId).val();
 		
 		var reg = new RegExp("^[0-9]*$");
 		
@@ -530,7 +537,7 @@
 		
 		
 		
-		$("#"+id).val(account);
+		$("#"+accountId).val(account);
 		
 		}
 	
@@ -632,6 +639,8 @@
 					
 					var trName = new Date().getTime();
 					
+					price = Number(price/1000).toFixed(3);
+					
 					html+="<tr id='title_"+trName+"'>";
 					html+="<td ><input type='hidden' name='hidename' value='"+procedureNode+"'</td>";
 					html+="<td ><input type='hidden' name='hideprice' value='"+price+"'</td>";
@@ -652,7 +661,7 @@
 					$("#username").val('');
 					$("#account").val('');
 					$("input[name = 'pid']").val();
-					$("#proceduresPrice").val(price/1000);
+					$("#proceduresPrice").val(price);
 					$("#proceduresName").val(procedureNode);
 					
 					
@@ -676,17 +685,19 @@
 			
 			$("input[name = 'e_trid']").val(trid);
 			
-			var trList = $(trid).children();
+			var tdList = $(trid).children();
 			
-			var name = trList.eq(0).children().eq(0).val();
+			var name = tdList.eq(0).children().eq(0).val();
 			
-			var price = trList.eq(1).children().eq(0).val();
+			var price = tdList.eq(1).children().eq(0).val();
 			
-			var number = trList.eq(2).html();
+			var number = tdList.eq(2).html();
 			
-			var uname = trList.eq(3).html();
+			var uname = tdList.eq(3).html();
 			
-			var account = trList.eq(4).html();
+			var account = tdList.eq(4).html();
+			
+			price = Number(price).toFixed(3);
 			
 			$("input[name = 'wid']").val(wid);
 			
