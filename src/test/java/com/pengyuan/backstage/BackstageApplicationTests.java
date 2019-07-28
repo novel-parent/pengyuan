@@ -1,6 +1,7 @@
 package com.pengyuan.backstage;
 
 import com.pengyuan.backstage.bean.Director;
+import com.pengyuan.backstage.bean.ProcedureHotKey;
 import com.pengyuan.backstage.mapper.DirectorMapper;
 import com.pengyuan.backstage.mapper.HotKeyMapper;
 import com.pengyuan.backstage.mapper.OrderMapper;
@@ -40,9 +41,14 @@ public class BackstageApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		Director director =
-				directorMapper.selByUid(30L);
-		System.out.println(director);
+		List<ProcedureHotKey> procedureHotKeys = hotKeyMapper.selProcedure();
+
+		procedureHotKeys.forEach(ele->{
+			String pName = ele.getpName();
+			Long pid = ele.getPid();
+			stringRedisTemplate.opsForValue().set("pName:"+pName+":"+pid,"1" );
+		});
+
 
 
 	}

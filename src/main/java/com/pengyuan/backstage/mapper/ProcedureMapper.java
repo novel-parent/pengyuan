@@ -10,7 +10,11 @@ import com.pengyuan.backstage.bean.Procedures;
 
 public interface ProcedureMapper {
 
-	@Insert("insert into procedures(pName,main,remarks,path) values(#{pName},#{main},#{remarks},#{path})")
+	/**
+	 *   插入工序表的时候  并且 返回自增的id
+	 * @param procedure
+	 * @return
+	 */
 	int saveProcedure(Procedures procedure);
 	
 	@Select("select * from procedures where pName = #{pName}")

@@ -3,8 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pengyuan.backstage.mapper.ProcedureMapper">
-	
-	<select id="searchProcedureByPage" resultType="com.pengyuan.backstage.bean.Procedures">
+
+    <insert id="saveProcedure" useGeneratedKeys="true" keyProperty="pid" >
+		insert into procedures(pName,main,remarks,path) values(#{pName},#{main},#{remarks},#{path})
+	</insert>
+
+    <select id="searchProcedureByPage" resultType="com.pengyuan.backstage.bean.Procedures">
 			select * from procedures
 			<where>
 				<if test="procedures.pName != null">

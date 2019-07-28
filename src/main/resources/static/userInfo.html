@@ -8,6 +8,7 @@
 <title></title>
 <link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/list.css">
 <script src="js/jquery.js"></script>
 <script src="js/pintuer.js"></script>
 </head>
@@ -85,10 +86,19 @@
             <input type="text" placeholder="日" onchange="changeSearch()" id="endDay" name="s_istop" class="input"
           style="width: 60px; line-height: 17px; display: inline-block">
         </li>
+
           <li>
-            <select name="cid" class="input" onfocus="getProcedures()"  id="pid" style="width:120px; line-height:17px;" onchange="changeSearch()">
+            <!--<select name="cid" class="input" onfocus="getProcedures()"  id="pid" style="width:120px; line-height:17px;" onchange="changeSearch()">
              <option value=''>袋子型号</option>
-            </select>
+            </select> -->
+            <input type="text" placeholder="请输入袋子型号" id="pid"  name="keywords" class="input"
+            						style="width: 120px; line-height: 17px; display: inline-block" />
+
+            <div id="historySearch">
+                <ul class="historyLi" id="historyLi">
+                    <li onclick="getLi(this)" value="55">66</li>
+                </ul>
+            </div>
           </li>
 
           <li>
@@ -115,6 +125,10 @@
     </table>
   </div>
 <script type="text/javascript">
+
+function getLi(data) {
+  console.log(data.value)
+}
 
 function getUserName() {
     var username = $('#username')

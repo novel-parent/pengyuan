@@ -24,4 +24,12 @@ public class ProcedureHotKey {
     public void setpName(String pName) {
         this.pName = pName;
     }
+
+    @Override
+    public String toString() {
+        return "ProcedureHotKey{" +
+                "pid=" + pid +
+                ", pName='" + pName + '\'' +
+                '}';
+    }
 }

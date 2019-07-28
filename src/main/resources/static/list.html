@@ -179,6 +179,13 @@
 
 	<script type="text/javascript">
 
+    $('#key').bind('keypress',function(event) {
+
+          if(event.keyCode==13){
+              changeSearch()
+          }
+        });
+
     function getMoney() {
 
         var newPrice = $('#newPrice').val();

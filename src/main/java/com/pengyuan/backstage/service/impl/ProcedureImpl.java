@@ -1,22 +1,21 @@
 package com.pengyuan.backstage.service.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.aliyun.oss.ClientException;
-import com.aliyun.oss.OSSException;
 import com.pengyuan.backstage.bean.ProcedureModel;
 import com.pengyuan.backstage.bean.Procedures;
 import com.pengyuan.backstage.mapper.ProcedureMapper;
 import com.pengyuan.backstage.service.ProcedureService;
-import com.pengyuan.backstage.util.DateUtil;
 import com.pengyuan.backstage.util.OssUtil;
 
+/**
+ * @author lx
+ */
 @Service
 public class ProcedureImpl implements ProcedureService {
 	
@@ -25,6 +24,16 @@ public class ProcedureImpl implements ProcedureService {
 	
 	@Autowired
 	private OssUtil oss;
+
+	@Autowired
+	private StringRedisTemplate stringRedisTemplate;
+
+	public void setProcedure(Procedures procedure){
+
+		String pName = procedure.getpName();
+		Long pid = procedure.getPid();
+		stringRedisTemplate.opsForValue().set("pName:"+pName+":"+pid,"1" );
+	}
 
 
 	@Override
@@ -41,9 +50,14 @@ public class ProcedureImpl implements ProcedureService {
 			}
 			
 			procedure.setMain(procedure.getMain().trim());
-			
-			
-		    return	pm.saveProcedure(procedure);
+
+			int i = pm.saveProcedure(procedure);
+
+			if(i>0){
+				setProcedure(procedure);
+			}
+
+			return i;
 			
 		}
 		catch (Exception e) {
