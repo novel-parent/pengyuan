@@ -1,14 +1,10 @@
 package com.pengyuan.backstage.controller;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -83,7 +79,7 @@ public class ProcedureController {
 		
 		if(pp.getObj().isEmpty()) {
 			pp.setCode(-1);
-			pp.setMsg("查无此数据");
+			pp.setMsg("没有查找到与条件匹配的数据");
 		}else {
 			pp.setCode(1);
 		}

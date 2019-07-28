@@ -117,9 +117,6 @@ function searchUser(type){
 	var flag = $('#userStatus').val();
 	
 	
-	
-		
-	
 		var data = {};
 		
 		if(name != null && name != ''){
@@ -353,19 +350,19 @@ function searchUser(type){
 		
 		if($("input[name = 'uid']").val() == 0){
 			data = {
-					userName:$("#name").val(),
-					tel:$("#tel").val(),
-					fid:$("#fid").val(),
-					flag:$("#flag").val(),
-					token:$("input[name^='token']").val()
+					userName:$("#name").val().trim(),
+					tel:$("#tel").val().trim(),
+					fid:$("#fid").val().trim(),
+					flag:$("#flag").val().trim(),
+					token:$("input[name^='token']").val().trim()
 				}
 		}else{
 			data = {
-					uid:$("input[name = 'uid']").val(),
-					userName:$("#name").val(),
-					tel:$("#tel").val(),
-					fid:$("#fid").val(),
-					flag:$("#flag").val()
+					uid:$("input[name = 'uid']").val().trim(),
+					userName:$("#name").val().trim(),
+					tel:$("#tel").val().trim(),
+					fid:$("#fid").val().trim(),
+					flag:$("#flag").val().trim()
 				}
 		}
 		
