@@ -6,14 +6,27 @@ package com.pengyuan.backstage.bean;
  */
 public class ProcedureHotKey {
 
-    private Long pid;
+    private String pid;
     private String pName;
 
-    public Long getPid() {
+    public ProcedureHotKey(String pid, String pName) {
+        this.pid = pid;
+        this.pName = pName;
+    }
+
+    @Override
+    public String toString() {
+        return "ProcedureHotKey{" +
+                "pid='" + pid + '\'' +
+                ", pName='" + pName + '\'' +
+                '}';
+    }
+
+    public String getPid() {
         return pid;
     }
 
-    public void setPid(Long pid) {
+    public void setPid(String pid) {
         this.pid = pid;
     }
 
@@ -23,13 +36,5 @@ public class ProcedureHotKey {
 
     public void setpName(String pName) {
         this.pName = pName;
-    }
-
-    @Override
-    public String toString() {
-        return "ProcedureHotKey{" +
-                "pid=" + pid +
-                ", pName='" + pName + '\'' +
-                '}';
     }
 }

@@ -1,6 +1,7 @@
 package com.pengyuan.backstage.service.impl;
 
 import com.pengyuan.backstage.bean.ProcedureHotKey;
+import com.pengyuan.backstage.bean.Procedures;
 import com.pengyuan.backstage.bean.UserHotKey;
 import com.pengyuan.backstage.mapper.HotKeyMapper;
 import com.pengyuan.backstage.service.HotKeyService;
@@ -35,9 +36,23 @@ public class HotKeyServiceImpl implements HotKeyService {
     }
 
     @Override
-    public List<ProcedureHotKey> getProcedure() {
+    public List<ProcedureHotKey> getProcedure(String key) {
 
-        List<ProcedureHotKey> list = hotKeyMapper.selProcedure();
+        Set keys = redisTemplate.keys("pName:*" + key + "*:*");
+
+        List<ProcedureHotKey> list = new ArrayList<>() ;
+
+        if( keys != null && keys.size() > 0 ){
+
+            List<ProcedureHotKey> finalList = list;
+
+            keys.forEach(ele->{
+
+                String[] split = ele.toString().split(":");
+
+                finalList.add(new ProcedureHotKey(split[2],split[1]));
+            });
+        }
         return list;
     }
 

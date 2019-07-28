@@ -41,16 +41,9 @@ public class BackstageApplicationTests {
 	@Test
 	public void contextLoads() {
 
-		List<ProcedureHotKey> procedureHotKeys = hotKeyMapper.selProcedure();
+		Set keys = redisTemplate.keys("pName:*");
 
-		procedureHotKeys.forEach(ele->{
-			String pName = ele.getpName();
-			Long pid = ele.getPid();
-			stringRedisTemplate.opsForValue().set("pName:"+pName+":"+pid,"1" );
-		});
-
-
-
+		System.out.println(keys);
 	}
 
 }

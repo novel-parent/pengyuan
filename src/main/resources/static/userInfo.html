@@ -8,11 +8,13 @@
 <title></title>
 <link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
-<link rel="stylesheet" href="css/list.css">
+<link rel="stylesheet" href="css/userInfo.css">
 <script src="js/jquery.js"></script>
 <script src="js/pintuer.js"></script>
 </head>
 <body>
+
+  <input id="pid" type="hidden" value="">
   <input id="pageNumber" type="hidden" value="">
   <div class="panel admin-panel">
     <div class="panel-head"><strong class="icon-reorder">工资列表</strong> </div>
@@ -91,12 +93,11 @@
             <!--<select name="cid" class="input" onfocus="getProcedures()"  id="pid" style="width:120px; line-height:17px;" onchange="changeSearch()">
              <option value=''>袋子型号</option>
             </select> -->
-            <input type="text" placeholder="请输入袋子型号" id="pid"  name="keywords" class="input"
+            <input type="text" placeholder="请输入袋子型号" onkeyup="getProcedures()" id="key" onclick="show()"  name="keywords" class="input"
             						style="width: 120px; line-height: 17px; display: inline-block" />
 
             <div id="historySearch">
                 <ul class="historyLi" id="historyLi">
-                    <li onclick="getLi(this)" value="55">66</li>
                 </ul>
             </div>
           </li>
@@ -126,8 +127,20 @@
   </div>
 <script type="text/javascript">
 
+
+
+function show() {
+  $('#historySearch').show()
+  getProcedures()
+}
+
 function getLi(data) {
-  console.log(data.value)
+
+
+    $('#key').val(data.innerHTML)
+    $('#pid').val(data.value)
+    $('#historySearch').css("display","none")
+    changeSearch()
 }
 
 function getUserName() {
@@ -352,7 +365,7 @@ function changeSearch(){
                }
              }
 
-              result+="<a href='javascript:void(0)' onclick='nextPage()' >下一页</a><a href='javascript:void(0)' onclick='theLastPage()'>尾页</a> </div></td>"
+             result+="<a href='javascript:void(0)' onclick='nextPage()' >下一页</a><a href='javascript:void(0)' onclick='theLastPage()'>尾页</a> </div></td>"
              result+="</tr>"
              $('#wagesList').append(result)
 
@@ -366,13 +379,28 @@ function changeSearch(){
 
 }
 
+var tKey = ''
+
 function getProcedures() {
 
-     $('#pid').html('')
-     $('#pid').append( "<option value=''>袋子型号</option>")
+    var key = $('#key').val()
+
+    if( key == '' ){
+        return
+    }
+
+    if( tKey == key ){
+
+        return
+    }
+
+    tKey = key
+
+    $('#historyLi').html('')
 
     $.ajax({
            url: "/getProcedures.b",
+           data:{"key":key},
            error:function(){
                alert("请求出错.")
            },
@@ -384,7 +412,7 @@ function getProcedures() {
                data = eval(data)
 
                $(data).each(function(index,ele) {
-                   $('#pid').append( "<option value='"+ele.pid+"'>"+ele.pName+"</option>")
+                   $('#historyLi').append( "<li onclick='getLi(this)' value='"+ele.pid+"'>"+ele.pName+"</li>")
                })
            },
            type:'POST'

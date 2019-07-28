@@ -17,7 +17,7 @@ public interface HotKeyService {
      *     袋子类型
      * @return
      */
-    List<ProcedureHotKey> getProcedure();
+    List<ProcedureHotKey> getProcedure(String key);
 
     /**
      *        得到key   用户 有关的  查询

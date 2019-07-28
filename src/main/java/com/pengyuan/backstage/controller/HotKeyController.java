@@ -31,9 +31,9 @@ public class HotKeyController {
 
     @ResponseBody
     @RequestMapping("/getProcedures.b")
-    public List<ProcedureHotKey> getProcedureKey(){
+    public List<ProcedureHotKey> getProcedureKey(@RequestParam(required = false) String key){
 
-        List<ProcedureHotKey> procedure = hotKeyService.getProcedure();
+        List<ProcedureHotKey> procedure = hotKeyService.getProcedure(key);
         return procedure;
     }
 

@@ -332,11 +332,13 @@ getCorporateName()
 
 function searchOnclick() {
     $('#historySearch').show()
+    getSearchKey()
 }
 
 function setSearchKey( data) {
         $('#historySearch').css('display','none')
         $('#key').val(data.innerText)
+        changeSearch()
 }
 
 
