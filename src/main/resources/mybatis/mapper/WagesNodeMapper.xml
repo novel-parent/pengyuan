@@ -23,6 +23,7 @@
                </if>
         order by times asc limit #{index},#{pageSize}
     </select>
+    
     <select id="selWagesNodeNumber" resultType="java.lang.Integer">
 
         SELECT COUNT(*) FROM wages_node WHERE  times BETWEEN #{startTime} and #{endTime}

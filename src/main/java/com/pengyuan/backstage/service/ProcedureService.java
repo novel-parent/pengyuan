@@ -45,5 +45,11 @@ public interface ProcedureService {
 	 * @return
 	 */
 	Procedures searchProcedureById(Long pid);
+	/**
+	 * 	通过pid删除procedures信息
+	 * @param pid
+	 * @return
+	 */
+	int deleteProcedureByPid(Long pid);
 
 }

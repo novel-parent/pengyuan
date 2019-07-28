@@ -13,8 +13,17 @@ import com.pengyuan.backstage.bean.Factory;
  */
 public interface FactoryMapper {
 	
-	Factory selectFactoryByFid(@Param("fid") long i);
-
+	/**
+	 * 	通过fid查找factory对象
+	 * @param fid
+	 * @return
+	 */
+	Factory selectFactoryByFid(@Param("fid") long fid);
+	
+	/**
+	 * 查找所有的factory对象
+	 * @return
+	 */
 	@Select("select * from factory ")
 	List<Factory> getAllFactory();
 }
