@@ -260,7 +260,7 @@ $(function(){
 			return;
 		}
 		
-		var reg = new RegExp("^[0-9]+$");
+		var reg = /^(\-|\+)?\d+(\.\d+)?$/;
 		
 		if(!reg.test(price)){
 			alert('单价不为数字');

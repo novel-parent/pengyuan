@@ -667,6 +667,7 @@
 			
 			$("#account").val(account);
 			
+
 			$("#username").val(uname);
 			
 		}
