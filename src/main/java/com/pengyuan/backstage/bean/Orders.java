@@ -106,7 +106,7 @@ public class Orders implements Serializable{
     }
 
     public void setTimes(String times ) {
-        times = DateUtil.getMonthAndDayForAdmin( times );
+        times = DateUtil.getDayForAdmin( times );
         this.times = times ;
     }
 

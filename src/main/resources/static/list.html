@@ -188,12 +188,22 @@
 
     function getMoney() {
 
-        var newPrice = $('#newPrice').val();
+        var newPrice = $('#newPrice').val()*1000;
 
         var newNumber = $('#newNumber').val();
 
         if(newPrice!='' && newNumber!=''){
-            $('#newMoney').val(newPrice*newNumber)
+
+            var money =  newPrice*newNumber
+
+            if(money>=1000){
+                money = money+''
+                money = money.substring(0,money.length-3)+"."+money.substring(money.length-3)
+            }else{
+                money = "0."+money
+            }
+
+            $('#newMoney').val(money)
         }
     }
 
@@ -516,12 +526,11 @@ function changeSearch(){
                         }
                     }
                     times+=day
-                    endTime=times+"2500"
-                    times+="0000"
+                    endTime=times
                 }else{
 
-                    endTime+=times+"320000"
-                    times+="000000"
+                    endTime+=times+"32"
+                    times+="00"
                 }
 
             tUrl+="startTime="+times+"&"
