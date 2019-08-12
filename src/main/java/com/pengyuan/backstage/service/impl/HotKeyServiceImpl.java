@@ -29,6 +29,14 @@ public class HotKeyServiceImpl implements HotKeyService {
     private HotKeyMapper hotKeyMapper;
 
     @Override
+    public List<UserHotKey> getUserByKeyAndFid(Long fid, String key) {
+
+        List<UserHotKey> userHotKeys = hotKeyMapper.selUserByKey(fid, key);
+
+        return userHotKeys;
+    }
+
+    @Override
     public List<UserHotKey> getUser(Long fid) {
 
         List<UserHotKey> userHotKeys = hotKeyMapper.selUser(fid);
@@ -38,43 +46,23 @@ public class HotKeyServiceImpl implements HotKeyService {
     @Override
     public List<ProcedureHotKey> getProcedure(String key) {
 
-        Set keys = redisTemplate.keys("pName:*" + key + "*:*");
+        List<ProcedureHotKey> list = hotKeyMapper.selProcedureByKey(key);
 
-        List<ProcedureHotKey> list = new ArrayList<>() ;
-
-        if( keys != null && keys.size() > 0 ){
-
-            List<ProcedureHotKey> finalList = list;
-
-            keys.forEach(ele->{
-
-                String[] split = ele.toString().split(":");
-
-                finalList.add(new ProcedureHotKey(split[2],split[1]));
-            });
-        }
         return list;
     }
 
     @Override
     public List<String> userNameList(String key) {
 
+        List<UserHotKey> userHotKeys = hotKeyMapper.selUserByKey(null, key);
+
         List<String> list = new ArrayList<>();
 
-        Set keys = redisTemplate.keys("user:*" + key + "*");
-
-        if( keys != null && keys.size() > 0 ){
-
-            keys.forEach(ele->
-                list.add(ele.toString().replace("user:","" ))
-            );
+        for (UserHotKey hotKey : userHotKeys) {
+            list.add(hotKey.getUserName());
         }
 
-        if( list.size() > 0 ){
-            return list;
-        }
-
-        return null;
+        return list;
     }
 
     @Override

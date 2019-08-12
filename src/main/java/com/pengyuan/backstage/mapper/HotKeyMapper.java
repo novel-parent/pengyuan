@@ -14,6 +14,21 @@ import java.util.List;
 public interface HotKeyMapper {
 
     /**
+     *      蘑菇查询工序名
+     * @param key
+     * @return
+     */
+    List<ProcedureHotKey> selProcedureByKey(@Param("key") String key);
+
+    /**
+     *        查询 用户
+     * @param fid
+     * @param key
+     * @return
+     */
+    List<UserHotKey> selUserByKey(@Param("fid") Long fid , @Param("key") String key);
+
+    /**
      *      根据工程来 查询user 名字
      * @param fid
      * @return

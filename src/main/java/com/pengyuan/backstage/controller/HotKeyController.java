@@ -22,6 +22,16 @@ public class HotKeyController {
     private HotKeyService hotKeyService;
 
     @ResponseBody
+    @RequestMapping("/getUserByKey")
+    List<UserHotKey> getUserByKey(@RequestParam(required = false) Long fid,@RequestParam(required = false) String key){
+
+        List<UserHotKey> userHotKeys = hotKeyService.getUserByKeyAndFid(fid, key);
+
+        return userHotKeys;
+    }
+
+
+    @ResponseBody
     @RequestMapping("/getUser.b")
     List<UserHotKey> getUserKey(@RequestParam(required = false) Long fid){
 

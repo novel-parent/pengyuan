@@ -11,6 +11,13 @@ import java.util.List;
  */
 public interface HotKeyService {
 
+    List<UserHotKey> getUserByKeyAndFid(Long fid , String key);
+
+    /**
+     *     得到用户名字  通过 工厂
+     * @param fid
+     * @return
+     */
     List<UserHotKey> getUser(Long fid);
 
     /**

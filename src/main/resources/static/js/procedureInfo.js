@@ -676,4 +676,7 @@
 		function cancel() {
 			$("#editModal").modal('hide');
 		}
-		
+
+		function show() {
+			$('#historySearch').show()
+        }

@@ -9,6 +9,7 @@
 <title></title>
 <link rel="stylesheet" href="css/pintuer.css">
 <link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/procedureInfo.css">
 <script src="js/jquery-3.1.1.js"></script>
 <script src="js/pintuer.js"></script>
 <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -73,7 +74,12 @@
 								<td><input type="text" class="form-control" id="proceduresPrice" disabled="disabled" ></td>
 								<td><input type="text" class="form-control"  id="number" placeholder="数量"  onkeyup="getAmmount(this.value,'proceduresPrice','account')"></td>
 								<td>
-								<input type="text" class="form-control" id="username" onblur=" getUidByUname(this.value,'add')" placeholder="员工姓名"  >
+								<input type="text" class="form-control" id="username" onclick="show()" onblur=" getUidByUname(this.value,'add')" placeholder="员工姓名"  >
+								<div id="historySearch">
+                                    <ul class="historyLi" id="historyLi">
+
+                                    </ul>
+                                </div>
 								<input type="hidden" name="uid" value="">
 								</td>
 								<td><input type="text" class="form-control" id="account" placeholder="总金额"  ></td>

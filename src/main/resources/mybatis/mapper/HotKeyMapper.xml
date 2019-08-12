@@ -21,4 +21,29 @@
                 </if>
             </where>
     </select>
+    <select id="selUserByKey" resultType="com.pengyuan.backstage.bean.UserHotKey">
+
+        SELECT userName , uid  FROM  user
+        <where>
+            <if test="fid!=null">
+                AND fid = #{fid}
+            </if>
+            <if test="key!=null">
+                <bind name="key" value="'%'+key+'%'"></bind>
+                AND userName like #{key}
+            </if>
+        </where>
+
+    </select>
+    <select id="selProcedureByKey" resultType="com.pengyuan.backstage.bean.ProcedureHotKey">
+
+        SELECT pName , pid FROM procedures
+             <where>
+                 <if test="key!=null">
+                     <bind name="key" value="'%'+key+'%'"></bind>
+                     AND  pName LIKE #{key}
+                 </if>
+             </where>
+
+    </select>
 </mapper>

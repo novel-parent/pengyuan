@@ -16,7 +16,7 @@ public class MoneyUtil {
     private final static String end = "0";
 
     public static String formatMoney(long money){
-
+        System.out.println(money);
         String tMoney = null;
 
         if(money > multiple){
@@ -28,12 +28,21 @@ public class MoneyUtil {
 
         }else{
             //   单价或者等于小于  一块钱
-            tMoney = "0."+money;
+
+            if(money>=100){
+                tMoney = "0."+money;
+            }else{
+                tMoney = "0.0"+money;
+            }
+
+
         }
 
         if(tMoney.endsWith( end )){
             tMoney = tMoney.substring(0,tMoney.length()-1 );
         }
+
+
 
         return tMoney;
     }

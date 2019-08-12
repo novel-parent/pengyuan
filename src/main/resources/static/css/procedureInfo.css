@@ -1,0 +1,19 @@
+#historySearch{
+    width: 130px;
+    position: fixed;
+    z-index: 999;
+    background: #fff;
+    display: none;
+    border: 1px solid #dddddd;
+}
+.historyLi li{
+    width: 130px;
+    color: #000;
+    font: 14px arial;
+    line-height: normal;
+    line-height: 22px;
+    padding: 0 8px;
+    position: relative;
+    cursor: default;
+    list-style-type:none;
+}
